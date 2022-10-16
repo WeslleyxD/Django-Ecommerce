@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'accounts:register' %}">
+        {% csrf_token %}
+        {% for field in user_form %}
+        <div>
+            {{field.label}}
+        </div>
+        <div>
+            <div class="inputlist">
+                {{field}}
+            </div>
+            {% for error in field.errors %}
+            <div> 
+                <span class="errorlist">{{error}}</span> 
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <button type="submit" value="Submit"> Continuar </button>
+    </form>
+
+    <a href="{% url 'accounts:logout_user' %}"> LOGOUT KKKKKKKKKKK</a>
+{% endblock %}

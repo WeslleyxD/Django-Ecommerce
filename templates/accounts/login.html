@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<form method="post" action="{% url 'accounts:login_user' %}">
+    {% csrf_token %}
+    {% if request.user.is_anonymous %}
+        {{ login_form.non_field_errors }}
+        {% for field in login_form %}
+        <div>
+            <div>
+                {{field.label}}
+            </div>
+            <div class="inputlist">
+                {{field}}
+            </div>
+            {% for error in field.errors %}
+            <div> 
+                <span class="errorlist">{{error}}</span> 
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <!-- {{ login_form.as_p}}     -->
+        <a href="{% url 'accounts:password_reset' %}">Esqueceu a senha?</a>
+        <button type="submit" value="Submit"> Continuar </button> 
+    {% endif %}
+</form>
+{% endblock %}
