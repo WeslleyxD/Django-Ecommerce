@@ -87,15 +87,16 @@ def check_token_password_reset(uidb64, token, password):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
+
     except Exception as e:
         user = None
 
     if user is not None and password_reset_token.check_token(user, token):
-        if user.verification_email == False:
-            user.verification_email = True
-        elif user.verification_email == True:
-            user.verification_email = False
-        user.password=password
+        if user.password_change == False:
+            user.password_change = True
+        else:
+            user.password_change = False
+        user.set_password(str(password))
         user.save()
         return True
     else:
@@ -103,7 +104,6 @@ def check_token_password_reset(uidb64, token, password):
 
 class PasswordResettTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
-        print (dir(user))
-        return ((user.pk) + (timestamp) + (user.verification_email))
+        return ((user.pk) + (timestamp) + (user.password_change))
         
 password_reset_token = PasswordResettTokenGenerator()

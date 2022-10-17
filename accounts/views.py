@@ -1,4 +1,5 @@
 from cgitb import reset
+from pdb import post_mortem
 from django.shortcuts import render
 from .forms import UserCreateForm, LoginForm, EmailToPasswordResetForm, ResetPasswordForm
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -16,7 +17,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from .models import User
 from django.contrib.auth.tokens import default_token_generator
-
+from django.contrib.auth.decorators import login_required
+from .decorators import user_is_entry_author
 # Create your views here.
 def login_user(request):
     login_form = LoginForm()
@@ -35,12 +37,24 @@ def logout_user(request):
     logout(request)
     return redirect('accounts:login_user')
 
+'TODO:em breve'
 def profile_user(request):
     user_form = UserCreateForm(instance=request.user)
     if request.method == 'POST':
+        
         if user_form.is_valid():
             print ('ok')
     return render(request, 'accounts/profile_user.html', {'user_form': user_form})
+
+def verification_email(request):
+    if 'accounts/profile/' in request.META.get('HTTP_REFERER', {}):
+        user = request.user
+        to_email = user.email
+        if not request.user.verification_email:
+            generate_token_verified_email(request, user, to_email)
+        return render(request, 'accounts/verification_email.html')
+    else:
+        return render(request, 'error404.html')
 
 def register(request):
     user_form = UserCreateForm()

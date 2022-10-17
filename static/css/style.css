@@ -4,18 +4,33 @@
     box-sizing: border-box;
 }
   
+:root {
+    --main-color:  #d6bf74;
+    --second-color: #61a5bf;
+}
+
 body, html {
-    background-color:rgb(253, 237, 216);
+    background-color: var(--second-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     font-size: sans-serif;
 }
 
-:root {
-    --main-color: hotpink;
-}
 header{
-    height: 9rem;
-    background-color: var(--main-color)
+    height: 12rem;
+    background-color: var(--main-color);
+    display: flex;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+   }
+
+.cat {
+    background-color: aqua;
+    height: 200px;
+    width: 200px;
 }

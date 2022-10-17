@@ -13,16 +13,17 @@
 
 <body>
     <!-- <a href="{% url 'accounts:register' %}"> Registrar </a> -->
-
     <header class="header">
-        <div class="header"> kk</div>
-        {% if request.user.is_anonymous %}
-        <div><a href="{% url 'accounts:login_user' %}"> login </a></div>
-        {% endif %}
-        {% if request.user.is_authenticated %}
-        <div><a href="{% url 'accounts:logout_user' %}"> logout </a></div>
-        <div><a href="{% url 'accounts:profile_user' %}"> ver perfil </a></div>
-        {% endif %}
+        <img src="{% static 'img/python.png' %}" alt="">
+        
+    {% if request.user.is_anonymous %}
+    <button><a href="{% url 'accounts:login_user' %}"> login </a></button>
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+
+    <div><a href="{% url 'accounts:profile_user' %}"> ver perfil </a></div>
+    {% endif %}
     </header>
     {% block content %}
 
