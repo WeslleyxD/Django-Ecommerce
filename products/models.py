@@ -3,13 +3,10 @@ from django.db import models
 from django.urls import reverse
 from accounts.models import User
 
-CHOICES = [
-    ('Celular', 'Celular'),
-    ('Carro', 'Carro'),
-]
+
 
 class Category(models.Model):
-    name = models.CharField(max_length=200, choices=CHOICES)
+    name = models.CharField(max_length=50)
     
     class Meta:
         ordering = ('name',)

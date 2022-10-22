@@ -147,3 +147,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 #TIMEOUT LINK RESET PASSWORD OR ACTIVE EMAIL
 PASSWORD_RESET_TIMEOUT = 30
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'accounts.backends.EmailBackend'
+    ]

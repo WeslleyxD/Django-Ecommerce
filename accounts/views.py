@@ -26,7 +26,7 @@ def login_user(request):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             cd = login_form.cleaned_data
-            user = authenticate(username=cd['username'], password=cd['password'])
+            user = authenticate(username=cd['email'], password=cd['password'])
             if user is not None:
                 login(request, user)
                 return redirect('core:index')

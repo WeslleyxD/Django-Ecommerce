@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 def user_is_entry_author(function):
     def wrap(request, *args, **kwargs):
         if 'accounts/profile/' not in request.META.get('HTTP_REFERER', {}):
-            print (1)
+            pass
         else:
-            print (1)
+            pass
     return wrap

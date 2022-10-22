@@ -1,5 +1,6 @@
 from distutils.command.clean import clean
 from django.contrib.auth import authenticate, password_validation
+from accounts.backends import ModelBackend
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.utils.translation import gettext_lazy as _
@@ -46,15 +47,17 @@ class UserCreateForm(UserCreationForm):
     #         )
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label=_('Usuário'), max_length=200, required=True)
+    email = forms.EmailField(label=_('E-mail'), max_length=200, required=True,
+    widget=forms.TextInput(attrs={"class": "login-form-attr"})
+    )
     password = forms.CharField(
         label=_("Senha"),
-        widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "current-password", "class":"login-form-attr"}),
     )
 
     error_messages = {
         "invalid_login": _(
-            "Usuário ou senha incorreto."
+            "E-mail ou senha incorreto."
         ),
         "invalid_password": _ (
             "Senha errada, tente novamente."
@@ -74,7 +77,7 @@ class LoginForm(forms.Form):
     
     def clean(self):
         cleaned_data = super().clean()
-        username = cleaned_data.get("username")
+        username = cleaned_data.get("email")
         password = cleaned_data.get("password")
         if not authenticate(username=username, password=password):
             raise ValidationError(
