@@ -30,7 +30,7 @@
                     <ul class="header-item-form-categorias">
                         <a href="{% url 'products:product_list_by_category' 'celular' %}"><li>Celular</li></a>
                         <a href="{% url 'products:product_list_by_category' 'portateis' %}"><li>Portáteis</li></a>
-                        <a href="{% url 'products:product_list_by_category' 'eletrodomestico'%}"><li>Eletrodomésticos</li></a>
+                        <a href="{% url 'products:product_list_by_category' 'eletrodomesticos'%}"><li>Eletrodomésticos</li></a>
                         <a href="{% url 'products:product_list_by_category' 'informatica' %}"><li>Informática</li></a>
                         <a href="{% url 'products:product_list_by_category' 'moveis' %}"><li>Móveis</li></a>
                     </ul>
@@ -39,9 +39,9 @@
                     <div class="header-item-right-meuspedidos">
                         <i class="fa-solid fa-gift"></i>
                         {% if request.user.is_authenticated %}
-                            <a href="#meuspedidos"><span>Meus pedidos</span></a>
+                            <a href="#meuspedidos"><span>Olá, {{user_authenticated|capfirst}} </span></a>
                         {% else %}
-                            <a href="{% url 'accounts:login_user' %}"><span>Meus pedidos</span></a>
+                            <a href="{% url 'accounts:login_user' %}"><span>{{user_authenticated|capfirst}}</span></a>
                         {% endif %}
                     </div>
                     <div>

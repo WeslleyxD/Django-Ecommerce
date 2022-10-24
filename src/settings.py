@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #AppExternos
+    'captcha',
     #MyApps
     'accounts',
     'core',
@@ -68,6 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #My Context
+                'core.context_processors.user_authenticated'
             ],
         },
     },
@@ -127,8 +131,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#get_user_model
 AUTH_USER_MODEL = 'accounts.User'
 
+#SMTP
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_FROM = config('EMAIL_FROM', default='')
@@ -148,8 +154,14 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 #TIMEOUT LINK RESET PASSWORD OR ACTIVE EMAIL
 PASSWORD_RESET_TIMEOUT = 30
 
-
+#Authentication with E-mail
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'accounts.backends.EmailBackend'
-    ]
+]
+
+#Recaptcha
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
+
+RECAPTCHA_REQUIRED_SCORE = 0.85

@@ -11,11 +11,6 @@
         <li {% if not category %}class="selected" {% endif %}>
             <a href="{% url 'core:index' %}">All</a>
         </li>
-        {% for c in categories %}
-        <li  class="selected" >
-            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-        </li>
-        {% endfor %}
     </ul>
 </div>
 <div id="main" class="product-list">

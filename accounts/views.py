@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_str
-from  django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model
 from .token import email_activation_token, check_token_verified_email, generate_token_verified_email, password_reset_token, check_token_password_reset, generate_token_password_reset
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
@@ -58,6 +58,7 @@ def verification_email(request):
 
 def register(request):
     user_form = UserCreateForm()
+
     if request.method == 'POST':
         user_form = UserCreateForm(request.POST)
         if user_form.is_valid():

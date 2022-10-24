@@ -8,20 +8,24 @@ from .models import Category, Product
 from django.conf import settings
 from django.views.decorators.cache import cache_page
 from os import environ
+from django.db import connection, reset_queries
 
 def product_list(request, category_name):
     category = None
-    categories = Category.objects.all()
     products = Product.objects.filter(available=True)
 
     if category_name:
         category = get_object_or_404(Category, name=category_name)
-        products = products.filter(category=category)
+        products = Product.objects.filter(category=category).filter(available=True).select_related('category')
+        for p in products:
+            print(dir(p.category.name))
+            print (p.name)
+
+        print (len((connection.queries)))
 
     return render(request,
                 'index.html',
                 {'category': category,
-                'categories': categories,
                 'products': products})
 
 def product_detail(request, id, slug):

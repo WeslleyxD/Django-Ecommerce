@@ -9,31 +9,36 @@ from .models import User
 #from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, SetPasswordForm
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from captcha.fields import ReCaptchaField, ReCaptchaV2Checkbox
+from captcha.widgets import ReCaptchaV2Invisible
 
-class UserCreateForm(UserCreationForm):
+class UserCreateForm(forms.ModelForm):
+    password1 = forms.CharField(label='Senha', 
+        widget=forms.PasswordInput(attrs={"class": "login-form-attr"}),
+    )
+    password2 = forms.CharField(label='Confirme a senha', 
+        widget=forms.PasswordInput(attrs={"class": "login-form-attr"}),
+    )
+    captcha = ReCaptchaField(label='', widget=ReCaptchaV2Checkbox(attrs={}))
+    
     error_messages = {
         "password_mismatch": _("The two password fields didn’t match."),
     }
-    password1 = forms.CharField(
-        strip=False,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}),
-    )
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={"placeholder": "Confirme a senha"}),
-        strip=False,
-    )
 
     class Meta:
         model = User
-        fields = ('username', 'email',)
+        fields = ('first_name','last_name', 'cpf', 'email', 'password1', 'password2', 'captcha')
         widgets = {
-            'username': forms.TextInput(attrs={'placeholder':'Usuário', 'title': 'Your name','size': "40"}), 
-            'email': forms.EmailInput(attrs={'placeholder':'E-mail',}),
+            'first_name': forms.TextInput(attrs={"class": "login-form-attr"}),
+            'last_name': forms.TextInput(attrs={"class": "login-form-attr"}),
+            'cpf': forms.NumberInput(attrs={"class": "login-form-attr"}),
+            'email': forms.EmailInput(attrs={"class": "login-form-attr"}),
             }
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
+        user.username = user.__str__()
+        user.set_password(user.password) # set the password # save the user
         if commit:
             user.save()
         return user
@@ -45,6 +50,20 @@ class UserCreateForm(UserCreationForm):
     #         raise ValidationError(
     #             "username testando xd"
     #         )
+    #     return username
+
+    #TODO: VALIDAR FORM REGISTER
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
+        cpf = cleaned_data.get("cpf")
+        if password1 and password2 and password1 != password2:
+            raise ValidationError(
+                self.error_messages["password_mismatch"],
+                code="password_mismatch",
+            )
+        return cleaned_data
 
 class LoginForm(forms.Form):
     email = forms.EmailField(label=_('E-mail'), max_length=200, required=True,
@@ -55,12 +74,13 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={"autocomplete": "current-password", "class":"login-form-attr"}),
     )
 
+    captcha = ReCaptchaField(label='', widget=ReCaptchaV2Checkbox(attrs={}))
     error_messages = {
         "invalid_login": _(
             "E-mail ou senha incorreto."
         ),
         "invalid_password": _ (
-            "Senha errada, tente novamente."
+            "Faltou verificar o recaptcha."
         )
         #"inactive": _("This account is inactive."),
     }
@@ -79,23 +99,19 @@ class LoginForm(forms.Form):
         cleaned_data = super().clean()
         username = cleaned_data.get("email")
         password = cleaned_data.get("password")
+        captcha = cleaned_data.get('captcha')
         if not authenticate(username=username, password=password):
             raise ValidationError(
                 self.error_messages["invalid_login"],
                 code="inactive",
             )
+        if not captcha:
+            raise ValidationError(
+            self.error_messages["invalid_password"],
+            code="inactive",
+            )
         return cleaned_data
 
-    # def clean_username(self):
-    #     username = self.cleaned_data['username']
-    #     if username == 'test':
-    #         raise ValidationError(
-    #             self.error_messages["invalid_login"],
-    #             code="inactive",
-    #             params={'username':20}
-    #         )
-    #     else:
-    #         return username
 
 class EmailToPasswordResetForm(forms.Form):
     email = forms.EmailField(

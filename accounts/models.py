@@ -1,8 +1,11 @@
+from email.policy import default
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractUser, AbstractBaseUser, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import PermissionsMixin
+from captcha.fields import ReCaptchaField
 
 class User(AbstractBaseUser, PermissionsMixin):
     username_validator = UnicodeUsernameValidator()
@@ -25,6 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             'unique': ("Esse e-mail já existe, favor selecionar outro."),
         }
     )
+    cpf = models.CharField(verbose_name='CPF', max_length=11)
     is_staff = models.BooleanField(verbose_name='É membro', default=False)
     is_active = models.BooleanField(verbose_name='É ativo', default=True)
     password_change = models.BooleanField(default=False)
@@ -36,7 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', ]
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email',]
 
     objects = UserManager()
 
@@ -46,7 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ordering = ['first_name', 'last_name', ]
 
     def __str__(self):
-        return self.username
+        return f'{self.get_full_name()} {self.email}'
 
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
