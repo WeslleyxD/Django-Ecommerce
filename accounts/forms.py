@@ -27,21 +27,12 @@ class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name','last_name', 'cpf', 'email', 'password1', 'password2', 'captcha')
+        fields = ('first_name','last_name', 'email', 'password1', 'password2', 'captcha')
         widgets = {
             'first_name': forms.TextInput(attrs={"class": "login-form-attr"}),
             'last_name': forms.TextInput(attrs={"class": "login-form-attr"}),
-            'cpf': forms.NumberInput(attrs={"class": "login-form-attr"}),
             'email': forms.EmailInput(attrs={"class": "login-form-attr"}),
             }
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.username = user.__str__()
-        user.set_password(user.password) # set the password # save the user
-        if commit:
-            user.save()
-        return user
 
     # def clean_username(self):
     #     cleaned_data = super().clean()
@@ -57,13 +48,19 @@ class UserCreateForm(forms.ModelForm):
         cleaned_data = super().clean()
         password1 = cleaned_data.get("password1")
         password2 = cleaned_data.get("password2")
-        cpf = cleaned_data.get("cpf")
         if password1 and password2 and password1 != password2:
             raise ValidationError(
                 self.error_messages["password_mismatch"],
                 code="password_mismatch",
             )
         return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
 
 class LoginForm(forms.Form):
     email = forms.EmailField(label=_('E-mail'), max_length=200, required=True,

@@ -1,3 +1,4 @@
+from ast import Add
 from email.policy import default
 from unittest.util import _MAX_LENGTH
 from django.db import models
@@ -11,7 +12,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username_validator = UnicodeUsernameValidator()
 
     username = models.CharField(
-        verbose_name='Usuário',
+        'Usuário',
         max_length=150,
         unique=True,
         validators=[username_validator],
@@ -19,24 +20,24 @@ class User(AbstractBaseUser, PermissionsMixin):
             'unique': ("Esse usuário já existe, favor selecionar outro."),
         },
     )
-    first_name = models.CharField(verbose_name='Nome', max_length=254)
-    last_name = models.CharField(verbose_name='Sobrenome', max_length=254)
+    first_name = models.CharField('Nome', max_length=254)
+    last_name = models.CharField('Sobrenome', max_length=254)
     email = models.EmailField(
-        verbose_name='E-mail',
+        'E-mail',
         unique=True,         
         error_messages={
             'unique': ("Esse e-mail já existe, favor selecionar outro."),
         }
     )
-    cpf = models.CharField(verbose_name='CPF', max_length=11)
-    is_staff = models.BooleanField(verbose_name='É membro', default=False)
-    is_active = models.BooleanField(verbose_name='É ativo', default=True)
+    cpf = models.CharField('CPF', max_length=11)
+    is_staff = models.BooleanField('É membro', default=False)
+    is_active = models.BooleanField('É ativo', default=True)
     password_change = models.BooleanField(default=False)
     #verified = models.BooleanField(default=False, editable=False)
-    verification_email = models.BooleanField(verbose_name='E-mail verificado', default=False)
-    created_at = models.DateTimeField(verbose_name='Criado em', auto_now_add=True)
-    modified_at = models.DateTimeField(verbose_name='Modificado em', auto_now=True)
-    deleted = models.BooleanField(verbose_name='Deletado', default=False)
+    verification_email = models.BooleanField('E-mail verificado', default=False)
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    modified_at = models.DateTimeField('Modificado em', auto_now=True)
+    deleted = models.BooleanField('Deletado', default=False)
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
@@ -58,4 +59,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def delete(self):
         self.deleted = True
         self.save()
-    
