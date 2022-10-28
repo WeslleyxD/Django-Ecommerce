@@ -314,3 +314,82 @@ input:focus {
 .form-register-items-formregister form{
     width: 100%
 }
+
+
+/* PASSWORD_RESET */
+
+.password_reset_container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 50px 150px;
+}
+
+.password_reset_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 250px;
+}
+.password_reset_content button {
+    width: 50%;
+}
+
+
+.password_reset_item-form {
+    width: 100%;
+}
+
+
+
+/*RESET FORM*/
+.reset-form-container {
+    margin: 100px 150px;
+}
+
+.reset-form-content {
+    display: flex;  
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+}
+
+.reset-form-items-form {
+    display: flex;
+    width: 720px;
+    height: 100%;
+    align-items: center;
+    padding: 20px;
+}
+
+.reset-form-items-form form {
+    width: 100%;
+}
+
+.reset-form-items-descricao {
+    padding: 50px;
+
+}
+
+.reset-form-items-descricao li{
+    display: flex;
+    align-items: center;
+}
+
+.reset-form-items-descricao i{
+    color: var(--green-color);
+    margin-right: 20px;
+}
+
+/* Passord reset done */
+
+.password-reset-done {
+    margin: 0 auto; 
+    margin-top: 40px; 
+    text-align: center;
+    height: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}

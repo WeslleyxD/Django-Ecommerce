@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -153,7 +153,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 #TIMEOUT LINK RESET PASSWORD OR ACTIVE EMAIL
-PASSWORD_RESET_TIMEOUT = 30
+#PASSWORD_RESET_TIMEOUT = 30
 
 #Authentication with E-mail
 AUTHENTICATION_BACKENDS = [

@@ -1,16 +1,11 @@
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from http.client import HTTPResponse
-from re import template
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.template.loader import render_to_string
-from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
+from django.core.mail import EmailMessage
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
-from django.contrib.auth.tokens import default_token_generator
-from django.conf import settings
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
 
 def generate_token_verified_email(request, user, to_email):
     mail_subject = 'active your e-mail'
@@ -87,6 +82,8 @@ def check_token_password_reset(uidb64, token, password):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
+
+        print (password_reset_token.check_token(user, token))
 
     except Exception as e:
         user = None

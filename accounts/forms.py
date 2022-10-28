@@ -1,16 +1,9 @@
-from distutils.command.clean import clean
-from django.contrib.auth import authenticate, password_validation
-from accounts.backends import ModelBackend
-from django.core.exceptions import ValidationError
-from django.core.mail import send_mail
-from django.utils.translation import gettext_lazy as _
-from django import forms
 from .models import User
-#from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, SetPasswordForm
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django import forms
+from django.contrib.auth import authenticate
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 from captcha.fields import ReCaptchaField, ReCaptchaV2Checkbox
-from captcha.widgets import ReCaptchaV2Invisible
 
 class UserCreateForm(forms.ModelForm):
     password1 = forms.CharField(label='Senha', 
@@ -19,15 +12,16 @@ class UserCreateForm(forms.ModelForm):
     password2 = forms.CharField(label='Confirme a senha', 
         widget=forms.PasswordInput(attrs={"class": "login-form-attr"}),
     )
-    captcha = ReCaptchaField(label='', widget=ReCaptchaV2Checkbox(attrs={}))
+    #captcha = ReCaptchaField(label='', widget=ReCaptchaV2Checkbox(attrs={}))
     
     error_messages = {
         "password_mismatch": _("The two password fields didn’t match."),
+        "password_small": _("A senha deve conter pelo menos 8 caracteres.")
     }
 
     class Meta:
         model = User
-        fields = ('first_name','last_name', 'email', 'password1', 'password2', 'captcha')
+        fields = ('first_name','last_name', 'email', 'password1', 'password2') #'captcha')
         widgets = {
             'first_name': forms.TextInput(attrs={"class": "login-form-attr"}),
             'last_name': forms.TextInput(attrs={"class": "login-form-attr"}),
@@ -43,7 +37,6 @@ class UserCreateForm(forms.ModelForm):
     #         )
     #     return username
 
-    #TODO: VALIDAR FORM REGISTER
     def clean(self):
         cleaned_data = super().clean()
         password1 = cleaned_data.get("password1")
@@ -53,6 +46,16 @@ class UserCreateForm(forms.ModelForm):
                 self.error_messages["password_mismatch"],
                 code="password_mismatch",
             )
+        elif len(password1) < 7 or len(password2) < 7:
+            raise ValidationError(
+                self.error_messages["password_small"],
+                code="password_small",
+            )
+        # elif User.objects.get(email__icontains=email).exists():
+        #     print(1)
+        # else:
+        #     print(2)
+        
         return cleaned_data
 
     def save(self, commit=True):
@@ -71,7 +74,7 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={"autocomplete": "current-password", "class":"login-form-attr"}),
     )
 
-    captcha = ReCaptchaField(label='', widget=ReCaptchaV2Checkbox(attrs={}))
+    #captcha = ReCaptchaField(label='', widget=ReCaptchaV2Checkbox(attrs={}))
     error_messages = {
         "invalid_login": _(
             "E-mail ou senha incorreto."
@@ -96,25 +99,25 @@ class LoginForm(forms.Form):
         cleaned_data = super().clean()
         username = cleaned_data.get("email")
         password = cleaned_data.get("password")
-        captcha = cleaned_data.get('captcha')
+        # captcha = cleaned_data.get('captcha', """  """{})
         if not authenticate(username=username, password=password):
             raise ValidationError(
                 self.error_messages["invalid_login"],
                 code="inactive",
             )
-        if not captcha:
-            raise ValidationError(
-            self.error_messages["invalid_password"],
-            code="inactive",
-            )
-        return cleaned_data
+        # if not captcha:
+        #     raise ValidationError(
+        #     self.error_messages["invalid_password"],
+        #     code="inactive",
+        #     )
+        # return cleaned_data
 
 
 class EmailToPasswordResetForm(forms.Form):
     email = forms.EmailField(
     label=_("Email"),
     max_length=254,
-    widget=forms.EmailInput(attrs={"autocomplete": "email"}),
+    widget=forms.EmailInput(attrs={"class": "login-form-attr"}),
 )
     error_messages = {
         "invalid_email": _(
@@ -125,7 +128,7 @@ class EmailToPasswordResetForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         email = cleaned_data.get("email")
-        if not User.objects.filter(email__iexact=email):
+        if not User.objects.filter(email__iexact=email).exists():
             raise ValidationError(
                 self.error_messages["invalid_email"],
                 code="inactive",
@@ -133,12 +136,12 @@ class EmailToPasswordResetForm(forms.Form):
         return cleaned_data
 
 class ResetPasswordForm(forms.Form):
-    password1 = forms.CharField(
+    password1 = forms.CharField(label='Senha', 
         strip=False,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Senha'}),
+        widget=forms.PasswordInput(attrs={"class": "login-form-attr"}),
     )
-    password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={"placeholder": "Confirme a senha"}),
+    password2 = forms.CharField(label='Confirme a senha', 
+        widget=forms.PasswordInput(attrs={"class": "login-form-attr"}),
         strip=False,
     )
     error_messages = {

@@ -1,14 +1,8 @@
-from django.shortcuts import render
-
-# Create your views here.
-
-from django.shortcuts import render
-from django.shortcuts import render, get_object_or_404
 from .models import Category, Product
 from django.conf import settings
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.cache import cache_page
-from os import environ
-from django.db import connection, reset_queries
+#from django.db import connection, reset_queries
 
 def product_list(request, category_name):
     category = None
@@ -20,8 +14,6 @@ def product_list(request, category_name):
         for p in products:
             print(dir(p.category.name))
             print (p.name)
-
-        print (len((connection.queries)))
 
     return render(request,
                 'index.html',

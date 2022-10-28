@@ -1,10 +1,6 @@
-from ast import Add
-from email.policy import default
-from unittest.util import _MAX_LENGTH
 from django.db import models
-from django.contrib.auth.models import AbstractUser, AbstractBaseUser, UserManager
+from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.core.exceptions import ValidationError
 from django.contrib.auth.models import PermissionsMixin
 from captcha.fields import ReCaptchaField
 
@@ -29,7 +25,6 @@ class User(AbstractBaseUser, PermissionsMixin):
             'unique': ("Esse e-mail já existe, favor selecionar outro."),
         }
     )
-    cpf = models.CharField('CPF', max_length=11)
     is_staff = models.BooleanField('É membro', default=False)
     is_active = models.BooleanField('É ativo', default=True)
     password_change = models.BooleanField(default=False)

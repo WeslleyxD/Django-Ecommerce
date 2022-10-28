@@ -1,24 +1,12 @@
-from cgitb import reset
-from pdb import post_mortem
-from django.shortcuts import render
-from .forms import UserCreateForm, LoginForm, EmailToPasswordResetForm, ResetPasswordForm
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from http.client import HTTPResponse
-from re import template
-from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.template.loader import render_to_string
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_str
-from django.contrib.auth import get_user_model
-from .token import email_activation_token, check_token_verified_email, generate_token_verified_email, password_reset_token, check_token_password_reset, generate_token_password_reset
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
 from .models import User
-from django.contrib.auth.tokens import default_token_generator
+from .forms import UserCreateForm, LoginForm, EmailToPasswordResetForm, ResetPasswordForm
+from .token import check_token_verified_email, generate_token_verified_email, password_reset_token, check_token_password_reset, generate_token_password_reset
+from django.shortcuts import render, redirect
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_str
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .decorators import user_is_entry_author
+
 # Create your views here.
 def login_user(request):
     login_form = LoginForm()
@@ -37,7 +25,7 @@ def logout_user(request):
     logout(request)
     return redirect('accounts:login_user')
 
-'TODO:em breve'
+# TODO: Logo mais
 def profile_user(request):
     user_form = UserCreateForm(instance=request.user)
     if request.method == 'POST':
@@ -58,6 +46,7 @@ def verification_email(request):
 
 def register(request):
     user_form = UserCreateForm()
+    request.session[0] = 'bar'
 
     if request.method == 'POST':
         user_form = UserCreateForm(request.POST)
@@ -72,6 +61,7 @@ def register(request):
 
 def register_email_confirm(request, uidb64, token):
     check_token = check_token_verified_email(uidb64, token)
+    print (check_token)
     if check_token:
         return render(request, 'accounts/register_email_confirm_sucess.html')
     else:
@@ -87,6 +77,7 @@ def password_reset(request):
             to_email = password_reset_form.cleaned_data
             user = User.objects.get(email=to_email['email'])
             generate_token_password_reset(request, user, to_email['email'])
+            return render(request, 'accounts/password_reset_done.html')
     return render(request, 'accounts/password_reset.html', {'password_reset_form': password_reset_form})
 
 def password_reset_confirm(request, uidb64, token):

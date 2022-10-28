@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from products.models import Category, Product
 from django.shortcuts import get_object_or_404
+from products.models import Category, Product
 from products.forms import SearchForm
 from django.db import connection, reset_queries
 
