@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="perfil-container">
+    <div class="perfil-content">
+    <div class="perfil-item-nav">
+        {% for fk in request.user.perfil.get_all_relations %}
+        <a href="{% url 'perfil:my_perfil_foreignkey' fk %}">
+            <div {% if fk == relation %} style="background-color: red;" {% endif %} class="perfil-item-fk"> 
+                <div>
+                    {{fk}}
+                </div>
+                <i class="fa-sharp fa-solid fa-location-dot fa-2x"></i>
+            </div>     
+        </a>
+        {% endfor %}
+    </div>
+    <div class="form-register-items-formregister">
+        
+        <form method="post" action="{% url 'perfil:my_perfil_foreignkey' relation %}">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+            <div class="form-login-items-labelinput">
+                <div class="form-login-items-labelinput-label">
+                    {{field.label}} {% if field.label != '' %} <span>*</span> {% endif %}
+                </div>
+                <div>
+                    {{field}}
+                    {{field.errors}}
+                </div>
+            </div>
+            {% endfor %}
+            {% if form %}<button type="submit" value="Submit"> Continuar </button> {% endif %}
+        </form>
+        
+    </div>
+</div>
+</div>
+
+{% endblock %}

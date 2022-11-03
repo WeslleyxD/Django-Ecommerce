@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
 def login_user(request):
     login_form = LoginForm()
     if request.method == 'POST':
@@ -17,22 +18,12 @@ def login_user(request):
             user = authenticate(username=cd['email'], password=cd['password'])
             if user is not None:
                 login(request, user)
-                return redirect('core:index')
-            return render(request, 'accounts/login.html', {'login_form': login_form})
+                return redirect('perfil:my_perfil')
     return render(request, 'accounts/login.html', {'login_form': login_form})
 
 def logout_user(request):
     logout(request)
     return redirect('accounts:login_user')
-
-# TODO: Logo mais
-def profile_user(request):
-    user_form = UserCreateForm(instance=request.user)
-    if request.method == 'POST':
-        
-        if user_form.is_valid():
-            print ('ok')
-    return render(request, 'accounts/profile_user.html', {'user_form': user_form})
 
 def verification_email(request):
     if 'accounts/profile/' in request.META.get('HTTP_REFERER', {}):

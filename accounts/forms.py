@@ -26,7 +26,7 @@ class UserCreateForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={"class": "login-form-attr"}),
             'last_name': forms.TextInput(attrs={"class": "login-form-attr"}),
             'email': forms.EmailInput(attrs={"class": "login-form-attr"}),
-            }
+        }
 
     # def clean_username(self):
     #     cleaned_data = super().clean()

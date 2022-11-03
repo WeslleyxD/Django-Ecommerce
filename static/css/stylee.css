@@ -21,7 +21,9 @@ body, html {
 
 /* ####  HEADER ####*/
 
-
+select {
+    background-color: white;
+}
 
 h1 {
     text-align: center;
@@ -392,4 +394,34 @@ input:focus {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+/* Perfil */
+.perfil-container {
+    margin: 20px 150px;
+}
+
+.perfil-content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.perfil-item-nav {
+    width: 15rem;
+    height: 100px;
+}
+
+.perfil-item-fk{
+    border: 2px solid pink;
+    height: 100px;
+    margin: 20px 0;
+    background-color: var(--background-color);
+}
+
+.perfil-item-fk i{
+    color: var(--main-color);
+}
+
+.perfil-item-form{
+    background-color: #e4148d;
 }
