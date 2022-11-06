@@ -1,11 +1,13 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
+from . models import User, LoginCodeVerification
+from . utils import send_verification_email
+from random import randrange
 
 def generate_token_verified_email(request, user, to_email):
     mail_subject = 'active your e-mail'
@@ -19,15 +21,6 @@ def generate_token_verified_email(request, user, to_email):
     })
     send = send_verification_email(mail_subject, message, settings.EMAIL_FROM, to_email)
     return send
-    
-def send_verification_email(mail_subject, message, from_email, to_email):
-    try:
-        email = EmailMessage(mail_subject, message, from_email=from_email, to=[to_email])
-        if email.send():
-            return True
-    except Exception as e:
-        print (e)
-        return False
 
 def check_token_verified_email(uidb64, token):
     User = get_user_model()
@@ -67,15 +60,6 @@ def generate_token_password_reset(request, user, to_email):
     })
     send = send_verification_email(mail_subject, message, settings.EMAIL_FROM, to_email)
     return send
-    
-def send_verification_email(mail_subject, message, from_email, to_email):
-    try:
-        email = EmailMessage(mail_subject, message, from_email=from_email, to=[to_email])
-        if email.send():
-            return True
-    except Exception as e:
-        print (e)
-        return False
 
 def check_token_password_reset(uidb64, token, password):
     User = get_user_model()
@@ -104,3 +88,40 @@ class PasswordResettTokenGenerator(PasswordResetTokenGenerator):
         return ((user.pk) + (timestamp) + (user.password_change))
         
 password_reset_token = PasswordResettTokenGenerator()
+
+
+
+
+
+################################# TOKEN 2FA ##############################
+
+def login_code_authentication(user, create=None, delete=None):
+    if user and create:
+        user_code = LoginCodeVerification.objects.filter(user_id=user.pk)
+        if user_code:
+            user_code.delete()
+        token_2fa = str(randrange(111111, 999999))
+        while LoginCodeVerification.objects.filter(code=token_2fa).exists():
+            token_2fa = str(randrange(111111, 999999))
+
+        code = LoginCodeVerification.objects.create(user_id=user.pk, code=token_2fa)
+
+        #send mail
+        mail_subject = 'Token de acesso'
+        message = f'Olá, seu token de segurança é {code}.'
+        to_email = user.email
+        send_verification_email(mail_subject, message, settings.EMAIL_FROM, to_email)
+
+        return token_2fa
+
+    if user and delete:
+        LoginCodeVerification.objects.get(user_id=user.pk).delete()
+
+        return True
+    ok = email_activation_token.make_token(user)
+    print (ok)
+
+
+
+############################ E-MAIL #############################
+

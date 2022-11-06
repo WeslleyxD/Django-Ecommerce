@@ -1,4 +1,4 @@
-from .models import User
+from .models import User, LoginCodeVerification
 from django import forms
 from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
@@ -21,11 +21,12 @@ class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name','last_name', 'email', 'password1', 'password2') #'captcha')
+        fields = ('first_name','last_name', 'email', 'password1', 'password2', 'twofa') #'captcha')
         widgets = {
             'first_name': forms.TextInput(attrs={"class": "login-form-attr"}),
             'last_name': forms.TextInput(attrs={"class": "login-form-attr"}),
             'email': forms.EmailInput(attrs={"class": "login-form-attr"}),
+            'twofa': forms.CheckboxInput(attrs={"class": "login-form-attr"})
         }
 
     # def clean_username(self):
@@ -167,4 +168,31 @@ class ResetPasswordForm(forms.Form):
                 code="inactive",
             )
         
+        return cleaned_data
+
+
+class LoginCodeVerificationForm(forms.ModelForm):
+    class Meta:
+        model = LoginCodeVerification
+        fields = ['code']
+        widgets = {
+            'code': forms.TextInput(),}
+        labels = {
+            "code": _("Código de segurança"),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({"class":"login-form-attr"})
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if 'a' == 8:
+            raise ValidationError(
+                self.error_messages["senha_pequena"],
+                code="inactive",
+            )
+        self.add_error
+        print (cleaned_data)
         return cleaned_data

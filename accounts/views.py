@@ -1,11 +1,12 @@
-from .models import User
-from .forms import UserCreateForm, LoginForm, EmailToPasswordResetForm, ResetPasswordForm
-from .token import check_token_verified_email, generate_token_verified_email, password_reset_token, check_token_password_reset, generate_token_password_reset
-from django.shortcuts import render, redirect
+from .models import User, LoginCodeVerification
+from .forms import UserCreateForm, LoginForm, EmailToPasswordResetForm, ResetPasswordForm, LoginCodeVerificationForm
+from .token import check_token_verified_email, generate_token_verified_email, password_reset_token, check_token_password_reset, generate_token_password_reset, login_code_authentication
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -16,10 +17,46 @@ def login_user(request):
         if login_form.is_valid():
             cd = login_form.cleaned_data
             user = authenticate(username=cd['email'], password=cd['password'])
-            if user is not None:
+            if user is not None and user.twofa:
+                request.session['user_pk'] = user.pk
+                token_2fa = login_code_authentication(user, create=True)
+                # TODO: PAREI AQUI, PEGA O TOKEN PARA ENVIAR O EMAIL
+                #print (token_2fa)
+                #login(request, user)
+                #return redirect('perfil:my_perfil')
+                return redirect('accounts:login_twofa_authentication')
+            elif user is not None:
                 login(request, user)
-                return redirect('perfil:my_perfil')
+                return redirect ('perfil:my_perfil')
     return render(request, 'accounts/login.html', {'login_form': login_form})
+
+def login_twofa_authentication(request, resend_mail=None):
+    if resend_mail:
+        user_pk = request.session.get('user_pk')
+        user = get_object_or_404(User, pk=user_pk)
+        login_code_authentication(user, create=True)
+        return redirect('accounts:login_twofa_authentication')
+    login_code_form = LoginCodeVerificationForm()
+    if request.method == 'POST':
+        login_code_form = LoginCodeVerificationForm(request.POST)
+        if login_code_form.is_valid():
+            user_pk = request.session.get('user_pk')
+            user = get_object_or_404(User, pk=user_pk)
+            cd = login_code_form.cleaned_data
+            try:
+                if user.logincodeverification.code == cd['code']:
+                    login(request, user, backend='accounts.backends.EmailBackend')
+                    login_code_authentication(user, delete=True)
+                    return redirect('core:index')
+                else:
+                    login_code_form.add_error(None, "Código de segurança inválido.")
+                    return render(request, 'accounts/login_2fa.html', {'login_code_form': login_code_form})
+            except Exception:
+                #.add_error(None, 'TEXT') adiciona erro no def non_field_errors do form
+                login_code_form.add_error(None, "Código de segurança inválido")
+                return render(request, 'accounts/login_2fa.html', {'login_code_form': login_code_form})
+
+    return render(request, 'accounts/login_2fa.html', {'login_code_form': login_code_form})
 
 def logout_user(request):
     logout(request)

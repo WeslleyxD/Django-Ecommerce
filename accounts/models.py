@@ -33,6 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     modified_at = models.DateTimeField('Modificado em', auto_now=True)
     deleted = models.BooleanField('Deletado', default=False)
+    twofa = models.BooleanField('Autenticação em duas etapas', default=False)
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
@@ -54,3 +55,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def delete(self):
         self.deleted = True
         self.save()
+
+
+class LoginCodeVerification(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    code = models.CharField(max_length=6)
+
+    def __str__(self):
+        return str(self.code)
