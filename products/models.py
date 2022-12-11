@@ -2,10 +2,24 @@ from django.db import models
 from django.urls import reverse
 from accounts.models import User
 
+class Brand(models.Model):
+    name = models.CharField(max_length=20, db_index=True)
+    slug = models.SlugField(max_length=20, unique=True)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'brand'
+        verbose_name_plural = 'brands'
+    
+    def __str__(self):
+        return self.name
+
+    # def get_absolute_url(self):
+    #     return reverse('products:product_list_by_category', args=[self.slug])
 
 class Category(models.Model):
-    name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, unique=True)
+    name = models.CharField(max_length=30, db_index=True)
+    slug = models.SlugField(max_length=30, unique=True)
 
     class Meta:
         ordering = ('name',)
@@ -15,11 +29,12 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('products:product_list_by_category', args=[self.slug])
+    # def get_absolute_url(self):
+    #     return reverse('products:product_list_by_category', args=[self.slug])
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand, related_name='brand', on_delete=models.CASCADE)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
@@ -34,7 +49,7 @@ class Product(models.Model):
         index_together = (('id', 'slug'),)
         
     def __str__(self):
-        return self.name
+        return f'{self.category} {self.brand} {self.name} {self.description} {self.price}'
 
     def get_absolute_url(self):
         return reverse('products:product_detail', args=[self.id, self.slug])

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'core',
     'products',
     'perfil',
+    'order',
 ]
 
 MIDDLEWARE = [
@@ -152,8 +153,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # MEDIA
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 #TIMEOUT LINK RESET PASSWORD OR ACTIVE EMAIL
 #PASSWORD_RESET_TIMEOUT = 30
@@ -163,6 +164,8 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'accounts.backends.EmailBackend'
 ]
+
+#SESSION_COOKIE_AGE = 15
 
 #Recaptcha
 RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')

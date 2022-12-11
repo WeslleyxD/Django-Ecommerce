@@ -1,6 +1,7 @@
 import json
 from django.shortcuts import render, redirect
 from . forms import AddressForm, PerfilForm
+from order.models import Order
 from accounts.forms import UserCreateForm
 from . utils import via_cep
 from django.contrib.auth.decorators import login_required
@@ -16,6 +17,8 @@ def my_perfil(request, fk=None):
         form = AddressForm(instance=request.user.perfil.address)
     if fk == 'perfil':
         form = PerfilForm(instance=request.user.perfil)
+    # if fk == 'Order':
+    #     form = 
 
     if request.method == 'POST':
         if fk == 'user':
@@ -27,10 +30,8 @@ def my_perfil(request, fk=None):
         if fk == 'perfil':
             form = PerfilForm(request.POST, instance=request.user.perfil)
 
-        print (form.is_valid())
         if form.is_valid():
             cd = form.cleaned_data
-            print(cd)
             form.save()
             return redirect('perfil:my_perfil_foreignkey', fk=fk)
 

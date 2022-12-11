@@ -23,11 +23,11 @@ class AddressForm(forms.ModelForm):
             if self.fields[field].label == 'CEP':
                 self.fields[field].widget.attrs.update({"class":"login-form-attr", "required": True, "onkeypress":"mascara_cep()"})
             
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if commit:
-            user.save()
-        return user
+    # def save(self, commit=True):
+    #     user = super().save(commit=False)
+    #     if commit:
+    #         user.save()
+    #     return user
 
     def clean(self):
         cleaned_data = super().clean()
@@ -87,7 +87,26 @@ class PerfilForm(forms.ModelForm):
             'birth': forms.DateInput(format = '%Y-%m-%d', attrs={'type':'date'})
         }
 
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({"class":"login-form-attr"})
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cep = cleaned_data.get("cep")
+        # try:
+        #     cep = cep.replace(cep[5], '')
+        # except Exception as e:
+        #     raise ValidationError(
+        #         self.error_messages["small_cep"],
+        #         code="invalid",
+        #     )
+        if not cep.isnumeric():
+            raise ValidationError(
+                self.error_messages["number_cep"],
+                code="invalid",
+            )
+
+        return cleaned_data

@@ -16,7 +16,8 @@ class UserCreateForm(forms.ModelForm):
     
     error_messages = {
         "password_mismatch": _("The two password fields didn’t match."),
-        "password_small": _("A senha deve conter pelo menos 8 caracteres.")
+        "password_small": _("A senha deve conter pelo menos 8 caracteres."),
+        "email_exists": "E-mail fornecido já existe",
     }
 
     class Meta:
@@ -47,16 +48,16 @@ class UserCreateForm(forms.ModelForm):
                 self.error_messages["password_mismatch"],
                 code="password_mismatch",
             )
-        elif len(password1) < 7 or len(password2) < 7:
+        if len(password1) < 7 or len(password2) < 7:
             raise ValidationError(
                 self.error_messages["password_small"],
                 code="password_small",
             )
-        # elif User.objects.get(email__icontains=email).exists():
-        #     print(1)
-        # else:
-        #     print(2)
-        
+        if User.objects.filter(email__icontains=cleaned_data.get('email')).exists():
+            raise ValidationError(
+                self.error_messages["email_exists"],
+                code="email_exists",
+            )
         return cleaned_data
 
     def save(self, commit=True):

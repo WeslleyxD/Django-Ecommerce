@@ -67,8 +67,6 @@ def check_token_password_reset(uidb64, token, password):
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
 
-        print (password_reset_token.check_token(user, token))
-
     except Exception as e:
         user = None
 
@@ -118,9 +116,6 @@ def login_code_authentication(user, create=None, delete=None):
         LoginCodeVerification.objects.get(user_id=user.pk).delete()
 
         return True
-    ok = email_activation_token.make_token(user)
-    print (ok)
-
 
 
 ############################ E-MAIL #############################

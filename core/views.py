@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404
 from products.models import Category, Product
 from products.forms import SearchForm
 from django.db import connection, reset_queries
+from django.core.signing import Signer
+from products.utils import pagination
 
 # Create your views here.
 
@@ -14,9 +16,29 @@ def index(request, category_name=None):
     if category_name:
         products = products.filter(category=category)
 
-    return render(request, 'index.html',
+    page_obj = pagination(request, products, 4)
+    ok = render(request, 'index.html',
                 {'category': category,
                 'categories': categories,
-                'products': products,
-                'search_form': search_form}
+                'search_form': search_form,
+                'page_obj': page_obj}
     )
+
+
+
+    #ok['Set-Cookie'] = 'commida=jujuba'
+    # ok['Content-Type'] = 'application/json'
+    # # ok['Content'] = {'weslley': '123'}
+    # xd = ok
+    # signer = Signer()
+
+    # xd.set_signed_cookie('test', signer.sign_object({'message': 'Hello!'}),
+#)
+
+    #print (dir(xd))
+    #print (xd.cookies['test'])
+    # test = (request.get_signed_cookie('test'))
+    # print (test)
+    # printa =  signer.unsign_object(test)
+    # print (printa)
+    return ok

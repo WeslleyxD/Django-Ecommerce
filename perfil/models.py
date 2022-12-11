@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import User
 from django.urls import reverse
+from datetime import datetime
 
 # Create your models here.
 
@@ -62,10 +63,10 @@ class Perfil(models.Model):
         ('N', 'Não responder'),
     ]
 
-    user = models.OneToOneField(User, on_delete=models.PROTECT, verbose_name=('Usuário'))
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=('Usuário'))
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, verbose_name=('Endereço'))
-    cell = models.CharField('Celular', max_length=30, null=True, blank=True)
-    cpf = models.CharField('CPF', max_length=30, null=True, blank=True)
+    cell = models.CharField('Celular', max_length=11, null=True, blank=True)
+    cpf = models.CharField('CPF', max_length=11, null=True)
     birth = models.DateField('Data de Nascimento', null=True, blank=True)
     genre = models.CharField('Gênero', max_length=1, choices=GENDERCHOICE, default='N')
     #foto = models.ImageField(('Foto do Perfil'), null=True, blank=True, upload_to=profile_directory_path)

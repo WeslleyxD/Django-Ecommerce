@@ -12,6 +12,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 def login_user(request):
     login_form = LoginForm()
+    request.session['funfa'] = 'testandoooooo'
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
@@ -19,8 +20,9 @@ def login_user(request):
             user = authenticate(username=cd['email'], password=cd['password'])
             if user is not None and user.twofa:
                 request.session['user_pk'] = user.pk
+                
                 token_2fa = login_code_authentication(user, create=True)
-                # TODO: PAREI AQUI, PEGA O TOKEN PARA ENVIAR O EMAIL
+                # PAREI AQUI, PEGA O TOKEN PARA ENVIAR O EMAIL
                 #print (token_2fa)
                 #login(request, user)
                 #return redirect('perfil:my_perfil')
@@ -74,7 +76,6 @@ def verification_email(request):
 
 def register(request):
     user_form = UserCreateForm()
-    request.session[0] = 'bar'
 
     if request.method == 'POST':
         user_form = UserCreateForm(request.POST)
@@ -89,7 +90,6 @@ def register(request):
 
 def register_email_confirm(request, uidb64, token):
     check_token = check_token_verified_email(uidb64, token)
-    print (check_token)
     if check_token:
         return render(request, 'accounts/register_email_confirm_sucess.html')
     else:
