@@ -23,19 +23,21 @@
         {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-solid fa-backward"></i></a>
         {% endif %}
+
+        <!--ITEMS-->
         {% for obj in page_obj %}
-        <div class="product-list-item">
-            <a href="{{ obj.get_absolute_url }}">
+        <a href="{{ obj.get_absolute_url }}">
+            <div class="product-list-item">
                 <div class="product-list-item-img">
                     <img src="{% if obj.image %}{{ obj.image.url }}{%else %}{% static 'img/no_image.png' %}{% endif %}">
                 </div>
                 <div class="product-list-item-description">
-                    <a href="{{ obj.get_absolute_url }}">{{ obj|truncatechars:55 }}</a>
+                    <h3>{{ obj|truncatechars:70 }}</h3>
                     <br>
-                    R$ {{ obj.price }}
+                    <h3>R$ {{ obj.price }}</h3>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
         {% endfor %}
         <!-- PAGINATION NEXT -->
         {% if page_obj.has_next %}

@@ -1,6 +1,17 @@
 from django.db import models
 from django.urls import reverse
 from accounts.models import User
+from django.template.defaultfilters import slugify
+import os
+import posixpath
+from django.conf import settings
+from PIL import Image
+from datetime import datetime
+from io import BytesIO
+from django.core.files import File
+from sorl.thumbnail import ImageField
+from sorl.thumbnail import get_thumbnail
+from django_resized import ResizedImageField
 
 class Brand(models.Model):
     name = models.CharField(max_length=20, db_index=True)
@@ -52,4 +63,10 @@ class Product(models.Model):
         return f'{self.category} {self.brand} {self.name} {self.description} {self.price}'
 
     def get_absolute_url(self):
-        return reverse('products:product_detail', args=[self.id, self.slug])
+        return reverse('products:product_detail', args=[self.category, self.slug])
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f'{self.brand.name} {self.name} {self.description}')
+        super().save(*args, **kwargs)
+
+        

@@ -17,12 +17,13 @@ def index(request, category_name=None):
         products = products.filter(category=category)
 
     page_obj = pagination(request, products, 4)
-    ok = render(request, 'index.html',
+    ok = render(request, 
+                'index.html',
                 {'category': category,
                 'categories': categories,
                 'search_form': search_form,
                 'page_obj': page_obj}
-    )
+        )
 
 
 
