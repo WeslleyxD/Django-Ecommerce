@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} index {% endblock %}
+
+{% block content %}
+
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{xd.as_p}}
+    {% for x in user.image.all %}
+    <img src="{{x}}" width="250" height="250">
+    {% endfor %}
+        
+    <button type="submit"> Continuar </button>
+</form>
+
+{% endblock %}

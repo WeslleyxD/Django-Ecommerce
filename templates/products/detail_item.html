@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} index {% endblock %}
+{% block title %} detail-product {% endblock %}
 
 {% block content %}
 
@@ -17,8 +17,26 @@
     TODO PAGINAÇÃO DOS ITEMS
 -->
 
-FUNCIONOU
-
-{{product}}
+<div class="product-detail-container">
+    <div class="product-detail-content">
+        <div class="product-detail-content-images">
+            <div class="product-detail-items-images-group">
+                {% for image in product.image.all %}
+                    <a href="{% url 'products:product_detail_image' product.category product.slug image.id%}">
+                        <img src="{{image}}" alt="test" {% if image == image_selected %} style="border: 1px solid red;" {% endif %}>
+                    </a>
+                {% endfor %}
+            </div>
+            <div class="product-detail-item-image-first">
+                <img src="{{image_selected}}" alt="test">
+            </div>
+        </div>
+        <div class="product-detail-content-description">
+            {% autoescape off %}
+                {{product.description}}
+            {% endautoescape %}
+        </div>
+    </div>
+</div>
 
 {% endblock %}

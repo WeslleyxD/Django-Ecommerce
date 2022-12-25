@@ -23,6 +23,7 @@ urlpatterns = [
     path('products/', include('products.urls')),
     path('accounts/', include('accounts.urls')),
     path('my-perfil/', include('perfil.urls')),
+    path('tinymce/', include('tinymce.urls')),
     path('', include('core.urls')),
 ]
 if settings.DEBUG:
