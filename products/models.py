@@ -43,11 +43,13 @@ class Image(models.Model):
         return self.image.url
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='category', on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, related_name='brand', on_delete=models.CASCADE)
+    image = models.ManyToManyField(Image, blank=True)
+    like = models.ManyToManyField(User, blank=True, related_name='like')
+    deslike = models.ManyToManyField(User, blank=True, related_name='deslike')
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
-    image = models.ManyToManyField(Image, blank=True)
     description = HTMLField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
@@ -68,3 +70,16 @@ class Product(models.Model):
         self.slug = slugify(f'{self.brand.name} {self.name}')
         super().save(*args, **kwargs)
         
+class Comment(models.Model):
+    product = models.ForeignKey(Product, related_name='comment', on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE, blank=True, null=True)
+    body = models.TextField(default='', max_length=600)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return f'Comment by {self.product} on {1}'

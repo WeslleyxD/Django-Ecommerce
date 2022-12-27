@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
+{% load parcelas %}
+
 
 {% block title %} detail-product {% endblock %}
 
@@ -19,24 +22,94 @@
 
 <div class="product-detail-container">
     <div class="product-detail-content">
+        <h1>{{product|capfirst}}</h1>
         <div class="product-detail-content-images">
             <div class="product-detail-items-images-group">
-                {% for image in product.image.all %}
+                <div class="product-detail-item-images">
+                    {% for image in page_images %}
                     <a href="{% url 'products:product_detail_image' product.category product.slug image.id%}">
-                        <img src="{{image}}" alt="test" {% if image == image_selected %} style="border: 1px solid red;" {% endif %}>
+                        <img src="{{image}}" alt="test" {% if image == image_selected %} style="border: 3px solid #61a5bf;" {% endif %}>
                     </a>
-                {% endfor %}
+                    {% endfor %}
+                    <!-- PAGINATION NEXT -->
+                    {% if page_images.has_next %}
+                        <a href="?page={{ page_images.next_page_number }}"><i class="fa-duotone fa-forward"></i></a>
+                    {% endif %}
+
+                    <!-- PAGINATION PREVIOUS -->
+                    {% if page_images.has_previous %}
+                        <a href="?page={{ page_images.previous_page_number }}"><i class="fa-solid fa-backward"></i></a>
+                    {% endif %}
+                </div>
+                <div class="product-detail-item-image-first">
+                    <img src="{% if image_selected %} {{image_selected}} {% else %} {{image_first}} {% endif %}" alt="test">
+                </div>
             </div>
-            <div class="product-detail-item-image-first">
-                <img src="{{image_selected}}" alt="test">
-            </div>
+            <div class="product-detail-item-atributes">
+                <div>
+                    <h2>R${{product.price|intcomma}}</h2>
+                    <h3>Em até 10x de R$ {{product.price|parcelas:"10"|intcomma}}</h3>
+                </div>
+                <div>
+                    <button>Adicionar ao carrinho</button>
+                </div>
+                <div class="product-detail-item-atributes-like">
+                    <div>
+                        <form method="post" action="{% url 'products:like_deslike_product' product.id 'like' %}">
+                            {% csrf_token %}
+                            <button type="submit"> {% if request.user in product.like.all %} <i class="fa-solid fa-thumbs-up fa-4x"></i> {% else %}
+                                <i class="fa-regular fa-thumbs-up fa-4x"></i> {% endif %} </button>
+                        </form>
+                        <h3 style="margin: 0 auto;">{{product.like.count}}</h3>
+                    </div>
+                    <div>
+                        <form method="post" action="{% url 'products:like_deslike_product' product.id 'deslike' %}">
+                            {% csrf_token %}
+                            <button type="submit">{% if request.user in product.deslike.all %} <i class="fa-solid fa-thumbs-down fa-4x"></i> {% else %} 
+                                <i class="fa-regular fa-thumbs-down fa-4x"></i> {% endif %}</button>
+                            <button type="submit"></button>
+                        </form>
+                        <h3>{{product.deslike.count}}</h3>
+                    </div>
+                </div>
+            </div>   
         </div>
         <div class="product-detail-content-description">
+            <h2>Descrição</h2>
             {% autoescape off %}
                 {{product.description}}
             {% endautoescape %}
         </div>
+        <div class="product-detail-content-comments">
+            {% with total_comments=product.comment.all.count %}
+                <h2>{{ total_comments }} Comentário{{ total_comments|pluralize }}</h2>
+            {% endwith %}
+            {% for comment in product.comment.all %}
+                <div class="product-detail-items-comments">
+                    <h3>{{comment.user.get_full_name|capfirst}}</h3>
+                    <p>{{comment.body|capfirst}}</p> 
+                </div>
+            {% endfor %}
+
+            <hr style="margin-bottom: 20px;">
+
+            <div class="product-detail-items-comment-form">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {% for field in comment_form %}
+                        {{field.label|capfirst}}:
+                        {{field}}
+                    {% endfor %}
+                        <button type="submit" value="Submit"> Comentar </button> 
+                </form>
+                
+            </div>
+        </div>
     </div>
 </div>
+
+
+
+
 
 {% endblock %}

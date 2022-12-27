@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Brand, Image
+from .models import Category, Product, Brand, Image, Comment
 from django import forms
 from django.core.files.images import ImageFile
 
@@ -47,3 +47,4 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(Image, ImageAdmin)
+admin.site.register(Comment)

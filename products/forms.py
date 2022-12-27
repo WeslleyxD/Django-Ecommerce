@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.utils.translation import gettext_lazy as _
 from django import forms
-from .models import User
+from .models import User, Comment
 #from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, SetPasswordForm
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -16,8 +16,15 @@ class SearchForm(forms.Form):
 class ProductModelForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ['like', 'deslike']
 
+class CommentModelForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['body']
         widgets = {
-            'image': forms.ClearableFileInput(attrs={'multiple': True}),
+            'body': forms.TextInput(attrs={"class": "comment-form-attr"}),
+        }
+        labels = {
+            'body': 'comentar'
         }
