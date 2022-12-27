@@ -76,7 +76,7 @@ class Comment(models.Model):
     body = models.TextField(default='', max_length=600)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=True)
+    available = models.BooleanField(default=True)
 
     class Meta:
         ordering = ('created',)
