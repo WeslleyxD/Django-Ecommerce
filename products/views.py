@@ -28,6 +28,17 @@ def product_detail(request, category_name, slug, image=None):
     #Produto selecionado no template list products
     product = get_object_or_404(Product, slug__iexact=slug, available=True)
 
+    #Commentários
+    comment_form = CommentModelForm()
+
+    #Desabilita o botão de submit se o usuário logado já comentou no product
+    button_status = None
+    #Desabilita o comentário se o user já comentou neste produto.
+    if product.comment.filter(user=request.user).exists():
+        button_status = True
+        for field in comment_form:
+            field.field.widget.attrs.update({"class": "comment-form-attr-block", "readonly": True, "placeholder": "Você já comentou este produto"})
+
     #Primeira imagem a aparecer do produto
     image_first = product.image.first()
 
@@ -39,12 +50,27 @@ def product_detail(request, category_name, slug, image=None):
     #Pagination images
     page_images = pagination(request, product.image.all().order_by('id'), 4)
 
-    #Commentários
-    comment_form = CommentModelForm()
+    if request.method == 'POST':
+        if product.comment.filter(user=request.user).exists():
+            comment_form = CommentModelForm()
+            button_status = True
+            for field in comment_form:
+                field.field.widget.attrs.update({"class": "comment-form-attr-block", "readonly": True, "placeholder": "Você já comentou este produto" })
+        else:
+            comment_form = CommentModelForm(data=request.POST)
+            if comment_form.is_valid():
+                save_comment_form = comment_form.save(commit=False)
 
+                #Salvando as informações essenciais pro comentário aparecer
+                save_comment_form.user = request.user
+                save_comment_form.product = product
+                save_comment_form.save()
 
-    #print(dir(ok))
-    #print (dir(ok.product))
+                comment_form = CommentModelForm()
+                button_status = True
+                for field in comment_form:
+                    field.field.widget.attrs.update({"class": "comment-form-attr-block", "readonly": True, "placeholder": "Você já comentou este produto" })
+
 
     return render(request, 
                 'products/detail_item.html', 
@@ -54,23 +80,30 @@ def product_detail(request, category_name, slug, image=None):
                     'image_first': image_first,
                     'page_images': page_images,
                     'comment_form': comment_form,
+                    'button_status': button_status
                 }
             )
 
 @login_required()
 @require_POST
-def like_deslike_product(request, product_id=None, status_likes=None):
-    product = get_object_or_404(Product, id=product_id)
-
+def like_deslike_product(request, product_id=None, status_likes=None, model=None):
     #product.like.remove(request.user)
+    if model.lower() == 'product':
+        product = get_object_or_404(Product, id=product_id)
+        if status_likes == 'like':
+            product.like.remove(request.user.id) if product.like.filter(id=request.user.id).exists() else product.like.add(request.user)
 
-    if status_likes == 'like':
-        product.like.remove(request.user.id) if product.like.filter(id=request.user.id).exists() else product.like.add(request.user)
+        if status_likes == 'deslike':
+            product.deslike.remove(request.user.id) if product.deslike.filter(id=request.user.id).exists() else product.deslike.add(request.user)
 
-    if status_likes == 'deslike':
-        product.deslike.remove(request.user.id) if product.deslike.filter(id=request.user.id).exists() else product.deslike.add(request.user)
+        return redirect (request.META['HTTP_REFERER'])
 
+    if model.lower() == 'comment':
+        comment = get_object_or_404(Comment, id=product_id)
+        if status_likes == 'like':
+            comment.like.remove(request.user.id) if comment.like.filter(id=request.user.id).exists() else comment.like.add(request.user)
 
-    return redirect (request.META['HTTP_REFERER'])
+        if status_likes == 'deslike':
+            comment.deslike.remove(request.user.id) if comment.deslike.filter(id=request.user.id).exists() else comment.deslike.add(request.user)
 
-    #{'product': product})
+        return redirect (request.META['HTTP_REFERER'])

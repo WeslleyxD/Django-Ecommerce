@@ -74,6 +74,8 @@ class Comment(models.Model):
     product = models.ForeignKey(Product, related_name='comment', on_delete=models.CASCADE, blank=True, null=True)
     user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE, blank=True, null=True)
     body = models.TextField(default='', max_length=600)
+    like = models.ManyToManyField(User, blank=True, related_name='like_comment')
+    deslike = models.ManyToManyField(User, blank=True, related_name='deslike_comment')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     available = models.BooleanField(default=True)
@@ -82,4 +84,4 @@ class Comment(models.Model):
         ordering = ('created',)
 
     def __str__(self):
-        return f'Comment by {self.product} on {1}'
+        return f'Comment by {self.user} on {self.product}'

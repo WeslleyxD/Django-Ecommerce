@@ -55,7 +55,7 @@
                 </div>
                 <div class="product-detail-item-atributes-like">
                     <div>
-                        <form method="post" action="{% url 'products:like_deslike_product' product.id 'like' %}">
+                        <form method="post" action="{% url 'products:like_deslike_product' product.id 'like' 'product' %}">
                             {% csrf_token %}
                             <button type="submit"> {% if request.user in product.like.all %} <i class="fa-solid fa-thumbs-up fa-4x"></i> {% else %}
                                 <i class="fa-regular fa-thumbs-up fa-4x"></i> {% endif %} </button>
@@ -63,7 +63,7 @@
                         <h3 style="margin: 0 auto;">{{product.like.count}}</h3>
                     </div>
                     <div>
-                        <form method="post" action="{% url 'products:like_deslike_product' product.id 'deslike' %}">
+                        <form method="post" action="{% url 'products:like_deslike_product' product.id 'deslike' 'product' %}">
                             {% csrf_token %}
                             <button type="submit">{% if request.user in product.deslike.all %} <i class="fa-solid fa-thumbs-down fa-4x"></i> {% else %} 
                                 <i class="fa-regular fa-thumbs-down fa-4x"></i> {% endif %}</button>
@@ -86,8 +86,27 @@
             {% endwith %}
             {% for comment in product.comment.all %}
                 <div class="product-detail-items-comments">
-                    <h3>{{comment.user.get_full_name|capfirst}}</h3>
-                    <p>{{comment.body|capfirst}}</p> 
+                    <div class="product-detail-items-name-created">
+                        <h3>{{comment.user.get_full_name|capfirst}}</h3>
+                        <div class="product-detail-items-created-likes">
+                            <h5>{{comment.created}}</h5>
+                            <form method="post" action="{% url 'products:like_deslike_product' comment.id 'like' 'comment' %}" style="margin: 0px 20px;">
+                                {% csrf_token %}
+                                <button type="submit"> {% if request.user in comment.like.all %} <i class="fa-solid fa-thumbs-up fa-2x"></i> {% else %}
+                                    <i class="fa-regular fa-thumbs-up fa-2x"></i> {% endif %} 
+                                </button>
+                                <h3 style="margin: 0 auto;">{{comment.like.count}}</h3>
+                            </form>
+                            <form method="post" action="{% url 'products:like_deslike_product' comment.id 'deslike' 'comment' %}">
+                                {% csrf_token %}
+                                <button type="submit">{% if request.user in comment.deslike.all %} <i class="fa-solid fa-thumbs-down fa-2x"></i> {% else %} 
+                                    <i class="fa-regular fa-thumbs-down fa-2x"></i> {% endif %}
+                                </button>
+                                <h3>{{comment.deslike.count}}</h3>
+                            </form>
+                        </div>
+                    </div>
+                    <p>{{comment.body|capfirst}}</p>
                 </div>
             {% endfor %}
 
@@ -100,16 +119,13 @@
                         {{field.label|capfirst}}:
                         {{field}}
                     {% endfor %}
-                        <button type="submit" value="Submit"> Comentar </button> 
-                </form>
-                
+                        
+                        <button {% if button_status %} disabled {% else %} None {% endif %} type="submit"> Comentar </button>        
+                </form> 
             </div>
         </div>
     </div>
 </div>
-
-
-
 
 
 {% endblock %}

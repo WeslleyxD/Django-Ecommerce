@@ -115,7 +115,7 @@ header {
     outline: none;
 }
 
-input:focus {
+.header-item-form input:focus {
     border-color: var(--second-color);
     border: 2px solid var(--second-color);
 }
@@ -235,7 +235,7 @@ input:focus {
     outline: none;
 }
 
-.login-form-attr button {
+.form-login-items button {
     width: 100%;
     height: 2rem;
     background-color: #61a5bf;
@@ -255,6 +255,11 @@ input:focus {
     padding: 5px;
     outline: none;
 }
+.login-form-attr input:focus {
+    border-color: var(--second-color);
+    border: 2px solid var(--second-color);
+}
+
 .errorlist.nonfield {
     color: red;
 }
@@ -268,7 +273,15 @@ input:focus {
     max-width: 500px;
     box-shadow: 0px 11px 18px rgb(0 0 0 / 25%);
     height: 400px;
+}
 
+.form-login-items-register button{
+    width: 100%;
+    height: 2rem;
+    background-color: #61a5bf;
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 10px;
 }
 
 .form-login-items-register i{
@@ -320,6 +333,15 @@ input:focus {
     width: 100%
 }
 
+.form-register-items-formregister button {
+    cursor: pointer;
+    height: 2rem;
+    background-color: var(--main-color);
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0px 20px;
+}
 
 /* PASSWORD_RESET */
 
@@ -339,6 +361,12 @@ input:focus {
 }
 .password_reset_content button {
     width: 50%;
+    cursor: pointer;
+    background-color: var(--main-color);
+    border: 1px solid black;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0px 20px;
 }
 
 
@@ -494,8 +522,6 @@ input:focus {
 /* PRODUCT DETAIL */
 .product-detail-container {
     margin: 0px 250px;
-    display: flex;
-    flex-direction: row;
 }
 
 .product-detail-content{
@@ -569,6 +595,11 @@ input:focus {
 .product-detail-item-atributes button{
     width: 500px;
     height: 70px;
+    cursor: pointer;
+    background-color: var(--main-color);
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0px 20px;
 }
 
 .product-detail-item-images {
@@ -594,7 +625,8 @@ input:focus {
     height: 1px;
     background:transparent; 
     border:none; 
-    outline:none
+    outline:none;
+    cursor: pointer;
 }
 
 .product-detail-content-comments {
@@ -629,14 +661,46 @@ input:focus {
     outline: none;
 }
 
+.comment-form-attr-block {
+    width: 100%;
+    height: 2rem;
+    border: 1px solid var(--third-color);
+    box-shadow: 0 0 19px rgb(0 0 0 / 10%);
+    border-radius: 5px;
+    font-size: 15px;
+    padding: 5px;
+    outline: none;
+}
 
 .product-detail-items-comment-form button {
     position: relative;
     left:92%;
     height: 2rem;
-    background-color: #61a5bf;
+    background-color: var(--main-color);
     border: 1px solid black;
     cursor: pointer;
     border-radius: 10px;
     padding: 0px 20px;
+}
+
+.product-detail-items-name-created {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.product-detail-items-created-likes {
+    display: flex;
+}
+
+.product-detail-items-created-likes i{
+    color: var(--main-color);
+}
+
+.product-detail-items-created-likes button {
+    width: 100%;    
+    background:transparent; 
+    border:none; 
+    outline:none;
+    cursor: pointer;
 }
