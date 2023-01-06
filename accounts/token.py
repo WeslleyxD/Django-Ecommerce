@@ -19,7 +19,7 @@ def generate_token_verified_email(request, user, to_email):
         'token': email_activation_token.make_token(user),
         'protocol': 'https' if request.is_secure() else 'http'
     })
-    send = send_verification_email(mail_subject, message, settings.EMAIL_FROM, to_email)
+    send = send_verification_email(mail_subject, message, to_email)
     return send
 
 def check_token_verified_email(uidb64, token):
@@ -58,7 +58,7 @@ def generate_token_password_reset(request, user, to_email):
         'token': password_reset_token.make_token(user),
         'protocol': 'https' if request.is_secure() else 'http'
     })
-    send = send_verification_email(mail_subject, message, settings.EMAIL_FROM, to_email)
+    send = send_verification_email(mail_subject, message, to_email)
     return send
 
 def check_token_password_reset(uidb64, token, password):
@@ -108,7 +108,7 @@ def login_code_authentication(user, create=None, delete=None):
         mail_subject = 'Token de acesso'
         message = f'Olá, seu token de segurança é {code}.'
         to_email = user.email
-        send_verification_email(mail_subject, message, settings.EMAIL_FROM, to_email)
+        send_verification_email(mail_subject, message, to_email)
 
         return token_2fa
 

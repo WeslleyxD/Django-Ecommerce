@@ -5,6 +5,7 @@ from products.forms import SearchForm
 from django.db import connection, reset_queries
 from django.core.signing import Signer
 from products.utils import pagination
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -17,6 +18,8 @@ def index(request, category_name=None):
         products = products.filter(category=category)
 
     page_obj = pagination(request, products, 4)
+
+    
     ok = render(request, 
                 'index.html',
                 {'category': category,
