@@ -1,6 +1,8 @@
 from .models import Category, Product, Image, User, Comment
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.decorators.cache import cache_page
 from products.utils import pagination
 from .forms import ProductModelForm, CommentModelForm
@@ -30,14 +32,13 @@ def product_detail(request, category_name, slug, image=None):
 
     #Commentários
     comment_form = CommentModelForm()
-
     #Desabilita o botão de submit se o usuário logado já comentou no product
     button_status = None
     #Desabilita o comentário se o user já comentou neste produto.
-    if product.comment.filter(user=request.user).exists():
-        button_status = True
-        for field in comment_form:
-            field.field.widget.attrs.update({"class": "comment-form-attr-block", "readonly": True, "placeholder": "Você já comentou este produto"})
+    # if product.comment.filter(user=request.user).exists():
+    #     button_status = True
+    #     for field in comment_form:
+    #         field.field.widget.attrs.update({"class": "comment-form-attr-block", "readonly": True, "placeholder": "Você já comentou este produto"})
 
     #Primeira imagem a aparecer do produto
     image_first = product.image.first()
@@ -51,11 +52,15 @@ def product_detail(request, category_name, slug, image=None):
     page_images = pagination(request, product.image.all().order_by('id'), 4)
 
     if request.method == 'POST':
-        if product.comment.filter(user=request.user).exists():
-            comment_form = CommentModelForm()
-            button_status = True
-            for field in comment_form:
-                field.field.widget.attrs.update({"class": "comment-form-attr-block", "readonly": True, "placeholder": "Você já comentou este produto" })
+        if not request.user.is_authenticated:
+            print (request.path)
+            return redirect(f'/accounts/login/?next={request.path}')
+            #return render(request, 'accounts/login.html')
+        # if product.comment.filter(user=request.user).exists():
+        #     comment_form = CommentModelForm()
+        #     button_status = True
+        #     for field in comment_form:
+        #         field.field.widget.attrs.update({"class": "comment-form-attr-block", "readonly": True, "placeholder": "Você já comentou este produto" })
         else:
             comment_form = CommentModelForm(data=request.POST)
             if comment_form.is_valid():

@@ -12,15 +12,12 @@ from django.core.exceptions import ObjectDoesNotExist
 
 def login_user(request):
     login_form = LoginForm()
-    request.session['funfa'] = 'testandoooooo'
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             cd = login_form.cleaned_data
             user = authenticate(username=cd['email'], password=cd['password'])
             if user is not None and user.twofa:
-                request.session['user_pk'] = user.pk
-                
                 token_2fa = login_code_authentication(user, create=True)
                 # PAREI AQUI, PEGA O TOKEN PARA ENVIAR O EMAIL
                 #print (token_2fa)
@@ -28,8 +25,17 @@ def login_user(request):
                 #return redirect('perfil:my_perfil')
                 return redirect('accounts:login_twofa_authentication')
             elif user is not None:
+                request.session['user_pk'] = user.pk
+                # request.session['fav_color'] = 'blue'
+                # request.session['products'] = {'celular': '1'}
+                # print (dir(request.session))
+                # print ('*' * 50)
                 login(request, user)
+                if 'next' in request.META['HTTP_REFERER']:
+                    return redirect(request.META['HTTP_REFERER'].split('next=')[1])
+
                 return redirect ('perfil:my_perfil')
+
     return render(request, 'accounts/login.html', {'login_form': login_form})
 
 def login_twofa_authentication(request, resend_mail=None):
