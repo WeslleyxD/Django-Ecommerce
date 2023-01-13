@@ -9,7 +9,7 @@
         <div class="form-login-items">
             <form method="post" action="{% url 'accounts:login_user' %}">
                 {% csrf_token %}
-                {% if request.user.is_anonymous %}
+
                 <div>
                     <h2>Já possui cadastro em nosso site?</h2>
                     <h3>Entre em nosso site e aproveite os mais diversos produtos disponíveis</h3>
@@ -44,7 +44,6 @@
             </ul>
             <a href="{% url 'accounts:register' %}"><button>Registre-se</button></a>
         </div>
-        {% endif %}
 
     </div>
 
