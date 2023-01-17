@@ -47,8 +47,8 @@
                     </div>
                     <div>
                         <a href="#profile"><i class="fa-2x fa-sharp fa-solid fa-user"></i></a>
-                        <a href="#cart"><i class="fa-2x fa-sharp fa-solid fa-cart-shopping"></i></a>
-                        <span class="fa-layers-counter">1,419</span>
+                        <a href="{% url 'cart:cart_detail' %}"><i class="fa-2x fa-sharp fa-solid fa-cart-shopping"></i></a>
+                        <span class="fa-layers-counter">{{cart.get_quantity_products}}</span>
                     </div>
                     <div class="header-item-right-minhaconta">
                         <i class="fa-solid fa-gift"></i>

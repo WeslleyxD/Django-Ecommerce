@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.decorators.cache import cache_page
 from products.utils import pagination
 from .forms import ProductModelForm, CommentModelForm
+from cart.forms import CartAddProductForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 #from django.db import connection, reset_queries
@@ -29,7 +30,7 @@ def product_list(request, category_name=None):
 def product_detail(request, category_name, slug, image=None):
     #Produto selecionado no template list products
     product = get_object_or_404(Product, slug__iexact=slug, available=True)
-
+    cart_product_form = CartAddProductForm()
     #Commentários
     comment_form = CommentModelForm()
     #Desabilita o botão de submit se o usuário logado já comentou no product
@@ -85,7 +86,8 @@ def product_detail(request, category_name, slug, image=None):
                     'image_first': image_first,
                     'page_images': page_images,
                     'comment_form': comment_form,
-                    'button_status': button_status
+                    'button_status': button_status,
+                    'cart_product_form': cart_product_form
                 }
             )
 

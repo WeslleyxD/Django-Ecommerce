@@ -51,7 +51,11 @@
                     <h3>Em até 10x de R$ {{product.price|parcelas:"10"|intcomma}}</h3>
                 </div>
                 <div>
-                    <button>Adicionar ao carrinho</button>
+                    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                        {{ cart_product_form }}
+                        {% csrf_token %}
+                        <input type="submit" value="Add to cart">
+                    </form>
                 </div>
                 <div class="product-detail-item-atributes-like">
                     <div>

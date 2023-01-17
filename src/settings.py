@@ -78,7 +78,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 #My Context
-                'core.context_processors.user_authenticated'
+                'core.context_processors.user_authenticated',
+                'cart.context_processors.cart'
             ],
         },
     },
@@ -181,3 +182,6 @@ RECAPTCHA_REQUIRED_SCORE = 0.85
 
 #LOGIN
 LOGIN_URL = reverse_lazy('accounts:login_user')
+
+#SESSION
+CART_SESSION_ID = 'cart'
