@@ -46,11 +46,11 @@ INSTALLED_APPS = [
     'captcha',
     'tinymce',
     #MyApps
+    'order',
+    'perfil',
     'accounts',
     'core',
     'products',
-    'perfil',
-    'order',
     'cart',
 ]
 
