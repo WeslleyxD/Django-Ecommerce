@@ -26,6 +26,7 @@ urlpatterns = [
     path('my-perfil/', include('perfil.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('cart/', include('cart.urls')),
+    path('coupons/', include('coupon.urls')),
     path('', include('core.urls')),
 ]
 if settings.DEBUG:

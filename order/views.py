@@ -6,12 +6,14 @@ from cart.cart import Cart
 
 def order_create(request):
     cart = Cart(request)
+    print (1)
     if request.method == 'POST':
-        form = OrderCreateForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
+        print (2)
+        form_order = OrderCreateForm(request.POST)
+        if form_order.is_valid():
+            cd = form_order.cleaned_data
             print (cd)
-            order = form.save(commit=False)
+            order = form_order.save(commit=False)
             order.user = request.user.perfil
             order.save()
             print (order)
@@ -23,10 +25,8 @@ def order_create(request):
             cart.clear()
             return render(request,
                         'order/created.html',
-                        {'order': order})
-    else:
-        form = OrderCreateForm()
+                        {'form_order': form_order})
 
     return render(request,
                 'order/create.html',
-                {'cart': cart, 'form': form})
+                {'cart': cart, 'form_order': form_order})
