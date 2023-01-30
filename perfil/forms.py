@@ -62,21 +62,9 @@ class AddressForm(forms.ModelForm):
         form.district = viacep.get('bairro')
         form.address = viacep.get('logradouro')
         
-        #form.set_password(self.cleaned_data["password1"])
         if commit:
             form.save()
         return form
-        # password2 = cleaned_data.get("password2")
-        # if password1 != password2:
-        #     raise ValidationError(
-        #         self.error_messages["invalid_password"],
-        #         code="inactive",
-        #     )
-        # if len(password1) < 8:
-        #     raise ValidationError(
-        #         self.error_messages["senha_pequena"],
-        #         code="inactive",
-        #     )
 
 # TODO: FAZER VALIDAÇÃO DOS FORMS
 class PerfilForm(forms.ModelForm):
