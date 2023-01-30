@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required()
 def my_perfil(request, fk=None):
+    print (fk)
     form = None
     if fk == 'user':
         form = UserCreateForm(instance=request.user)
@@ -24,9 +25,9 @@ def my_perfil(request, fk=None):
         if fk == 'user':
             form = UserCreateForm(request.POST, instance=request.user)
         if fk == 'address':
-            form = AddressForm(request.POST, instance=request.user.perfil.address)
+            form = AddressForm(request.POST, instance=request.user.perfil.address_set.get(selected=True))
             #return render(request, 'perfil/my_perfil_foreignkey.html', {'form':form, 'relation':fk})
-                
+
         if fk == 'perfil':
             form = PerfilForm(request.POST, instance=request.user.perfil)
 

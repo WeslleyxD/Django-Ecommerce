@@ -8,7 +8,7 @@ from . utils import via_cep
 class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
-        fields = '__all__'
+        exclude = ['perfil']
     
     error_messages = {
         "number_cep": ("Insira o CEP apenas com números."),
@@ -93,20 +93,20 @@ class PerfilForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs.update({"class":"login-form-attr"})
 
-    def clean(self):
-        cleaned_data = super().clean()
-        cep = cleaned_data.get("cep")
-        # try:
-        #     cep = cep.replace(cep[5], '')
-        # except Exception as e:
-        #     raise ValidationError(
-        #         self.error_messages["small_cep"],
-        #         code="invalid",
-        #     )
-        if not cep.isnumeric():
-            raise ValidationError(
-                self.error_messages["number_cep"],
-                code="invalid",
-            )
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     cep = cleaned_data.get("cep")
+    #     # try:
+    #     #     cep = cep.replace(cep[5], '')
+    #     # except Exception as e:
+    #     #     raise ValidationError(
+    #     #         self.error_messages["small_cep"],
+    #     #         code="invalid",
+    #     #     )
+    #     if not cep.isnumeric():
+    #         raise ValidationError(
+    #             self.error_messages["number_cep"],
+    #             code="invalid",
+    #         )
 
-        return cleaned_data
+    #     return cleaned_data
