@@ -27,7 +27,7 @@ def generater_username(sender, instance,**kwargs):
         instance.username = username
 
 @receiver(post_save, sender=User)
-def create_perfil_and_coupon(sender, instance, created, **kwargs):
+def create_perfil_address_coupon(sender, instance, created, **kwargs):
     # Verifica se está criando um usuário
     if created:
 
@@ -37,7 +37,9 @@ def create_perfil_and_coupon(sender, instance, created, **kwargs):
         )
 
         # Cria um Address associado ao Perfil do User    
-        Address.objects.create(perfil=perfil_instance)
+        Address.objects.create(
+            perfil=perfil_instance, 
+            selected=True)
 
         # Cria um Coupon associado ao Perfil do User
         coupon_code = ''.join(random.choices(population=string.ascii_uppercase+string.digits, k=8))

@@ -14,7 +14,7 @@ def my_perfil(request, fk=None):
     if fk == 'user':
         form = UserCreateForm(instance=request.user)
     if fk == 'address':
-        form = AddressForm(instance=request.user.perfil.address)
+        form = AddressForm(instance=request.user.perfil.address_set.get(selected=True))
     if fk == 'perfil':
         form = PerfilForm(instance=request.user.perfil)
     # if fk == 'Order':

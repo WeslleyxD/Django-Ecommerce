@@ -74,6 +74,7 @@ class Address(models.Model):
     address = models.CharField('Logradouro', max_length=254, null=True, blank=True)
     number = models.CharField('Número', max_length=10, null=True, blank=True)
     complement = models.CharField('Complemento', max_length=254, null=True, blank=True)
+    selected = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = ('Address')
