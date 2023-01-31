@@ -58,7 +58,7 @@ class AddressForm(forms.ModelForm):
         viacep = json.loads(self.viacep)
         form.cep = viacep.get('cep').replace('-', '')
         form.state = viacep.get('uf')
-        form.country = viacep.get('localidade')
+        form.city = viacep.get('localidade')
         form.district = viacep.get('bairro')
         form.address = viacep.get('logradouro')
         

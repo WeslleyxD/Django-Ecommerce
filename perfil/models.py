@@ -65,11 +65,10 @@ class Address(models.Model):
     ('DF', 'Distrito Federal'),
     ]
 
-    perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, null=True, blank=True, verbose_name=('perfil'))
+    perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, null=True, blank=True, related_name='address', verbose_name='perfil')
     cep = models.CharField('CEP', max_length=8, null=True, blank=True)
     state = models.CharField('Estado', max_length=200, null=True, blank=True, choices=STATES)
     city = models.CharField('Cidade', max_length=20, null=True, blank=True)
-    country = models.CharField('Município', max_length=30, null=True, blank=True)
     district = models.CharField('Bairro', max_length=100, null=True, blank=True)
     address = models.CharField('Logradouro', max_length=254, null=True, blank=True)
     number = models.CharField('Número', max_length=10, null=True, blank=True)
@@ -84,7 +83,7 @@ class Address(models.Model):
         return f"{self.address} {self.cep}"
 
     def get_full_address(self):
-        return f"{self.state} {self.district} {self.address} {self.number} {self.complement}"
+        return f"{self.state} {self.city} {self.district} {self.address} {self.number} {self.complement}"
         
     # def get_absolute_url(self):
     #     return reverse('perfil:product_list_by_category', args=[self.slug])

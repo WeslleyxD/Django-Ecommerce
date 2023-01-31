@@ -15,7 +15,7 @@ def my_perfil(request, fk=None):
     if fk == 'user':
         form = UserCreateForm(instance=request.user)
     if fk == 'address':
-        form = AddressForm(instance=request.user.perfil.address_set.get(selected=True))
+        form = AddressForm(instance=request.user.perfil.address.get(selected=True))
     if fk == 'perfil':
         form = PerfilForm(instance=request.user.perfil)
     # if fk == 'Order':
@@ -25,7 +25,7 @@ def my_perfil(request, fk=None):
         if fk == 'user':
             form = UserCreateForm(request.POST, instance=request.user)
         if fk == 'address':
-            form = AddressForm(request.POST, instance=request.user.perfil.address_set.get(selected=True))
+            form = AddressForm(request.POST, instance=request.user.perfil.address.get(selected=True))
             #return render(request, 'perfil/my_perfil_foreignkey.html', {'form':form, 'relation':fk})
 
         if fk == 'perfil':

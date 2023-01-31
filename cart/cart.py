@@ -13,6 +13,7 @@ class Cart(object):
         self.cart = cart
         # store current applied coupon
         self.coupon_id = self.session.get('coupon_id', None)
+        print (self.session.items())
 
     def add(self, product, quantity=1):
         product_id = str(product.id)
@@ -92,6 +93,7 @@ class Cart(object):
 
     def clear(self):
         del self.session[settings.CART_SESSION_ID]
+        del self.session['coupon_id']
         self.save()
 
 

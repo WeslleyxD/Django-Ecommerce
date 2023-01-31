@@ -7,12 +7,11 @@ from perfil.models import Perfil
 # Create your models here.
 
 class Order(models.Model):
-    user = models.ForeignKey(Perfil, related_name='perfil', on_delete=models.CASCADE)
-    coupon = models.ForeignKey(Coupon, related_name='coupon', on_delete=models.CASCADE, null=True, blank=True)
+    perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='orders')
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True, blank=True, related_name='orders')
     address = models.CharField(max_length=300)
     email = models.EmailField()
     cep = models.CharField(max_length=20)
-    city = models.CharField(max_length=50)
     finish = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -30,7 +29,7 @@ class Order(models.Model):
         
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE, null=True)
-    product = models.ForeignKey(Product, related_name='products', on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product, related_name='items', on_delete=models.CASCADE, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
 

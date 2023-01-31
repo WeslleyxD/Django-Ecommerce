@@ -22,8 +22,7 @@
     <p>Total: ${{ cart.get_total_price_after_discount|floatformat:2 }}</p>
 </div>
 <form method="post" class="order-form">
-    <p><input type="submit" value="Place order"></p>
-    {{form_order}}
+    <p><input type="submit" value="Confirmar"></p>
     {% csrf_token %}
 </form>
 
