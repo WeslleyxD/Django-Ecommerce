@@ -39,10 +39,10 @@ def index(request, category_name=None):
     # xd.set_signed_cookie('test', signer.sign_object({'message': 'Hello!'}),
 #)
 
-    #print (dir(xd))
-    #print (xd.cookies['test'])
+    #dir(xd))
+    #xd.cookies['test'])
     # test = (request.get_signed_cookie('test'))
-    # print (test)
+    # test)
     # printa =  signer.unsign_object(test)
-    # print (printa)
+    # printa)
     return ok

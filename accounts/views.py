@@ -66,7 +66,11 @@ def login_twofa_authentication(request, resend_mail=None):
 
     return render(request, 'accounts/login_2fa.html', {'login_code_form': login_code_form})
 
-def logout_user(request):
+def logout_user(request):    
+
+    #Remove as sessões expiradas da tabela Session
+    request.session.clear_expired()
+
     logout(request)
     return redirect('accounts:login_user')
 

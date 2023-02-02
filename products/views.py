@@ -54,7 +54,6 @@ def product_detail(request, category_name, slug, image=None):
 
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            print (request.path)
             return redirect(f'/accounts/login/?next={request.path}')
             #return render(request, 'accounts/login.html')
         # if product.comment.filter(user=request.user).exists():

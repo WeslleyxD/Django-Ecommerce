@@ -186,3 +186,5 @@ LOGIN_URL = reverse_lazy('accounts:login_user')
 
 #SESSION
 CART_SESSION_ID = 'cart'
+SESSION_COOKIE_AGE = 100000
+

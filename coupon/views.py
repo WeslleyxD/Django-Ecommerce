@@ -3,7 +3,12 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from .models import Coupon
 from .forms import CouponApplyForm
+from cart.forms import CartAddProductForm, CartUpdateProductForm
 from cart.cart import Cart
+
+from django.contrib.auth.decorators import login_required
+
+
 
 @require_POST
 def coupon_apply(request):
@@ -16,7 +21,16 @@ def coupon_apply(request):
                 request.session['coupon_id'] = coupon.id
         except Coupon.DoesNotExist:
             request.session['coupon_id'] = None
-    return redirect('cart:cart_detail')
+        return redirect('cart:cart_detail')
+    else:
+        cart = Cart(request)
+        for item in cart:
+            item['add_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity']})
+            item['update_quantity_form'] = CartUpdateProductForm(initial={'quantity': item['quantity']})
+        return render(request, 'cart/detail.html', {'cart': cart, 'coupon_apply_form': form})
+        
+
+
 
 @require_POST
 def coupon_remove(request):

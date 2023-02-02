@@ -14,8 +14,6 @@ from django.utils import timezone
 
 def order_create(request):
     cart = Cart(request)
-    print (dir(cart))
-    print (cart.coupon_id)
     if request.method == 'POST':
         #request.POST.update({'TESTE': ['123']})
 
@@ -54,7 +52,8 @@ def order_create(request):
                             product=item['product'],
                             price=item['price'],
                             quantity=item['quantity'])
-        cart.clear()
+        cart.clean()
+        cart.clear_coupon()
         return render(request,
                     'order/created.html',
                     {})
