@@ -53,7 +53,7 @@ def order_create(request):
                             price=item['price'],
                             quantity=item['quantity'])
         cart.clean()
-        cart.clear_coupon()
+        cart.clean_coupon()
         return render(request,
                     'order/created.html',
                     {})

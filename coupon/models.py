@@ -5,11 +5,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from perfil.models import Perfil
 
 class Coupon(models.Model):
-    perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, null=True, blank=True, related_name='coupon')
-    code = models.CharField(max_length=50, unique=True)
+    perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, null=True, blank=True, related_name='coupons')
+    code = models.CharField(max_length=50, unique=True, editable=False)
     valid_from = models.DateTimeField(auto_now_add=True, editable=False)
-    valid_to = models.DateTimeField()
-    used_at = models.DateTimeField(null=True, blank=True)
+    valid_to = models.DateTimeField(editable=False)
+    used_at = models.DateTimeField(null=True, blank=True, editable=False)
     discount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(20)])
     active = models.BooleanField(default=True)
 

@@ -12,17 +12,22 @@ class CouponApplyForm(forms.Form):
     }
 
     def __init__(self, *args, **kwargs):
-        user_id = kwargs.pop('user_id', None)
+        perfil_id = kwargs.pop('perfil_id', None)
         super().__init__(*args, **kwargs)
-        self.user_id = user_id
+        self.perfil_id = perfil_id
 
     def clean(self):
         
-        self.user_id
+        self.perfil_id
         cleaned_data = super().clean()
 
         try:
-            Coupon.objects.get(code=cleaned_data['code'], active=True)
+            coupon = Coupon.objects.get(code=cleaned_data['code'], active=True)
+            if coupon.perfil.id !=self.perfil_id:
+               raise ValidationError(
+                self.error_messages["coupon_not_found"],
+                code="coupon_not_found",
+            )
         except Coupon.DoesNotExist:
             raise ValidationError(
                 self.error_messages["coupon_not_found"],
@@ -30,3 +35,9 @@ class CouponApplyForm(forms.Form):
             )
 
         return cleaned_data 
+
+
+class CouponForm(forms.ModelForm):
+    class Meta:
+        model = Coupon
+        exclude = ['perfil']

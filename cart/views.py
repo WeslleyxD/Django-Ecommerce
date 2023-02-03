@@ -43,7 +43,7 @@ def cart_detail(request):
         item['update_quantity_form'] = CartUpdateProductForm(initial={'quantity': item['quantity']})
 
     if request.method == 'POST':
-        coupon_apply_form = CouponApplyForm(request.POST, user_id=(request.user.perfil.id if request.user.is_authenticated else None))
+        coupon_apply_form = CouponApplyForm(request.POST, perfil_id=(request.user.perfil.id if request.user.is_authenticated else None))
         
         if coupon_apply_form.is_valid():
             cart = Cart(request)

@@ -29,7 +29,7 @@ class Perfil(models.Model):
         return f"{self.user.get_full_name()} [{self.user.email}]"
 
     def get_all_relations(self):
-        return ['user', 'address', 'perfil']
+        return ['user', 'address', 'perfil', 'coupons']
 
 
 
