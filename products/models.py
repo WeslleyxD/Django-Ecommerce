@@ -43,8 +43,8 @@ class Image(models.Model):
         return self.image.url
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='category', on_delete=models.CASCADE)
-    brand = models.ForeignKey(Brand, related_name='brand', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand, related_name='products', on_delete=models.CASCADE)
     image = models.ManyToManyField(Image, blank=True)
     like = models.ManyToManyField(User, blank=True, related_name='like')
     deslike = models.ManyToManyField(User, blank=True, related_name='deslike')

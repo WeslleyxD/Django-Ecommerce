@@ -45,6 +45,8 @@ li {
 }
 
 
+
+
 /* input {
     width: 40rem;
     padding: 10px 20px;
@@ -102,6 +104,11 @@ header {
     flex-direction: column;
     justify-content: space-around;
     height: 100%;
+    position: relative;
+}
+
+.header-item-form:hover {
+    background-color: #61a5bf;
 }
 
 .header-item-form input{
@@ -173,14 +180,44 @@ header {
     color: var(--second-color);
     font-size: 25px;
     font-weight: bold;
+    position: relative;
 }
 
 .header-item-form-categorias a{
     color: var(--second-color);
 }
 
+.header-item-form-categorias a:hover {
+    background-color: #00ff2a;
+}
 
+.header-item-form-categorias-dropdown {
+    position: absolute;
+    width: 500px;
+    display: none;
+    background-color: white;
+    border: 1px solid gray;
+    z-index: 1;
+    transition: all 2s ease 2s;
+}
 
+.header-item-form-categorias-dropdown li {
+    list-style: none;
+    padding: 10px 20px;
+  }
+  
+  .header-item-form-categorias-dropdown li a {
+    text-decoration: none;
+    color: rgb(255, 0, 0);
+    display: block;
+  }
+  
+  .header-item-form-categorias:hover .header-item-form-categorias-dropdown {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+  }
+  
 
 /* LOGIN FORM */
 .login-register-form-container{
@@ -704,3 +741,98 @@ header {
     outline:none;
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.dropdown {
+    position: relative;
+    /* display: inline-block; */
+    color: green;
+
+  }
+
+  .dropdown:hover {
+    color: #61a5bf;
+}
+  
+  .dropdown-toggle {
+    background-color: lightgray;
+    /* border: none; */
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    width: 500px;
+    display: none;
+    background-color: white;
+    border: 1px solid gray;
+    z-index: 1;
+    transition: all 2s ease 2s;
+  }
+  
+  .dropdown-menu li {
+    list-style: none;
+    padding: 10px 20px;
+  }
+  
+  .dropdown-menu li a {
+    text-decoration: none;
+    color: rgb(255, 0, 0);
+    display: block;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+  }
+  
+
+
+
+
+
+
+  @media (max-width: 700px) {
+    .dropdown {
+      display: block;
+    }
+  
+    .dropdown-toggle {
+      display: block;
+      margin-bottom: 10px;
+    }
+  
+    .dropdown-menu {
+      display: none;
+    }
+  
+    .dropdown:focus .dropdown-menu,
+    .dropdown:active .dropdown-menu {
+      display: block;
+      position: static;
+    }
+  }

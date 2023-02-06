@@ -8,64 +8,138 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/stylee.css' %}">
     <script src="https://kit.fontawesome.com/53c22141b9.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/python.png' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
         <div class="header-container">
             <div class="header-content">
-                <div class="header-item-logo">
-                    <a href="{% url 'core:index' %}"><img class="header-item-logo-img"
-                            src="{% static 'img/python.png' %}" alt=""></a>
+                <div>
+                    <a href="{% url 'core:index' %}"><img id="logo" src="{% static 'img/python.png' %}" alt="Logo"></a>
                 </div>
-                <div class="header-item-form">
-                    <a href="{% url 'core:index' %}">
-                        <h1>Py Commerce</h1>
-                    </a>
+                <div class="header-block-search">
+                    <a href="{% url 'core:index' %}"><h1 id="name"><span class="underline-left-to-right">Py Commerce</span></h1></a>
+                    <!-- TODO: CONSTRUIR SEARCH INPUT -->
                     <form>
-                        <input type="text" id="search" name="search">
+                        {% csrf_token %}
+                        <div class="search-form">
+                            <i class="fa-2x fa-solid fa-magnifying-glass"></i>
+                          <input type="text" id="search" name="search" placeholder="Procurar" onfocus="teste_onfocus()">
+                        </div>
                     </form>
-                    <ul class="header-item-form-categorias">
-                        <a href="{% url 'products:product_list_by_category' 'smartphone' %}"><li>Smartphone</li></a>
-                        <a href="{% url 'products:product_list_by_category' 'computador' %}"><li>Computador</li></a>
-                        <a href="{% url 'products:product_list_by_category' 'eletronicos' %}"><li>Eletrônicos</li></a>
-                        <a href="{% url 'products:product_list_by_category' 'acessorios' %}"><li>Acessórios</li></a>
+                    <ul class="navbar">
+                       <li><a href="{% url 'products:product_list_by_category' 'smartphone' %}">Smartphone</a>
+                            <ul class="dropdown">
+                                <a href="#">Motorola</a>
+                                <a href="#">Samsung</a>
+                                <a href="#">Lenovo</a>
+                                <a href="#">Xiaomi</a>
+                                <a href="#">Nokia</a>
+                                <a href="#">Apple</a>
+                                <a href="#">Asus</a>
+                                <a href="#">LG</a>
+                            </ul>
+                        </li>
+                       <li><a href="{% url 'products:product_list_by_category' 'computador' %}">Computador</a>
+                            <ul class="dropdown">
+                                <a href="#">Opção 4</a>
+                                <a href="#">Opção 5</a>
+                                <a href="#">Opção 6</a>
+                            </ul>
+                        </li>
+                       <li><a href="{% url 'products:product_list_by_category' 'eletronicos' %}">Eletrônicos</a>
+                            <ul class="dropdown">
+                                <a href="#">Opção 1</a>
+                                <a href="#">Opção 2</a>
+                                <a href="#">Opção 3</a>
+                            </ul>
+                        </li>
+                       <li><a href="{% url 'products:product_list_by_category' 'acessorios' %}">Acessórios</a>
+                            <ul class="dropdown">
+                                <a href="#">Opção 1</a>
+                                <a href="#">Opção 2</a>
+                                <a href="#">Opção 3</a>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
-                <div class="header-item-right">
-                    <div class="header-item-right-meuspedidos">
-                        <i class="fa-solid fa-gift"></i>
+                <div class="header-block-options">
+                    <div class="header-item-orders">
+                        <!-- <i class="fa-solid fa-gift"></i> -->
                         {% if request.user.is_authenticated %}
-                            <a href="#meuspedidos"><span>Olá, {{user_authenticated|capfirst}} </span></a>
+                            <a href="{% url 'perfil:my_perfil' %}"><span>Olá, {{user_authenticated|capfirst}}</span></a>
                         {% else %}
                             <a href="{% url 'accounts:login_user' %}"><span>{{user_authenticated|capfirst}}</span></a>
                         {% endif %}
+                        <i class="fa-solid fa-user"></i>
                     </div>
-                    <div>
-                        <a href="#profile"><i class="fa-2x fa-sharp fa-solid fa-user"></i></a>
-                        <a href="{% url 'cart:cart_detail' %}"><i class="fa-2x fa-sharp fa-solid fa-cart-shopping"></i></a>
-                        <span class="fa-layers-counter">{{cart.get_quantity_products}}</span>
+                    <div class="header-item-profile">
+                        <a href="{% url 'cart:cart_detail' %}"><span>Meu carrinho</span>
+                        <!-- <a href="#profile"><i class="fa-sharp fa-solid fa-user"></i></a> -->
+                        
+                            <div id="cart">
+                                <a href="{% url 'cart:cart_detail' %}"><i class="fa-sharp fa-solid fa-cart-shopping"></i></a>
+                                <span class="fa-layers-counter">{{cart.get_quantity_products}}</span>
+                            </div>
+                        </a>
                     </div>
-                    <div class="header-item-right-minhaconta">
-                        <i class="fa-solid fa-gift"></i>
+                    <!-- <div class="header-item-myaccount">
                         <a href="{% url 'perfil:my_perfil' %}"> <span>Minha conta</span></a>
-                    </div>
+                        <i class="fa-solid fa-gift"></i>
+                    </div> -->
                 </div>
             </div>
         </div>
     </header>
 
 
-    {% block content %}
 
-        {% block js %} {% endblock %}
+
+
+
+
+<header>
+    <div class="header-container">
+        
+    </div>
+</header>
+
+
+
+
+
+
+    {% block content %}
+<!-- 
+        {% block js %} {% endblock %} -->
 
     {% endblock %}
 
+
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
+
+
+
+<div class="underline-left-to-right ">
+    <a class="underline" href="#">Item 1</a>
+  </div>
+
+
+  <i class="h-icon h-package"></i>
 
 </body>
 

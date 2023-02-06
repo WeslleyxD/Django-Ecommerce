@@ -46,3 +46,9 @@ def index(request, category_name=None):
     # printa =  signer.unsign_object(test)
     # printa)
     return ok
+
+
+def testando(request):
+    return render(request, 
+                'testando.html',
+        )
