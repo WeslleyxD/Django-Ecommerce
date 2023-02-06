@@ -1,17 +1,53 @@
-function teste_onfocus() {
-    let funfapls = document.querySelector('.search-form');
-    if (funfapls.classList.contains('search-form')) {
-        funfapls.removeAttribute('placeholder', '');
-        funfapls.setAttribute('class', 'icon')
+// function teste_onfocus() {
+//     let funfapls = document.querySelector('.search-form');
+//     if (funfapls.classList.contains('search-form')) {
+//         funfapls.removeAttribute('placeholder', '');
+//         funfapls.setAttribute('class', 'icon')
 
-        // funfapls.style.backgroundColor = 'red';
-        console.log(1)
-    } else {
-        console.log(2)
-    }
-    console.dir(funfapls)
-    console.log('ok')
-}
+//         // funfapls.style.backgroundColor = 'red';
+//         console.log(1)
+//     } else {
+//         console.log(2)
+//     }
+//     console.dir(funfapls)
+//     console.log('ok')
+// }
+
+
+// let button = document.querySelector(".search-form");
+// this.addEventListener("focus", (e) => {
+//     button.setAttribute('class', 'icon')
+//     let search = document.querySelector("#search");
+//     search.removeAttribute('placeholder')
+// })
+
+
+const search = document.querySelector("#search");
+
+// SEARCH INPUT //
+
+search.addEventListener("focus", (event)=> {
+    search.removeAttribute('placeholder')
+    console.log(event)
+    search.style.padding = "0px 20px 0px 50px"
+    let button = document.querySelector(".search-form");
+        button.classList.toggle("icon");
+});
+
+search.addEventListener("blur", (event)=> {
+    search.setAttribute('placeholder', 'Procurar')
+    search.style.padding = "0px 20px"
+    let button = document.querySelector(".search-form");
+        button.classList.toggle("icon");
+});
+
+// ---
+
+
+
+
+
+
 
 // function mascara_cpf(){
 //     var cpf = document.getElementById('id_cep')
