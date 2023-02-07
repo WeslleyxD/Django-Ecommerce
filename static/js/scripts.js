@@ -32,6 +32,7 @@ search.addEventListener("focus", (event)=> {
     search.style.padding = "0px 20px 0px 50px"
     let button = document.querySelector(".search-form");
         button.classList.toggle("icon");
+    let body = document.querySelector("body");
 });
 
 search.addEventListener("blur", (event)=> {
