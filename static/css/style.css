@@ -18,7 +18,6 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin: 0 10rem;
   }
 
 a {
@@ -34,16 +33,16 @@ li {
 
 .header-container {
     background-color: var(--main-color);
-    margin: 0 -20rem;
 }
 
 .header-content {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
+    justify-content: space-around;
     padding: 20px;
-    margin: 0 200px;
 
 }
+
 
 #logo {
     width: 7rem;
@@ -213,7 +212,7 @@ li {
 
 .header-item-orders {
     display: flex;
-    justify-content: space-between  ;
+    justify-content: space-between;
     background-color: var(--third-color);
     text-align: center;
     padding: 8px 20px;
@@ -311,14 +310,38 @@ li {
     .search-form i {
         left: 94%;
     }
+    .icon {
+        position: relative;
+    }
+    .icon i {
+        position: absolute;
+        top: 22%;
+        left: 2%;
+    }
   }
 
-  @media (max-width:1420px) {
+@media (max-width:1420px) {
     #search {
         width: 30rem;
     }
     .search-form i {
         left: 92%;
     }
+    .search-form {
+        position: relative;
+    }
+    .icon {
+        position: relative;
+    }
+    .icon i {
+        position: absolute;
+        top: 22%;
+        left: 2%;
+    }
+  }
 
+@media (max-width:880px) {
+    .header-content {
+        display: none;
+    }
   }

@@ -8,9 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
-    <script src="https://kit.fontawesome.com/53c22141b9.js" crossorigin="anonymous"></script>
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/python.png' %}"/>
+    <link rel="stylesheet" href="{% static 'css/mobile.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://kit.fontawesome.com/53c22141b9.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
 
 </head>
@@ -19,7 +20,7 @@
     <header>
         <div class="header-container">
             <div class="header-content">
-                <div>
+                <div class="logo">
                     <a href="{% url 'core:index' %}"><img id="logo" src="{% static 'img/python.png' %}" alt="Logo"></a>
                 </div>
                 <div class="header-block-search">
@@ -28,7 +29,7 @@
                     <form>
                         {% csrf_token %}
                         <div class="search-form">
-                            <input type="text" id="search" name="search" placeholder="Procurar" >
+                            <input type="text" id="search" name="search" placeholder="Busque seu produto" >
                             <!-- onfocus="teste_onfocus()" -->
                             <i class="fa-2x fa-solid fa-magnifying-glass"></i>
                         </div>
@@ -95,6 +96,52 @@
                     </div> -->
                 </div>
             </div>
+
+            <!-- MOBILE -->
+
+            <div class="mobile-header-content">
+                <div class="mobile-block-icons">
+                    <div class="mobile-menu">
+                        <i id="mobile-menu" class="fa-sharp fa-solid fa-bars"></i>
+                            <div class="menu-click">
+                                <div class="menu-user">
+                                    <div class="item-icon-user">
+                                        <a href="{% url 'perfil:my_perfil' %}"><i class="fa-2x fa-solid fa-user"></i></a>
+                                    </div>
+                                    <div class="item-boas-vindas">
+                                        {% if request.user.is_authenticated %}
+                                        <a href="{% url 'perfil:my_perfil' %}"><span>Olá, {{user_authenticated|capfirst}}</span></a>
+                                        <p><a href="{% url 'accounts:logout_user' %}">Encerrar sessão</a></p>
+                                        {% else %}
+                                        <a href="{% url 'perfil:my_perfil' %}"><span>{{user_authenticated|capfirst}}</span></a>
+                                        <p><a href="{% url 'accounts:login_user' %}">Entre</a> ou <a href="{% url 'accounts:register' %}">Cadastre-se</a></p>
+                                        {% endif %}
+                                    </div>
+                                    <i id="menu-close" class="fa-regular fa-circle-xmark"></i>
+                                </div>
+                                
+                                <ul>
+                                    <li>teste1</li>
+                                    <li>teste2</li>
+                                    <li>teste3</li>
+                                    <li>teste4</li>
+                                </ul>
+                            </div>
+                        <a href="{% url 'core:index' %}" id="mobile-name"><span>Py Commerce</span></a>
+                    </div>
+                    <div class="mobile-profile">
+                        <a href="#profile"><i class="fa-sharp fa-solid fa-user"></i></a>
+                        <div>
+                            <a href="{% url 'cart:cart_detail' %}"><i class="fa-sharp fa-solid fa-cart-shopping"></i></a>
+                            <span class="fa-layers-counter">{{cart.get_quantity_products}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mobile-search-form">
+                    <input type="text" id="mobile-search" name="search" placeholder="Busque seu produto">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>  
+            </div>
         </div>
     </header>
 
@@ -105,26 +152,6 @@
 
     {% endblock %}
 
-
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-
-
-
-<div class="underline-left-to-right ">
-    <a class="underline" href="#">Item 1</a>
-  </div>
-
-
-  <i class="h-icon h-package"></i>
 
 
   <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>

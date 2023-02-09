@@ -42,12 +42,48 @@ search.addEventListener("blur", (event)=> {
         button.classList.toggle("icon");
 });
 
-// ---
+
+
+////////////////////\\\\\\\\\\\\\\\\\\\\\\
+//////////////// MOBILE \\\\\\\\\\\\\\\\\\
+////////////////////\\\\\\\\\\\\\\\\\\\\\\
 
 
 
+const mobile_search = document.querySelector("#mobile-search");
+// SEARCH
+mobile_search.addEventListener("focus", (event)=> {
+    mobile_search.removeAttribute('placeholder')
+    mobile_search.style.padding = "0px 20px 0px 28px"
+    let button = document.querySelector(".mobile-search-form");
+        button.classList.toggle("mobile-icon");
+    let body = document.querySelector("body");
+});
 
+mobile_search.addEventListener("blur", (event)=> {
+    mobile_search.setAttribute('placeholder', 'Procurar')
+    mobile_search.style.padding = "0px 20px"
+    let button = document.querySelector(".mobile-search-form");
+        button.classList.toggle("mobile-icon");
+});
 
+//
+
+// MENU
+const menu_icon = document.querySelector("#mobile-menu");
+
+menu_icon.addEventListener("click", (event)=> {
+    let show_menu = document.querySelector(".menu-click");
+    show_menu.classList.toggle("show-menu");
+    
+});
+
+const close_menu = document.querySelector("#menu-close");
+close_menu.addEventListener("click", (event)=> {
+    console.log(123)
+    let close_menu = document.querySelector(".menu-click");
+    close_menu.classList.toggle("show-menu");
+});
 
 
 // function mascara_cpf(){
