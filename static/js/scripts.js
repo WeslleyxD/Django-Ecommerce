@@ -28,7 +28,6 @@ const search = document.querySelector("#search");
 
 search.addEventListener("focus", (event)=> {
     search.removeAttribute('placeholder')
-    console.log(event)
     search.style.padding = "0px 20px 0px 50px"
     let button = document.querySelector(".search-form");
         button.classList.toggle("icon");
@@ -73,6 +72,7 @@ mobile_search.addEventListener("blur", (event)=> {
 const menu_icon = document.querySelector("#mobile-menu");
 
 menu_icon.addEventListener("click", (event)=> {
+    console.log(678)
     let show_menu = document.querySelector(".menu-click");
     show_menu.classList.toggle("show-menu");
     

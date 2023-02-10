@@ -344,9 +344,14 @@ li {
     gap: 20px;
 }
 
+.ofertas {
+    min-width: 133px;
+}
+
 .copyright p {
     text-align: center;
     color: var(--black-color);
+    margin: 0px 15px;
 }
 
 
@@ -395,4 +400,13 @@ li {
     .header-content {
         display: none;
     }
+    .footer-content {
+        margin: 25px 2%;
+    }
   }
+
+@media (max-width:500px) {
+    .footer-container {
+        display: none;
+    }
+}

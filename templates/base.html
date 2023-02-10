@@ -26,7 +26,7 @@
                 <div class="header-block-search">
                     <a href="{% url 'core:index' %}"><h1 id="name"><span class="underline-left-to-right">Py Commerce</span></h1></a>
                     <!-- TODO: CONSTRUIR SEARCH INPUT -->
-                    <form>
+                    <form action="">
                         {% csrf_token %}
                         <div class="search-form">
                             <input type="text" id="search" name="search" placeholder="Busque seu produto" >
@@ -97,7 +97,7 @@
                 </div>
             </div>
 
-            <!-- MOBILE -->
+            <!-- MOBILE HEADER-->
 
             <div class="mobile-header-content">
                 <div class="mobile-block-icons">
@@ -137,10 +137,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="mobile-search-form">
+                <form class="mobile-search-form">
+                    <!-- TODO: CONSTRUIR O SEARCH Q| -->
+                    {% csrf_token %}
                     <input type="text" id="mobile-search" name="search" placeholder="Busque seu produto">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                </div>  
+                </form>
             </div>
         </div>
     </header>
@@ -173,7 +175,7 @@
                     <a href=""><li>Trocar senha</li></a>
                 </ul>
             </div>
-            <div>
+            <div class="ofertas">
                 <h3>Ofertas</h3>
                 <ul>
                     <!-- #TODO: criar todas essas features -->
@@ -186,7 +188,45 @@
         </div>
         <div class="copyright">
             <p>WPAS LTDA | CNPJ: 00.000.000.0000-00 | Rua. à caminho de full-stack, S/N - Centro III, Web Developer - BR, 00000-000</p>
-            <p>© 2023 - Nenhum direitos reservados</p>
+            <p>© 2023 - Nenhum direito reservado</p>
+        </div>
+    </footer>
+
+    <!-- MOBILE FOOTER -->
+    <footer class="mobile-footer-container">
+        <div class="mobile-footer-content">
+            <div class="mobile-social-medias">
+                <h3>Redes Sociais</h3>
+                <div>
+                    <a href="https://www.linkedin.com/in/weslley-pablo-7b0734222/" target="_blank"><i class="fa-2x fa-brands fa-github"></i></a>
+                    <a href="https://github.com/WeslleyxD" target="_blank"><i class="fa-2x fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3>Atendimento</h3>
+                <ul>
+                    <a href="{% url 'perfil:my_perfil' %}"><li>Minha conta</li></a>
+                    <!-- TODO: criar meus pedidos em perfil -->
+                    <a href=""><li>Meus pedidos</li></a>
+                    <a href="{% url 'cart:cart_detail' %}"><li>Meu carrinho</li></a>
+                    <a href="{% url 'accounts:password_reset' %}"><li>Recuperar senha</li></a>
+                    <a href=""><li>Trocar senha</li></a>
+                </ul>
+            </div>
+            <div>
+                <h3>Ofertas</h3>
+                <ul>
+                    <!-- #TODO: criar todas essas features -->
+                    <a href=""><li>Ganhar cupom</li></a>
+                    <a href=""><li>Em promoções</li></a>
+                    <a href=""><li>Novidades</li></a>
+                    <a href=""><li>Relatar erros</li></a>
+                </ul>
+            </div>
+        </div>
+        <div class="mobile-copyright">
+            <p>WPAS LTDA | CNPJ: 00.000.000.0000-00 | Rua. à caminho de full-stack, S/N - Centro III, Web Developer - BR, 00000-000</p>
+            <p>© 2023 - Nenhum direito reservado</p>
         </div>
     </footer>
 
