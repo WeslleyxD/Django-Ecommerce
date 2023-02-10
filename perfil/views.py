@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 
 @login_required()
 def my_perfil(request, fk=None):
-    print (fk)
     form = None
     if fk == 'user':
         form = UserCreateForm(instance=request.user)
