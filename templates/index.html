@@ -16,10 +16,9 @@
 <!--
     TODO PAGINAÇÃO DOS ITEMS
 -->
-<div id="main" class="product-list-container">
+<!-- <div id="main" class="product-list-container">
     <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
     <div class="product-list-content">
-        <!-- PAGINATION PREVIOUS -->
         {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-solid fa-backward"></i></a>
         {% endif %}
@@ -37,11 +36,62 @@
             </a>
         </div>
         {% endfor %}
-        <!-- PAGINATION NEXT -->
         {% if page_obj.has_next %}
             <a href="?page={{ page_obj.next_page_number }}"><i class="fa-duotone fa-forward"></i></a>
         {% endif %}
     </div>
-</div>
+</div> -->
+
+
+
+<section class="section-container">
+    <div class="slideshow-container">
+        <div class="slideshow-content">
+            <div class="mySlides fade" style="display: block;">
+                <img src="/static/img/banner1.webp">
+            </div>
+    
+            <div class="mySlides fade" style="display: none;">
+                <img src="/static/img/banner2.webp">
+            </div>
+    
+            <div class="mySlides fade" style="display: none;">
+                <img src="/static/img/banner3.webp">
+            </div>
+    
+            <div class="dots">
+                <span class="dot                                                                                                         active"></span> 
+                <span class="dot                                                                                                        "></span> 
+                <span class="dot                                                                                                        "></span> 
+            </div>
+        </div>
+    </div>
+
+    <div class="smartphones-container">
+        <h2 class="smartphone-title">Smartphones</h2>
+        <div class="smartphones-content">
+            <button class="pre-btn"><img src="/static/img/arrow.png" alt=""></button>
+            <div class="product-container">
+                {% for product in products %}
+                    <div class="product-card">
+                        <div class="product-image">
+                            <span class="discount-tag">50% off</span>
+                            <img src="{{product.image.url}}" class="product-thumb" alt="">
+                            <button class="card-btn">add to wishlist</button>
+                        </div>
+                        <div class="product-info">
+                            <h2 class="product-brand">brand</h2>
+                            <p class="product-short-description">a short line about the cloth..</p>
+                            <span class="price">$20</span><span class="actual-price">$40</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="nxt-btn"><img src="/static/img/arrow.png" alt=""></button>
+        </div>
+    </div>
+
+</section>
+
 
 {% endblock %}

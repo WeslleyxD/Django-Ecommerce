@@ -1,30 +1,66 @@
-// function teste_onfocus() {
-//     let funfapls = document.querySelector('.search-form');
-//     if (funfapls.classList.contains('search-form')) {
-//         funfapls.removeAttribute('placeholder', '');
-//         funfapls.setAttribute('class', 'icon')
+// CAROUSEL MANUAL
 
-//         // funfapls.style.backgroundColor = 'red';
-//         console.log(1)
-//     } else {
-//         console.log(2)
-//     }
-//     console.dir(funfapls)
-//     console.log('ok')
-// }
+const productContainers = [...document.querySelectorAll('.product-container')];
+const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
+const preBtn = [...document.querySelectorAll('.pre-btn')];
 
+productContainers.forEach((item, i) => {
+    let containerDimensions = item.getBoundingClientRect();
+    let containerWidth = containerDimensions.width;
 
-// let button = document.querySelector(".search-form");
-// this.addEventListener("focus", (e) => {
-//     button.setAttribute('class', 'icon')
-//     let search = document.querySelector("#search");
-//     search.removeAttribute('placeholder')
-// })
+    nxtBtn[i].addEventListener('click', () => {
+        item.scrollLeft += containerWidth;
+    })
+
+    preBtn[i].addEventListener('click', () => {
+        item.scrollLeft -= containerWidth;
+    })
+})
+// 
 
 
-const search = document.querySelector("#search");
+
+
+// CAROUSEL 
+let slideIndex = 0;
+showSlides();
+function showSlides() {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    let dots = document.getElementsByClassName("dot");
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {
+        slideIndex = 1
+    }
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace("active", "");
+    }
+    slides[slideIndex-1].style.display = "block";  
+    dots[slideIndex-1].className += " active";
+    timer = setTimeout(showSlides, 3000);
+}
+
+function startTimer() {
+    showSlides();
+}
+
+function pauseTimer() {
+    clearInterval(timer);
+}
+
+const slideshow_container = document.querySelector(".slideshow-container");
+slideshow_container.addEventListener("mouseover", pauseTimer);
+slideshow_container.addEventListener("mouseout", startTimer);
+
+// FIM CAROUSEL
+
 
 // SEARCH INPUT //
+
+const search = document.querySelector("#search");
 
 search.addEventListener("focus", (event)=> {
     search.removeAttribute('placeholder')
@@ -80,10 +116,17 @@ menu_icon.addEventListener("click", (event)=> {
 
 const close_menu = document.querySelector("#menu-close");
 close_menu.addEventListener("click", (event)=> {
-    console.log(123)
     let close_menu = document.querySelector(".menu-click");
     close_menu.classList.toggle("show-menu");
 });
+
+
+
+
+
+
+
+
 
 
 // function mascara_cpf(){

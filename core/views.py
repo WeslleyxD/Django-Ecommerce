@@ -25,7 +25,8 @@ def index(request, category_name=None):
                 {'category': category,
                 'categories': categories,
                 'search_form': search_form,
-                'page_obj': page_obj}
+                'page_obj': page_obj,
+                'products': products}
         )
 
 
