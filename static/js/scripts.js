@@ -16,46 +16,43 @@ productContainers.forEach((item, i) => {
         item.scrollLeft -= containerWidth;
     })
 })
-// 
+// FIM DO CAROUSEL MANUAL
 
 
 
+// CAROUSEL AUTOMÁTICO
+let mouseEmCima = false;
+const slideshowContainer = document.querySelector(".slideshow-container");
 
-// CAROUSEL 
-let slideIndex = 0;
-showSlides();
-function showSlides() {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    let dots = document.getElementsByClassName("dot");
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
-    }
-    slideIndex++;
-    if (slideIndex > slides.length) {
-        slideIndex = 1
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace("active", "");
-    }
-    slides[slideIndex-1].style.display = "block";  
-    dots[slideIndex-1].className += " active";
-    timer = setTimeout(showSlides, 3000);
+if (slideshowContainer) {
+    slideshowContainer.addEventListener("mouseover", () => {mouseEmCima = true});
+    slideshowContainer.addEventListener("mouseout", () => {mouseEmCima = false});
+
+    slideIndex = 0
+    setInterval(() => {
+        if(!mouseEmCima) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+            console.log (11)
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace("active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+        }
+    }, 1000);
 }
 
-function startTimer() {
-    showSlides();
-}
-
-function pauseTimer() {
-    clearInterval(timer);
-}
-
-const slideshow_container = document.querySelector(".slideshow-container");
-slideshow_container.addEventListener("mouseover", pauseTimer);
-slideshow_container.addEventListener("mouseout", startTimer);
-
-// FIM CAROUSEL
+// FIM DO CAROUSEL AUTOMATICO
 
 
 // SEARCH INPUT //
@@ -77,6 +74,7 @@ search.addEventListener("blur", (event)=> {
         button.classList.toggle("icon");
 });
 
+/// FIM SEARCH INPUT
 
 
 ////////////////////\\\\\\\\\\\\\\\\\\\\\\
@@ -84,44 +82,45 @@ search.addEventListener("blur", (event)=> {
 ////////////////////\\\\\\\\\\\\\\\\\\\\\\
 
 
+// SEARCH INPUT
 
-const mobile_search = document.querySelector("#mobile-search");
-// SEARCH
-mobile_search.addEventListener("focus", (event)=> {
-    mobile_search.removeAttribute('placeholder')
-    mobile_search.style.padding = "0px 20px 0px 28px"
+const mobileSearch = document.querySelector("#mobile-search");
+
+mobileSearch.addEventListener("focus", (event)=> {
+    mobileSearch.removeAttribute('placeholder')
+    mobileSearch.style.padding = "0px 20px 0px 28px"
     let button = document.querySelector(".mobile-search-form");
         button.classList.toggle("mobile-icon");
     let body = document.querySelector("body");
 });
 
-mobile_search.addEventListener("blur", (event)=> {
-    mobile_search.setAttribute('placeholder', 'Procurar')
-    mobile_search.style.padding = "0px 20px"
+mobileSearch.addEventListener("blur", (event)=> {
+    mobileSearch.setAttribute('placeholder', 'Procurar')
+    mobileSearch.style.padding = "0px 20px"
     let button = document.querySelector(".mobile-search-form");
         button.classList.toggle("mobile-icon");
 });
 
-//
+// SEARCH INPUT
 
 // MENU
-const menu_icon = document.querySelector("#mobile-menu");
 
-menu_icon.addEventListener("click", (event)=> {
+const menuIcon = document.querySelector("#mobile-menu");
+
+menuIcon.addEventListener("click", (event)=> {
     console.log(678)
     let show_menu = document.querySelector(".menu-click");
     show_menu.classList.toggle("show-menu");
     
 });
 
-const close_menu = document.querySelector("#menu-close");
-close_menu.addEventListener("click", (event)=> {
-    let close_menu = document.querySelector(".menu-click");
-    close_menu.classList.toggle("show-menu");
+const closeMenu = document.querySelector("#menu-close");
+closeMenu.addEventListener("click", (event)=> {
+    let closeMenu = document.querySelector(".menu-click");
+    closeMenu.classList.toggle("show-menu");
 });
 
-
-
+// FIM MENU
 
 
 

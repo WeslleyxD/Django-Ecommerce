@@ -19,8 +19,9 @@ body, html {
   flex-direction: column;
   justify-content: space-between;
   background-image: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 47%, rgba(233,248,255,1) 76%, rgba(213,243,255,1) 100%);
-  height: 100vh;
-
+  background-repeat: no-repeat;
+  /* height: 100vh; */
+  width: 100%;
 }
 
 a {
@@ -357,21 +358,22 @@ li {
 
 /* BORAAAAAAA */
 
-.section-container {
-  display: flex;
-  flex-direction: column;
-  margin: 0px 250px;
-}
-
 .slideshow-container {
   display: flex;
   justify-content: center;
+  /* flex-direction: column; */
 }
 
 .slideshow-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.slideshow-content img {
+  width: 100%;
+  /* height: 100%; */
+  object-fit: cover;
 }
 
 .fade {
@@ -382,9 +384,9 @@ li {
 .mySlides {
   display: none;
 }
-
+/* 
 .smartphones-container {
-}
+} */
 
 .smartphone-title {
   font-size: 30px;
@@ -524,7 +526,25 @@ li {
   text-decoration: line-through;
 }
 
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
 
+.dot {
+  background-color: red;
+  width: 15px;
+  height: 5px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-radius: 10px;
+}
+
+.active {
+  background-color: #61a5bf;
+}
 
 @media (max-width:1620px) {
   #search {
