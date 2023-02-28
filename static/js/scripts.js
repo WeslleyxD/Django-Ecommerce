@@ -6,10 +6,6 @@ if (productContainers) {
     const preBtn = [...document.querySelectorAll('.pre-btn')];
 
     productContainers.forEach((item, i) => {
-        console.log(nxtBtn)
-        console.log(preBtn)
-        console.log(i)
-
         let containerDimensions = item.getBoundingClientRect();
         let containerWidth = containerDimensions.width;
 
@@ -112,9 +108,10 @@ mobileSearch.addEventListener("blur", (event)=> {
 const menuIcon = document.querySelector("#mobile-menu");
 
 menuIcon.addEventListener("click", (event)=> {
+    console.log(event)
+    console.log(10)
     let show_menu = document.querySelector(".menu-click");
     show_menu.classList.toggle("show-menu");
-    
 });
 
 const closeMenu = document.querySelector("#menu-close");

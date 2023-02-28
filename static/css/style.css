@@ -15,13 +15,11 @@
 }
 
 body, html {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
+  /* justify-content: space-between; */
   background-image: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 47%, rgba(233,248,255,1) 76%, rgba(213,243,255,1) 100%);
   background-repeat: no-repeat;
-  /* height: 100vh; */
-  width: 100%;
+
 }
 
 a {
@@ -307,7 +305,7 @@ li {
 .footer-container {
   display: flex;
   flex-direction: column;
-  margin: 0px 0px 20px 0px;
+  margin: 100px 0px 20px 0px;
 }
 
 .footer-content {
