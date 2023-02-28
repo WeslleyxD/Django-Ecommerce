@@ -1,56 +1,18 @@
 {% extends 'base.html' %}
+
 {% load static %}
 
 {% block title %} index {% endblock %}
 
 {% block content %}
 
-<!-- <div id="sidebar">
-    <h3>Categories</h3>
-    <ul>
-        <li {% if not category %}class="selected" {% endif %}>
-            <a href="{% url 'core:index' %}">All</a>
-        </li>
-    </ul>
-</div> -->
-<!--
-    TODO PAGINAÇÃO DOS ITEMS
--->
-<!-- <div id="main" class="product-list-container">
-    <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
-    <div class="product-list-content">
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-solid fa-backward"></i></a>
-        {% endif %}
-        {% for obj in page_obj %}
-        <div class="product-list-item">
-            <a href="{{ obj.get_absolute_url }}">
-                <div class="product-list-item-img">
-                    <img src="{% if obj.image %}{{ obj.image.url }}{%else %}{% static 'img/no_image.png' %}{% endif %}">
-                </div>
-                <div>
-                    <a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a>
-                </div>
-                <br>
-                ${{ obj.price }}
-            </a>
-        </div>
-        {% endfor %}
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}"><i class="fa-duotone fa-forward"></i></a>
-        {% endif %}
-    </div>
-</div> -->
-
-
-
 <section class="section-container">
     <div class="slideshow-container">
         <div class="slideshow-content">
             <a href="">
-                    <div class="mySlides fade" style="display: block;">
-                        <img src="/static/img/banner1.webp">
-                    </div>
+                <div class="mySlides fade" style="display: block;">
+                    <img src="/static/img/banner1.webp">
+                </div>
             </a>
             <a href="">
                 <div class="mySlides fade" style="display: none;">
@@ -73,24 +35,22 @@
     <div class="smartphones-container">
         <h2 class="smartphone-title">Smartphones</h2>
         <div class="smartphones-content">
-            <button class="pre-btn"><img src="/static/img/arrow.png" alt=""></button>
+            <button class="pre-btn"><i class="fa-2x fa-sharp fa-solid fa-angles-left"></i></button>
             <div class="product-container">
                 {% for product in products %}
                     <div class="product-card">
                         <div class="product-image">
                             <span class="discount-tag">50% off</span>
-                            <img src="{{product.image.url}}" class="product-thumb" alt="">
-                            <button class="card-btn">add to wishlist</button>
+                            <img src="{% if product.main_image %}{{product.main_image.url}} {% else %}{% static 'img/no_image.png' %}{% endif %}" class="product-thumb" alt="">
                         </div>
                         <div class="product-info">
-                            <h2 class="product-brand">brand</h2>
-                            <p class="product-short-description">a short line about the cloth..</p>
+                            <h3 class="product-brand">{{product}}</h3>
                             <span class="price">$20</span><span class="actual-price">$40</span>
                         </div>
                     </div>
                 {% endfor %}
             </div>
-            <button class="nxt-btn"><img src="/static/img/arrow.png" alt=""></button>
+            <button class="nxt-btn"><i class="fa-2x fa-sharp fa-solid fa-angles-right"></i></button>
         </div>
     </div>
 

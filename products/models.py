@@ -46,6 +46,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, related_name='products', on_delete=models.CASCADE)
     image = models.ManyToManyField(Image, blank=True)
+    main_image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
     like = models.ManyToManyField(User, blank=True, related_name='like')
     deslike = models.ManyToManyField(User, blank=True, related_name='deslike')
     name = models.CharField(max_length=200, db_index=True)

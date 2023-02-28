@@ -1,23 +1,28 @@
 // CAROUSEL MANUAL
 
 const productContainers = [...document.querySelectorAll('.product-container')];
-const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
-const preBtn = [...document.querySelectorAll('.pre-btn')];
+if (productContainers) {
+    const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
+    const preBtn = [...document.querySelectorAll('.pre-btn')];
 
-productContainers.forEach((item, i) => {
-    let containerDimensions = item.getBoundingClientRect();
-    let containerWidth = containerDimensions.width;
+    productContainers.forEach((item, i) => {
+        console.log(nxtBtn)
+        console.log(preBtn)
+        console.log(i)
 
-    nxtBtn[i].addEventListener('click', () => {
-        item.scrollLeft += containerWidth;
+        let containerDimensions = item.getBoundingClientRect();
+        let containerWidth = containerDimensions.width;
+
+        nxtBtn[i].addEventListener('click', () => {
+            item.scrollLeft += containerWidth;
+        })
+
+        preBtn[i].addEventListener('click', () => {
+            item.scrollLeft -= containerWidth;
+        })
     })
-
-    preBtn[i].addEventListener('click', () => {
-        item.scrollLeft -= containerWidth;
-    })
-})
+}
 // FIM DO CAROUSEL MANUAL
-
 
 
 // CAROUSEL AUTOMÁTICO
@@ -37,7 +42,6 @@ if (slideshowContainer) {
 
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
-            console.log (11)
         }
         slideIndex++;
         if (slideIndex > slides.length) {
@@ -49,7 +53,7 @@ if (slideshowContainer) {
         slides[slideIndex-1].style.display = "block";  
         dots[slideIndex-1].className += " active";
         }
-    }, 1000);
+    }, 3000);
 }
 
 // FIM DO CAROUSEL AUTOMATICO
@@ -108,7 +112,6 @@ mobileSearch.addEventListener("blur", (event)=> {
 const menuIcon = document.querySelector("#mobile-menu");
 
 menuIcon.addEventListener("click", (event)=> {
-    console.log(678)
     let show_menu = document.querySelector(".menu-click");
     show_menu.classList.toggle("show-menu");
     
@@ -123,6 +126,13 @@ closeMenu.addEventListener("click", (event)=> {
 // FIM MENU
 
 
+
+
+// var heading = document.createElement("h1");
+// var heading_text = document.createTextNode("Big Head!");
+
+// heading.appendChild(heading_text);
+// document.body.appendChild(heading);
 
 
 

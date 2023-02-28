@@ -14,6 +14,7 @@ def index(request, category_name=None):
     category = None
     categories = Category.objects.all()
     products = Product.objects.filter(available=True)
+
     if category_name:
         products = products.filter(category=category)
 
