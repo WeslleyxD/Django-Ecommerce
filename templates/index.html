@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load humanize %}
+{% load parcelas %}
 
 {% block title %} index {% endblock %}
 
@@ -33,21 +35,29 @@
     </div>
 
     <div class="smartphones-container">
-        <h2 class="smartphone-title">Smartphones</h2>
+        <h2 class="smartphone-title">Ofertas especiais para você</h2>
         <div class="smartphones-content">
             <button class="pre-btn"><i class="fa-2x fa-sharp fa-solid fa-angles-left"></i></button>
             <div class="product-container">
                 {% for product in products %}
+                <a href="{{ product.get_absolute_url }}">
                     <div class="product-card">
                         <div class="product-image">
-                            <span class="discount-tag">50% off</span>
                             <img src="{% if product.main_image %}{{product.main_image.url}} {% else %}{% static 'img/no_image.png' %}{% endif %}" class="product-thumb" alt="">
                         </div>
                         <div class="product-info">
                             <h3 class="product-brand">{{product}}</h3>
-                            <span class="price">$20</span><span class="actual-price">$40</span>
+                            <div class="price-content">
+                                <span class="price">R$ {{product.price|intcomma}}</span>
+                                <div>
+                                    <span><i class="fa-sharp fa-solid fa-thumbs-up"></i> {{product.like.all.count}}</span>
+                                    <span><i class="fa-sharp fa-solid fa-thumbs-down"></i> {{product.like.all.count}}</span>
+                                </div>
+                            </div>
+                            <span><p>até 10x de R$ {{product.price|parcelas:"10"|intcomma}} sem juros</p></span>
                         </div>
                     </div>
+                </a>
                 {% endfor %}
             </div>
             <button class="nxt-btn"><i class="fa-2x fa-sharp fa-solid fa-angles-right"></i></button>
