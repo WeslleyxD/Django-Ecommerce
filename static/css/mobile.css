@@ -170,10 +170,13 @@ p {
     color: var(--third-color);
 }
 
-.item-boas-vindas > p > a{
+.item-boas-vindas > p > a {
     color: var(--second-color)
 }
 
+.item-boas-vindas span {
+    color: var(--third-color);
+} 
 
 .item-icon-user {
     display: flex;
@@ -225,6 +228,33 @@ p {
     font-size: 7.5px;
     color: var(--black-color);
 }
+
+.menu-nav-mobile {
+    padding: 20px;
+    font-family: 'Roboto Slab', serif;
+    display: flex;
+    flex-direction: column;
+    gap: 23.5px;
+}
+
+.menu-nav-mobile i {
+    color: var(--main-color);
+}
+
+.menu-nav-mobile h3 {
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: 26px;
+}
+
+.menu-nav-mobile li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0px;
+    border-bottom: 1px solid var(--main-color);
+}
+
 
 @media (max-width:880px) {
     .mobile-header-content  {

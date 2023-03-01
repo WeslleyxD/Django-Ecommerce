@@ -118,13 +118,15 @@
                                     </div>
                                     <i id="menu-close" class="fa-regular fa-circle-xmark"></i>
                                 </div>
-                                
-                                <ul>
-                                    <li>teste1</li>
-                                    <li>teste2</li>
-                                    <li>teste3</li>
-                                    <li>teste4</li>
-                                </ul>
+                                <nav class="menu-nav-mobile">
+                                    <h3>Categorias</h3>
+                                    <ul>
+                                        <a href="{% url 'products:product_list_by_category' 'smartphone' %}"> <li>Smartphone <i class="fa-solid fa-arrow-right"></i></li></a>
+                                        <a href="{% url 'products:product_list_by_category' 'computador' %}"> <li>Computador <i class="fa-solid fa-arrow-right"></i></li></a>
+                                        <a href="{% url 'products:product_list_by_category' 'eletronicos' %}"> <li>Eletrônicos <i class="fa-solid fa-arrow-right"></i></li></a>
+                                        <a href="{% url 'products:product_list_by_category' 'acessorios' %}"> <li>Acessórios <i class="fa-solid fa-arrow-right"></i></li></a>
+                                    </ul>
+                                </nav>
                             </div>
                         <a href="{% url 'core:index' %}" id="mobile-name"><span>Py Commerce</span></a>
                     </div>
