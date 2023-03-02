@@ -121,7 +121,27 @@
                                 <nav class="menu-nav-mobile">
                                     <h3>Categorias</h3>
                                     <ul>
-                                        <a href="{% url 'products:product_list_by_category' 'smartphone' %}"> <li>Smartphone <i class="fa-solid fa-arrow-right"></i></li></a>
+                                        <li id="nav-open-subcategory">Smartphone <i class="fa-solid fa-arrow-right"></i></li>
+                                        <nav id="menu">
+                                            <div class="nav-block-header">
+                                                <i id="nav-open-subcategory" class="fa-solid fa-arrow-left"></i>
+                                                <h3>Smartphone</h3>
+                                                <i id="menu-close" class="fa-regular fa-circle-xmark"></i>
+                                            </div>
+                                            <nav class="menu-nav-mobile">
+                                                <h3>Marcas</h3>
+                                                <ul>
+                                                   <a href="#"> <li>Motorola</li></a>
+                                                   <a href="#"> <li>Samsung</li></a>
+                                                   <a href="#"> <li>Lenovo</li></a>
+                                                   <a href="#"> <li>Xiaomi</li></a>
+                                                   <a href="#"> <li>Nokia</li></a>
+                                                   <a href="#"> <li>Apple</li></a>
+                                                   <a href="#"> <li>Asus</li></a>
+                                                   <a href="#"> <li>LG</li></a>
+                                                </ul>
+                                            </nav>
+                                        </nav>
                                         <a href="{% url 'products:product_list_by_category' 'computador' %}"> <li>Computador <i class="fa-solid fa-arrow-right"></i></li></a>
                                         <a href="{% url 'products:product_list_by_category' 'eletronicos' %}"> <li>Eletrônicos <i class="fa-solid fa-arrow-right"></i></li></a>
                                         <a href="{% url 'products:product_list_by_category' 'acessorios' %}"> <li>Acessórios <i class="fa-solid fa-arrow-right"></i></li></a>

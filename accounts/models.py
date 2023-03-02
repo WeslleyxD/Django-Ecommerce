@@ -56,9 +56,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.deleted = True
         self.save()
 
+    def save(self, *args, **kwargs):
+        if self.password:
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
+
 
 class LoginCodeVerification(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='code_verification')
     code = models.CharField(max_length=6)
 
     def __str__(self):

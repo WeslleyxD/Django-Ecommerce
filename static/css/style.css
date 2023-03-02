@@ -15,9 +15,9 @@
 }
 
 body, html {
-
+  height: 100%;
   /* justify-content: space-between; */
-  background-image: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 47%, rgba(233,248,255,1) 76%, rgba(213,243,255,1) 100%);
+  /* background-image: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 47%, rgba(233,248,255,1) 76%, rgba(213,243,255,1) 100%); */
   background-repeat: no-repeat;
 
 }
@@ -534,6 +534,10 @@ li {
   white-space: nowrap;
 }
 
+.product-brand {
+  color: var(--black-color);
+}
+
 .dots {
   display: flex;
   justify-content: center;
@@ -605,6 +609,9 @@ li {
       top: 22%;
       left: 2%;
   }
+  .smartphones-container {
+    margin: 0px 100px;
+  }
 }
 
 @media (max-width:880px) {
@@ -648,6 +655,9 @@ li {
   .product-info p {
     font-size: 12px;
   }
+  .footer-container {
+    display: none;
+}
 }
 
 @media (max-width:500px) {

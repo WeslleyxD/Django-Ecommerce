@@ -59,20 +59,24 @@ if (slideshowContainer) {
 
 const search = document.querySelector("#search");
 
-search.addEventListener("focus", (event)=> {
-    search.removeAttribute('placeholder')
-    search.style.padding = "0px 20px 0px 50px"
-    let button = document.querySelector(".search-form");
-        button.classList.toggle("icon");
-    let body = document.querySelector("body");
-});
+if (search) {
+    search.addEventListener("focus", (event)=> {
+        search.removeAttribute('placeholder')
+        search.style.padding = "0px 20px 0px 50px"
+        let button = document.querySelector(".search-form");
+            button.classList.toggle("icon");
+        let body = document.querySelector("body");
+    });
+    
+    search.addEventListener("blur", (event)=> {
+        search.setAttribute('placeholder', 'Procurar')
+        search.style.padding = "0px 20px"
+        let button = document.querySelector(".search-form");
+            button.classList.toggle("icon");
+    });
 
-search.addEventListener("blur", (event)=> {
-    search.setAttribute('placeholder', 'Procurar')
-    search.style.padding = "0px 20px"
-    let button = document.querySelector(".search-form");
-        button.classList.toggle("icon");
-});
+}
+
 
 /// FIM SEARCH INPUT
 
@@ -86,44 +90,82 @@ search.addEventListener("blur", (event)=> {
 
 const mobileSearch = document.querySelector("#mobile-search");
 
-mobileSearch.addEventListener("focus", (event)=> {
-    mobileSearch.removeAttribute('placeholder')
-    mobileSearch.style.padding = "0px 20px 0px 28px"
-    let button = document.querySelector(".mobile-search-form");
-        button.classList.toggle("mobile-icon");
-    let body = document.querySelector("body");
-});
+if (mobileSearch) {
+    mobileSearch.addEventListener("focus", (event)=> {
+        mobileSearch.removeAttribute('placeholder')
+        mobileSearch.style.padding = "0px 20px 0px 28px"
+        let button = document.querySelector(".mobile-search-form");
+            button.classList.toggle("mobile-icon");
+        let body = document.querySelector("body");
+    });
+    
+    mobileSearch.addEventListener("blur", (event)=> {
+        mobileSearch.setAttribute('placeholder', 'Procurar')
+        mobileSearch.style.padding = "0px 20px"
+        let button = document.querySelector(".mobile-search-form");
+            button.classList.toggle("mobile-icon");
+    });
+}
 
-mobileSearch.addEventListener("blur", (event)=> {
-    mobileSearch.setAttribute('placeholder', 'Procurar')
-    mobileSearch.style.padding = "0px 20px"
-    let button = document.querySelector(".mobile-search-form");
-        button.classList.toggle("mobile-icon");
-});
 
 // SEARCH INPUT
 
 // MENU
 
 const menuIcon = document.querySelector("#mobile-menu");
+const closeMenu = document.querySelectorAll("#menu-close");
 
-menuIcon.addEventListener("click", (event)=> {
-    console.log(event)
-    console.log(10)
-    let show_menu = document.querySelector(".menu-click");
-    show_menu.classList.toggle("show-menu");
-});
+if (menuIcon || closeMenu) {
+    menuIcon.addEventListener("click", (event)=> {
+        let show_menu = document.querySelector(".menu-click");
+        show_menu.classList.toggle("show-menu");
+    });
+    
+    closeMenu.forEach(closeMenu => {
+        closeMenu.addEventListener("click", () => {
+            let show_menu = document.querySelector(".menu-click");
+            show_menu.classList.toggle("show-menu");
 
-const closeMenu = document.querySelector("#menu-close");
-closeMenu.addEventListener("click", (event)=> {
-    let closeMenu = document.querySelector(".menu-click");
-    closeMenu.classList.toggle("show-menu");
-});
+            let menu = document.querySelector("#menu");
+            menu.classList.remove("open-subcategory");
+        });
+      });
+}
 
 // FIM MENU
 
 
 
+
+
+// var menuButton = document.querySelector("#menu-button");
+// var menu = document.querySelector("#menu");
+// var closeMenuButton = document.querySelector("#close-menu-button");
+
+// menuButton.addEventListener("click", (event)=> {
+//     menu.classList.add("open"); // adiciona a classe "open" ao menu
+// })
+
+// closeMenuButton.addEventListener("click", (event) => {
+//     menu.classList.remove("open"); // remove a classe "open" do menu
+// })
+
+
+const navOpenSubcategory = document.querySelectorAll("#nav-open-subcategory");
+navOpenSubcategory.forEach(navOpenSubcategory => {
+    navOpenSubcategory.addEventListener("click", () => {
+        let menu = document.querySelector("#menu");
+        menu.classList.toggle("open-subcategory");
+    });
+  });
+
+
+// navOpenSubcategory.addEventListener("click", (event)=> {
+//     console.log(navOpenSubcategory)
+//     console.log(10)
+//     let menu = document.querySelector("#menu");
+//     menu.classList.toggle("open-subcategory"); // adiciona a classe "open" ao menu
+// });
 
 // var heading = document.createElement("h1");
 // var heading_text = document.createTextNode("Big Head!");

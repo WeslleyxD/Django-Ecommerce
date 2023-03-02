@@ -69,7 +69,7 @@ def login_twofa_authentication(request, resend_mail=None):
 def logout_user(request):    
 
     #Remove as sessões expiradas da tabela Session
-    request.session.clear_expired()
+    # request.session.clear_expired()
 
     logout(request)
     return redirect('accounts:login_user')
