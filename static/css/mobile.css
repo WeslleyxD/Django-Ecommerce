@@ -47,6 +47,8 @@ p {
     align-items: center;
     gap: 15px;
     padding: 10px;
+    max-width: 1500px;
+    margin: 0 auto;
 }
 
 .mobile-header-content i {
@@ -273,7 +275,7 @@ p {
     position: fixed;
     gap: 20px;
     top: 0;
-    left: -3000px; /* começa fora da tela, deslocado para a esquerda */
+    left: -1000px; /* começa fora da tela, deslocado para a esquerda */
     width: 100%;
     min-height: 100%;
     background-color: var(--third-color);
