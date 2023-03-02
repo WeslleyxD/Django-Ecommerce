@@ -70,25 +70,29 @@
                     </ul>
                 </div>
                 <div class="header-block-options">
-                    <div class="header-item-orders">
-                        <!-- <i class="fa-solid fa-gift"></i> -->
-                        {% if request.user.is_authenticated %}
-                            <a href="{% url 'perfil:my_perfil' %}"><span>Olá, {{user_authenticated|capfirst}}</span></a>
-                        {% else %}
-                            <a href="{% url 'accounts:login_user' %}"><span>{{user_authenticated|capfirst}}</span></a>
-                        {% endif %}
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <div class="header-item-profile">
-                        <a href="{% url 'cart:cart_detail' %}"><span>Meu carrinho</span>
-                        <!-- <a href="#profile"><i class="fa-sharp fa-solid fa-user"></i></a> -->
-                        
-                            <div id="cart">
-                                <a href="{% url 'cart:cart_detail' %}"><i class="fa-sharp fa-solid fa-cart-shopping"></i></a>
-                                <span class="fa-layers-counter">{{cart.get_quantity_products}}</span>
-                            </div>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'perfil:my_perfil' %}" class="header-item-orders">
+                           <span>Olá, {{user_authenticated|capfirst}}!</span>
+                           <i class="fa-solid fa-user"></i>
                         </a>
-                    </div>
+                    {% else %}
+                        <a href="{% url 'accounts:login_user' %}" class="header-item-orders">
+                            <span>{{user_authenticated|capfirst}}</span>
+                            <i class="fa-solid fa-user"></i>
+
+                        </a>
+                    {% endif %}
+
+                    <a href="{% url 'cart:cart_detail' %}" class="header-item-profile">
+                       <span>Meu carrinho</span>
+                        <!-- <a href="#profile"><i class="fa-sharp fa-solid fa-user"></i></a> -->
+
+                        <div id="cart">
+                            <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+                            <span class="fa-layers-counter">{{cart.get_quantity_products}}</span>
+                        </div>
+                    </a>
+                    
                     <!-- <div class="header-item-myaccount">
                         <a href="{% url 'perfil:my_perfil' %}"> <span>Minha conta</span></a>
                         <i class="fa-solid fa-gift"></i>
@@ -167,11 +171,13 @@
             </div>
         </div>
 
-        {% block content %}
-        
-        {% block js %} {% endblock %}
-        
-        {% endblock %}
+        <section class="all-sections">
+            {% block content %}
+            
+            {% block js %} {% endblock %}
+            
+            {% endblock %}
+        </section>
     </header>
 
     <footer class="footer-container">

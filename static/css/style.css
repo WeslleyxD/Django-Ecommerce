@@ -12,6 +12,7 @@
   --green-color: #00ff2a;
   --gray-color: #a5a3a3cc;
   --black-color: black;
+  --red-color: rgb(230, 5, 5);
 }
 
 body, html {
@@ -213,7 +214,7 @@ li {
 .header-block-options i {
   color: var(--main-color);
 }
-
+/* header-item-orders */
 .header-item-orders {
   display: flex;
   justify-content: space-between;
@@ -236,6 +237,10 @@ li {
 }
 
 .header-item-orders:hover a {
+  color: var(--third-color);
+}
+
+.header-item-orders:hover span {
   color: var(--third-color);
 }
 
@@ -264,6 +269,10 @@ li {
   color: var(--third-color);
 }
 
+.header-item-profile:hover span {
+  color: var(--third-color);
+}
+
 .order {
   display: flex;
   flex-direction: column;
@@ -277,6 +286,7 @@ li {
   position: absolute;
   left: 90%;
   bottom: 35%;
+  color: var(--red-color);
 }
 
 .header-item-myaccount {
@@ -302,6 +312,11 @@ li {
 
 .header-item-myaccount:hover a {
   color: var(--third-color);
+}
+
+.all-sections {
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 .footer-container {
