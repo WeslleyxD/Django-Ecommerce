@@ -364,10 +364,13 @@ li {
   min-width: 133px;
 }
 
+.copyright {
+  padding: 20px;
+}
+
 .copyright p {
   text-align: center;
   color: var(--black-color);
-  margin: 0px 15px;
 }
 
 
@@ -547,7 +550,6 @@ li {
 .product-brand {
   width: 100% ;
   font-size: 20px;
-  text-transform: lowercase;
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;

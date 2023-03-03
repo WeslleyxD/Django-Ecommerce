@@ -19,12 +19,11 @@ def product_list(request, category_name=None):
         category = get_object_or_404(Category, name=category_name.lower())
         products = Product.objects.filter(category=category).filter(available=True).select_related('category').select_related('brand')
     
-    page_obj = pagination(request, products, 3)
 
     return render(request, 
                 'products/list.html',
                 {'category': category,
-                'page_obj': page_obj,
+                'products': products,
             })
 
 def product_detail(request, category_name, slug, image=None):

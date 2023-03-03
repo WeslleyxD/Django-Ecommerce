@@ -46,7 +46,7 @@
                             <img src="{% if product.main_image %}{{product.main_image.url}} {% else %}{% static 'img/no_image.png' %}{% endif %}" class="product-thumb" alt="">
                         </div>
                         <div class="product-info">
-                            <h3 class="product-brand">{{product}}</h3>
+                            <h3 class="product-brand">{{product.name|capfirst}}</h3>
                             <div class="price-content">
                                 <span class="price">R$ {{product.price|intcomma}}</span>
                                 <div>

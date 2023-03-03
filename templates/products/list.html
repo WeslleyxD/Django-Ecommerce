@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
+{% load parcelas %}
 
 {% block title %} index {% endblock %}
 
@@ -16,33 +18,33 @@
 <!--
     TODO PAGINAÇÃO DOS ITEMS
 -->
-<div id="main" class="product-list-container">
-    <h1>{% if category %}{{ category.name|capfirst }}{% else %}Products{% endif %}</h1>
-    <div class="product-list-content">
-        <!-- PAGINATION PREVIOUS -->
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}"><i class="fa-solid fa-backward"></i></a>
-        {% endif %}
-
-        <!--ITEMS-->
-        {% for obj in page_obj %}
-        <a href="{{ obj.get_absolute_url }}">
-            <div class="product-list-item">
-                <div class="product-list-item-img">
-                    <img src="{% if obj.image %}{{ obj.image.url }}{%else %}{% static 'img/no_image.png' %}{% endif %}">
+<div class="smartphones-container">
+    <h2 class="smartphone-title">{{category|capfirst}}</h2>
+    <div class="smartphones-content">
+        <button class="pre-btn"><i class="fa-2x fa-sharp fa-solid fa-angles-left"></i></button>
+        <div class="product-container">
+            {% for product in products %}
+            <a href="{{ product.get_absolute_url }}">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{% if product.main_image %}{{product.main_image.url}} {% else %}{% static 'img/no_image.png' %}{% endif %}" class="product-thumb" alt="">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-brand">{{product.name|capfirst}}</h3>
+                        <div class="price-content">
+                            <span class="price">R$ {{product.price|intcomma}}</span>
+                            <div>
+                                <span><i class="fa-sharp fa-solid fa-thumbs-up"></i> {{product.like.all.count}}</span>
+                                <span><i class="fa-sharp fa-solid fa-thumbs-down"></i> {{product.like.all.count}}</span>
+                            </div>
+                        </div>
+                        <span><p>até 10x de R$ {{product.price|parcelas:"10"|intcomma}} sem juros</p></span>
+                    </div>
                 </div>
-                <div class="product-list-item-description">
-                    <h3>{{ obj|truncatechars:70 }}</h3>
-                    <br>
-                    <h3>R$ {{ obj.price }}</h3>
-                </div>
-            </div>
-        </a>
-        {% endfor %}
-        <!-- PAGINATION NEXT -->
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}"><i class="fa-duotone fa-forward"></i></a>
-        {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+        <button class="nxt-btn"><i class="fa-2x fa-sharp fa-solid fa-angles-right"></i></button>
     </div>
 </div>
 
