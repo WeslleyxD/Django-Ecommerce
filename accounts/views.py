@@ -26,10 +26,6 @@ def login_user(request):
                 return redirect('accounts:login_twofa_authentication')
             elif user is not None:
                 request.session['user_pk'] = user.pk
-                # request.session['fav_color'] = 'blue'
-                # request.session['products'] = {'celular': '1'}
-                # print (dir(request.session))
-                # print ('*' * 50)
                 login(request, user)
                 if 'next' in request.META['HTTP_REFERER']:
                     return redirect(request.META['HTTP_REFERER'].split('next=')[1])

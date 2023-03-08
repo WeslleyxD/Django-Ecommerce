@@ -1,46 +1,51 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} Login {% endblock %}
+{% block title %} Login do cliente | PyCommerce {% endblock %}
 
 {% block content %}
-<div class="login-register-form-container">
-    <div class="form-login-content">
-        <div class="form-login-items">
-            <form method="post" action="{% url 'accounts:login_user' %}">
+<div class="login-form-container">
+    <div class="login-form-content">
+        <div class="login-form-items">
+            <form method="POST" action="{% url 'accounts:login_user' %}" class="form-login">
                 {% csrf_token %}
-
                 <div>
-                    <h2>Já possui cadastro em nosso site?</h2>
-                    <h3>Entre em nosso site e aproveite os mais diversos produtos disponíveis</h3>
+                    <h3>Já possui cadastro em nosso site?</h3>
+                    <h4>Entre em nosso site e aproveite os mais diversos produtos disponíveis</h4>
                 </div>
+
                 {{ login_form.non_field_errors }}
                 {% for field in login_form %}
-                <div class="form-login-items-labelinput">
-                    <div class="form-login-items-labelinput-label">
- 
-                    </div>
-                    <div>
-                        {{field}}
-                    </div>
-                </div>
+    
+                    {% if field.field.required %}
+                        <div class="register-input">
+                            <label for="{{ field.name }}" > {{field.label}} <span>{{field.field.label_suffix}}</span></label>
+                            {{field}}
+                        </div>
+                    {% else %}
+                        <div class="register-input-checkbox">
+                            <label for="{{ field.name }}" class="register-twofa"></label>
+                            {{field}}
+                        </div>
+                    {% endif %}
+    
                 {% endfor %}
                 <a href="{% url 'accounts:password_reset' %}">Esqueceu a senha?</a>
                 <button type="submit" value="Submit"> Continuar </button>
             </form>
         </div>
         <div id="linha-vertical"></div>
-        <div class="form-login-items-register">
+        <div class="register-option-items">
             <div>
-                <h2>Não possui conta em nosso site?</h2>
-                <p>Registre-se agora e obtenha muito mais vantagens</p>
+                <h3>Não possui conta em nosso site?</h3>
+                <h4>Registre-se agora e obtenha muito mais vantagens</h4>
             </div>
             <ul>
-                <li><i class="fa-duotone fa-check fa-2x"></i><span>Diversos produtos a sua escolha</span></li>
-                <li><i class="fa-duotone fa-check fa-2x"></i><span>Fácil de buscar e comprar</span></li>
-                <li><i class="fa-duotone fa-check fa-2x"></i><span>Descontos exclusivos para usuários</span></li>
-                <li><i class="fa-duotone fa-check fa-2x"></i><span>Segurança na hora do pagamento</span></li>
-                <li><i class="fa-duotone fa-check fa-2x"></i><span>O único e-commerce completo</span></li>
+                <li><i class="fa-solid fa-check"></i><span>Diversos produtos a sua escolha</span></li>
+                <li><i class="fa-solid fa-check"></i><span>Fácil de buscar e comprar</span></li>
+                <li><i class="fa-solid fa-check"></i><span>Descontos exclusivos para usuários</span></li>
+                <li><i class="fa-solid fa-check"></i><span>Segurança na hora do pagamento</span></li>
+                <li><i class="fa-solid fa-check"></i><span>O único e-commerce completo</span></li>
             </ul>
             <a href="{% url 'accounts:register' %}"><button>Registre-se</button></a>
         </div>

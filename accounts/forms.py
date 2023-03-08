@@ -86,23 +86,20 @@ class LoginForm(forms.Form):
     #captcha = ReCaptchaField(label='', widget=ReCaptchaV2Checkbox(attrs={}))
     error_messages = {
         "invalid_login": _(
-            "E-mail ou senha incorreto."
+            "E-mail ou senha incorreto"
         ),
         "invalid_password": _ (
-            "Faltou verificar o recaptcha."
+            "Faltou verificar o recaptcha"
         )
         #"inactive": _("This account is inactive."),
     }
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     username = cleaned_data.get("username")
-    #     password = cleaned_data.get("password")
-    #     if User.objects.filter(username__iexact=username):
-    #         ok = User.objects.get(username__iexact=username)
-    #         print (dir(ok))
-    #         print (ok.set_password)
-    #         msg = "Usuário ou senha incorreto"
-    #         self.add_error('username', msg)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            instance = self.fields[field]
+            if instance.required == True:
+                instance.label_suffix = " *"
     
     def clean(self):
         cleaned_data = super().clean()
