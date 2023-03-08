@@ -6,30 +6,33 @@
 {% block content %}
 <div class="form-register-container">
     <div class="form-register-content">
-        <div class="form-register-items-img">
-            <img src="{% static 'img/python-application.png' %}" alt="" style="height: 100%;">
-        </div>
-        <div class="form-register-items-formregister">
-            <form method="post" action="{% url 'accounts:register' %}">
-                {% csrf_token %}
-                {{ user_form.non_field_errors }}
-                {% for field in user_form %}
-                <div class="form-login-items-labelinput">
-                    <div class="form-login-items-labelinput-label">
-                        {{field.label}} {% if field.label != '' %} <span>*</span> {% endif %}
-                    </div>
-                    <div>
+        <img src="{% static 'img/python-application.png' %}" alt="">
+        <form method="post" action="{% url 'accounts:register' %}" class="form-register">
+            <h3>Registre-se :)</h3>
+            {% csrf_token %}
+            {{ user_form.non_field_errors }}
+            {% for field in user_form %}
+
+                {% if field.field.required %}
+                    <div class="register-input">
+                        <label for="{{ field.name }}" > {{field.label}} <span>{{field.field.label_suffix}}</span></label>
                         {{field}}
                     </div>
-                </div>
-                {% endfor %}
-                <button type="submit" value="Submit"> Continuar </button>
-            </form>
-        </div>
+                {% else %}
+                    <div class="register-input-checkbox">
+                        <label for="{{ field.name }}" class="register-twofa"></label>
+                        {{field}}
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+            <button type="submit" value="Submit"> Criar minha conta no Pycommerce </button>
+        </form>
     </div>
 </div>
 
 <a href="{% url 'accounts:logout_user' %}"> LOGOUT KKKKKKKKKKK</a>
+
 
 {% endblock %}
 

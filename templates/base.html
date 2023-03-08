@@ -117,7 +117,7 @@
                                         <p><a href="{% url 'accounts:logout_user' %}">Encerrar sessão</a></p>
                                         {% else %}
                                         <a href="{% url 'perfil:my_perfil' %}"><span>{{user_authenticated|capfirst}}</span></a>
-                                        <p><a href="{% url 'accounts:login_user' %}">Entre</a> ou <a href="{% url 'accounts:register' %}">Cadastre-se</a></p>
+                                        <p><a href="{% url 'accounts:login_user' %}">Entre</a> ou <a href="{% url 'accounts:register' %}">Registre-se</a></p>
                                         {% endif %}
                                     </div>
                                     <i id="menu-close" class="fa-regular fa-circle-xmark"></i>

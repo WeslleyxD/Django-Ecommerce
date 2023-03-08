@@ -6,13 +6,8 @@ from django.utils.translation import gettext_lazy as _
 from captcha.fields import ReCaptchaField, ReCaptchaV2Checkbox
 
 class UserCreateForm(forms.ModelForm):
-    password1 = forms.CharField(label='Senha', 
-        widget=forms.PasswordInput(attrs={"class": "login-form-attr"}),
-    )
-    password2 = forms.CharField(label='Confirme a senha', 
-        widget=forms.PasswordInput(attrs={"class": "login-form-attr"}),
-    )
-    #captcha = ReCaptchaField(label='', widget=ReCaptchaV2Checkbox(attrs={}))
+    password1 = forms.CharField(label='Senha', widget=forms.PasswordInput())
+    password2 = forms.CharField(label='Confirme a senha', widget=forms.PasswordInput(),)
     
     error_messages = {
         "password_mismatch": _("The two password fields didn’t match."),
@@ -22,14 +17,24 @@ class UserCreateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name','last_name', 'email', 'password1', 'password2', 'twofa') #'captcha')
+        fields = ('first_name','last_name', 'email', 'password1', 'password2', ) #'captcha')
         widgets = {
-            'first_name': forms.TextInput(attrs={"class": "login-form-attr"}),
-            'last_name': forms.TextInput(attrs={"class": "login-form-attr"}),
-            'email': forms.EmailInput(attrs={"class": "login-form-attr"}),
-            'twofa': forms.CheckboxInput(attrs={"class": "login-form-attr"})
+            # 'first_name': forms.TextInput(attrs={"class": "login-form-attr"}),
+            # 'last_name': forms.TextInput(attrs={"class": "login-form-attr"}),
+            # 'email': forms.EmailInput(attrs={"class": "login-form-attr"}),
+            # 'twofa': forms.CheckboxInput(attrs={"class": "login-form-attr"},)
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            instance = self.fields[field]
+            if instance.required == True:
+                instance.label_suffix = " *"
+
+            if field == 'twofa':
+                print (dir(instance))
+                print ((instance))
     # def clean_username(self):
     #     cleaned_data = super().clean()
     #     username = cleaned_data.get("username")
@@ -41,7 +46,6 @@ class UserCreateForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        print (10)
         password1 = cleaned_data.get("password1")
         password2 = cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:

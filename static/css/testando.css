@@ -65,3 +65,59 @@ body {
   padding: 10px;
   font-size: 1.2em;
 }
+
+
+
+
+
+.power-button {
+  width: 7rem;
+  height: 3rem;
+  background-color: greenyellow;
+  border-radius: 32px;
+}
+
+#powerbutton {
+  display: none;
+}
+
+.toggle {
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(255, 98, 98);
+  border-radius: 32px;
+  box-shadow: none;
+  transition: all 1s ease;
+}
+
+.toggle::after {
+  content: "off";
+  position: absolute;
+  text-transform: uppercase;
+  font-size: 20px;
+  top: 14px;
+  left: 12px;
+}
+
+.toggle::before {
+  content: "on";
+  color: #000000;
+  position: absolute;
+  font-size: 0;
+  top: 32px;
+  left: 20px;
+  text-transform: uppercase;
+}
+
+#powerbutton:checked + .toggle {
+  left: 4rem;
+  background-color: green;
+}
+
+
