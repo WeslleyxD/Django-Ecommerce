@@ -582,8 +582,11 @@ li {
   border-radius: 10px;
 }
 
-.active {
+/* .active {
   background-color: #61a5bf;
+} */
+.active {
+  display: block !important;
 }
 
 .price-content {
@@ -692,7 +695,12 @@ li {
   gap: 20px;
 }
 
-.login-form-content input {
+
+.form-login a {
+  width: 150px;
+}
+
+.login-form-container input {
   width: 100%;
   height: 2rem;
   padding: 2px 10px;
@@ -704,7 +712,7 @@ li {
   border: 1px solid var(--input);
 }
 
-.login-form-content button {
+.login-form-container button {
   background-color: var(--main-color);
   color: var(--third-color);
   border-radius: 5px;
@@ -719,15 +727,15 @@ li {
   letter-spacing: 0.1em;
 }
 
-.login-form-content h2 {
+.login-form-container h2 {
   color: var(--main-color);
 }
 
-.login-form-content a {
+.login-form-container a {
   color: var(--main-color);
 }
 
-.login-form-content h3 {
+.login-form-container h3 {
   font-size: 24px;
   line-height: 30px;
   margin-bottom: 10px;
@@ -736,7 +744,7 @@ li {
 
 }
 
-.login-form-content h4 {
+.login-form-container h4 {
   font-size: 16px;
   line-height: 18px;
   color: #6D6D6D;
@@ -761,6 +769,52 @@ li {
 
 .register-option-items ul li i{
   margin-right: 10px;
+}
+
+.forget-password-container {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  backdrop-filter: blur(2px);
+  inset: 0;
+  background-color: #00000080;
+}
+
+.forget-password-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.forget-password-items {
+  background-color: var(--third-color);
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 3;
+  margin: 0 20px;
+}
+
+.form-forget {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.forget-password-close {
+  display: flex;
+  justify-content: space-between;
+}
+
+.forget-password-close i {
+  font-weight: 600;
+  font-size: 26px;
+}
+
+#close-forget-password {
+  cursor: pointer;
 }
 
 @media (max-width:1620px) {
@@ -874,6 +928,9 @@ li {
     padding: 0px 20px;
   }
   .form-login h3 {
+    font-size: 21px;
+  }
+  .form-forget h3 {
     font-size: 21px;
   }
 

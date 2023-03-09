@@ -12,27 +12,39 @@ from django.core.exceptions import ObjectDoesNotExist
 
 def login_user(request):
     login_form = LoginForm()
+    password_reset_form = EmailToPasswordResetForm()
     if request.method == 'POST':
-        login_form = LoginForm(request.POST)
-        if login_form.is_valid():
-            cd = login_form.cleaned_data
-            user = authenticate(username=cd['email'], password=cd['password'])
-            if user is not None and user.twofa:
-                token_2fa = login_code_authentication(user, create=True)
-                # PAREI AQUI, PEGA O TOKEN PARA ENVIAR O EMAIL
-                #print (token_2fa)
-                #login(request, user)
-                #return redirect('perfil:my_perfil')
-                return redirect('accounts:login_twofa_authentication')
-            elif user is not None:
-                request.session['user_pk'] = user.pk
-                login(request, user)
-                if 'next' in request.META['HTTP_REFERER']:
-                    return redirect(request.META['HTTP_REFERER'].split('next=')[1])
 
-                return redirect ('perfil:my_perfil')
+        if 'login-email' in request.POST:
+            login_form = LoginForm(request.POST)
+            if login_form.is_valid():
+                cd = login_form.cleaned_data
+                user = authenticate(username=cd['email'], password=cd['password'])
+                if user is not None and user.twofa:
+                    token_2fa = login_code_authentication(user, create=True)
+                    # PAREI AQUI, PEGA O TOKEN PARA ENVIAR O EMAIL
+                    #print (token_2fa)
+                    #login(request, user)
+                    #return redirect('perfil:my_perfil')
+                    return redirect('accounts:login_twofa_authentication')
+                elif user is not None:
+                    request.session['user_pk'] = user.pk
+                    login(request, user)
+                    if 'next' in request.META['HTTP_REFERER']:
+                        return redirect(request.META['HTTP_REFERER'].split('next=')[1])
 
-    return render(request, 'accounts/login.html', {'login_form': login_form})
+                    return redirect ('perfil:my_perfil')
+
+        if 'forget-email' in request.POST:
+            password_reset_form = EmailToPasswordResetForm(request.POST)
+            if password_reset_form.is_valid():
+                to_email = password_reset_form.cleaned_data
+                user = User.objects.filter(email=to_email['email'])
+                if user:
+                    generate_token_password_reset(request, user[0], to_email['email'])
+                    return redirect('accounts:login_user')
+    
+    return render(request, 'accounts/login.html', {'login_form': login_form, 'password_reset_form': password_reset_form})
 
 def login_twofa_authentication(request, resend_mail=None):
     if resend_mail:
@@ -101,18 +113,6 @@ def register_email_confirm(request, uidb64, token):
     else:
         return render(request, 'accounts/register_email_confirm_error.html')
 
-
-#FORGET PASSWORD
-def password_reset(request):
-    password_reset_form = EmailToPasswordResetForm()
-    if request.method == 'POST':
-        password_reset_form = EmailToPasswordResetForm(request.POST)
-        if password_reset_form.is_valid():
-            to_email = password_reset_form.cleaned_data
-            user = User.objects.get(email=to_email['email'])
-            generate_token_password_reset(request, user, to_email['email'])
-            return render(request, 'accounts/password_reset_done.html')
-    return render(request, 'accounts/password_reset.html', {'password_reset_form': password_reset_form})
 
 def password_reset_confirm(request, uidb64, token):
     reset_password_form = ResetPasswordForm()

@@ -122,7 +122,7 @@ if (menuIcon || closeMenu) {
     });
     
     closeMenu.forEach(closeMenu => {
-        closeMenu.addEventListener("click", () => {
+        closeMenu.addEventListener("click", (event) => {
             let show_menu = document.querySelector(".menu-click");
             show_menu.classList.toggle("show-menu");
 
@@ -153,11 +153,39 @@ if (menuIcon || closeMenu) {
 
 const navOpenSubcategory = document.querySelectorAll("#nav-open-subcategory");
 navOpenSubcategory.forEach(navOpenSubcategory => {
-    navOpenSubcategory.addEventListener("click", () => {
+    navOpenSubcategory.addEventListener("click", (event) => {
         let menu = document.querySelector("#menu");
         menu.classList.toggle("open-subcategory");
     });
   });
+
+
+
+
+// ABRE E FECHA MODAL FORGET PASSWORD
+const forgetPassword = document.querySelector("#forget-password");
+if (forgetPassword) {
+    forgetPassword.addEventListener('click', (event) => {
+
+        let forgetPasswordContent = document.querySelector(".forget-password-container");
+        forgetPasswordContent.classList.toggle("active");
+    });
+}
+
+
+const closeModalClickOutWindow = document.querySelector(".forget-password-content")
+if (closeModalClickOutWindow) {
+
+    const forgetPasswordContent = document.querySelector(".forget-password-container");
+    const closeForgetPassword = document.querySelector('#close-forget-password');
+
+    closeModalClickOutWindow.addEventListener("click", (event) => {
+        if (event.target === closeModalClickOutWindow || event.target === closeForgetPassword) {
+            forgetPasswordContent.classList.toggle("active");
+        }
+    });
+}
+// -----
 
 
 // navOpenSubcategory.addEventListener("click", (event)=> {

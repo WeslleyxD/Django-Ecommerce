@@ -30,7 +30,7 @@
                     {% endif %}
     
                 {% endfor %}
-                <a href="{% url 'accounts:password_reset' %}">Esqueceu a senha?</a>
+                <a href="#" id="forget-password">Esqueceu a senha?</a>
                 <button type="submit" value="Submit"> Continuar </button>
             </form>
         </div>
@@ -49,15 +49,43 @@
             </ul>
             <a href="{% url 'accounts:register' %}"><button>Registre-se</button></a>
         </div>
-
     </div>
 
 
 
+    <div class="forget-password-container">
+        <div class="forget-password-content">
+            <div class="forget-password-items">
+                <form method="POST" action="{% url 'accounts:login_user' %}" class="form-forget">
+                    <div>
+                        <div class="forget-password-close">
+                            <h3>Recuperar a senha</h3>
+                            <i id="close-forget-password" class="fa-regular fa-circle-xmark"> </i>
+                        </div>
+                        <h4>Para redefinir sua senha, ensira o e-mail que você cadastrou.</h4>
+    
+                    </div>
+                    {% csrf_token %}
+
+                    {% for field in password_reset_form %}
+
+                        {% if field.field.required %}
+                            <div class="register-input">
+                                <label for="{{ field.name }}" > {{field.label}} <span>{{field.field.label_suffix}}</span></label>
+                                {{field}}
+                            </div>
+                        {% else %}
+                            <div class="register-input-checkbox">
+                                <label for="{{ field.name }}" class="register-twofa"></label>
+                                {{field}}
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+                    <button type="submit" value="Submit"> Enviar </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
-
-<form action="">
-    {% csrf_token %}
-    {{login_form.as_p}}
-</form>

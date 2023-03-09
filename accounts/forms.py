@@ -83,6 +83,8 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={"autocomplete": "current-password", "class":"login-form-attr"}),
     )
 
+    prefix = 'login'
+
     #captcha = ReCaptchaField(label='', widget=ReCaptchaV2Checkbox(attrs={}))
     error_messages = {
         "invalid_login": _(
@@ -120,26 +122,30 @@ class LoginForm(forms.Form):
 
 
 class EmailToPasswordResetForm(forms.Form):
-    email = forms.EmailField(
-    label=_("Email"),
-    max_length=254,
-    widget=forms.EmailInput(attrs={"class": "login-form-attr"}),
-)
+    email = forms.EmailField(label=_("E-mail"), max_length=254, widget=forms.EmailInput(attrs={"class": "login-form-attr"}),)
     error_messages = {
         "invalid_email": _(
             "E-mail inserido inválido, tente novamente."
         ),
     }
+    prefix = 'forget'
 
-    def clean(self):
-        cleaned_data = super().clean()
-        email = cleaned_data.get("email")
-        if not User.objects.filter(email__iexact=email).exists():
-            raise ValidationError(
-                self.error_messages["invalid_email"],
-                code="inactive",
-            )
-        return cleaned_data
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     email = cleaned_data.get("email")
+    #     if not User.objects.filter(email__iexact=email).exists():
+    #         raise ValidationError(
+    #             self.error_messages["invalid_email"],
+    #             code="inactive",
+    #         )
+    #     return cleaned_data
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            instance = self.fields[field]
+            if instance.required == True:
+                instance.label_suffix = " *"
 
 class ResetPasswordForm(forms.Form):
     password1 = forms.CharField(label='Senha', 
