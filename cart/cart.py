@@ -6,13 +6,13 @@ from coupon.models import Coupon
 class Cart(object):
     def __init__(self, request):
         self.session = request.session
-        cart = self.session.get(settings.CART_SESSION_ID, None)
+        cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
-        # save an empty cart in the session
+            # save an empty cart in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
         # store current applied coupon
-        self.coupon_id = self.session.get('coupon_id', None)
+        self.coupon_id = self.session.get('coupon_id')
 
     def add(self, product, quantity=1):
         product_id = str(product.id)
@@ -25,7 +25,7 @@ class Cart(object):
     def update(self, product, quantity):
         product_id = str(product.id)
         if product_id in self.cart:
-            if self.cart[product_id]['quantity'] + quantity < 1:
+            if self.cart[product_id]['quantity'] + quantity > 1:
                 self.cart[product_id]['quantity'] += quantity
                 self.save()
             else:

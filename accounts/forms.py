@@ -108,6 +108,7 @@ class LoginForm(forms.Form):
         username = cleaned_data.get("email")
         password = cleaned_data.get("password")
         # captcha = cleaned_data.get('captcha', """  """{})
+
         if not authenticate(username=username, password=password):
             raise ValidationError(
                 self.error_messages["invalid_login"],

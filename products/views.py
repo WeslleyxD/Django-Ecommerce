@@ -9,6 +9,7 @@ from .forms import ProductModelForm, CommentModelForm
 from cart.forms import CartAddProductForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from cart import cart
 #from django.db import connection, reset_queries
 
 def product_list(request, category_name=None):
@@ -42,7 +43,7 @@ def product_detail(request, category_name, slug, image=None):
 
     #Primeira imagem a aparecer do produto
     image_first = product.image.first()
-
+    
     #Alguma imagem selecionada
     image_selected = None
     if image:

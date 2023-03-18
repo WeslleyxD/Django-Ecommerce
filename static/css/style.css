@@ -417,7 +417,7 @@ li {
 }
 
 .smartphones-container {
-  margin: 0 auto;
+  margin: 20px auto;
   max-width: 1500px;
 
 }
@@ -587,6 +587,7 @@ li {
 } */
 .active {
   display: block !important;
+  background-color: var(--main-color);
 }
 
 .price-content {
@@ -857,7 +858,7 @@ li {
       left: 2%;
   }
   .smartphones-container {
-    margin: 0px 100px;
+    margin: 50px 100px;
   }
 }
 
@@ -869,7 +870,7 @@ li {
       margin: 25px 2%;
   }
   .smartphones-container {
-    margin: 0px 20px;
+    margin: 20px 20px;
   }
   .nxt-btn {
     right: 3px;

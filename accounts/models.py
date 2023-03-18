@@ -56,10 +56,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.deleted = True
         self.save()
 
-    def save(self, *args, **kwargs):
-        if self.password:
-            self.set_password(self.password)
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.password:
+    #         print (self.password)
+    #         self.set_password(self.password)
+    #     super().save(*args, **kwargs)
 
 
 class LoginCodeVerification(models.Model):
