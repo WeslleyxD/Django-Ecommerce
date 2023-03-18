@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Profile User {% endblock %}
+
+{% block content %}
+    
+    {{user_form}}
+
+    {% if not request.user.verification_email %}
+    <h5>e-mail não verificado, verifique seu e-mail para obter melhor experiência em nosso site. <a href="{% url 'accounts:verification_email' %}">Enviar link?</a></h5>
+    {% endif %}
+{% endblock %}

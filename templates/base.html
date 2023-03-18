@@ -1,0 +1,261 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/python.png' %}"/>
+    <link rel="stylesheet" href="{% static 'css/mobile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://kit.fontawesome.com/53c22141b9.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="{% url 'core:index' %}"><img id="logo" src="{% static 'img/python.png' %}" alt="Logo"></a>
+                </div>
+                <div class="header-block-search">
+                    <a href="{% url 'core:index' %}"><h1 id="name"><span class="underline-left-to-right">Py Commerce</span></h1></a>
+                    <!-- TODO: CONSTRUIR SEARCH INPUT -->
+                    <form action="">
+                        {% csrf_token %}
+                        <div class="search-form">
+                            <input type="text" id="search" name="search" placeholder="Busque seu produto" >
+                            <!-- onfocus="teste_onfocus()" -->
+                            <i class="fa-2x fa-solid fa-magnifying-glass"></i>
+                        </div>
+                    </form>
+                    <ul class="navbar">
+                       <li><a href="{% url 'products:product_list_by_category' 'smartphone' %}">Smartphone</a>
+                            <ul class="dropdown">
+                                <a href="#">Motorola</a>
+                                <a href="#">Samsung</a>
+                                <a href="#">Lenovo</a>
+                                <a href="#">Xiaomi</a>
+                                <a href="#">Nokia</a>
+                                <a href="#">Apple</a>
+                                <a href="#">Asus</a>
+                                <a href="#">LG</a>
+                            </ul>
+                        </li>
+                       <li><a href="{% url 'products:product_list_by_category' 'computador' %}">Computador</a>
+                            <ul class="dropdown">
+                                <a href="#">Opção 4</a>
+                                <a href="#">Opção 5</a>
+                                <a href="#">Opção 6</a>
+                            </ul>
+                        </li>
+                       <li><a href="{% url 'products:product_list_by_category' 'eletronicos' %}">Eletrônicos</a>
+                            <ul class="dropdown">
+                                <a href="#">Opção 1</a>
+                                <a href="#">Opção 2</a>
+                                <a href="#">Opção 3</a>
+                            </ul>
+                        </li>
+                       <li><a href="{% url 'products:product_list_by_category' 'acessorios' %}">Acessórios</a>
+                            <ul class="dropdown">
+                                <a href="#">Opção 1</a>
+                                <a href="#">Opção 2</a>
+                                <a href="#">Opção 3</a>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="header-block-options">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'perfil:my_perfil' %}" class="header-item-orders">
+                           <span>Olá, {{user_authenticated|capfirst}}!</span>
+                           <i class="fa-solid fa-user"></i>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'accounts:login_user' %}" class="header-item-orders">
+                            <span>{{user_authenticated|capfirst}}</span>
+                            <i class="fa-solid fa-user"></i>
+
+                        </a>
+                    {% endif %}
+
+                    <a href="{% url 'cart:cart_detail' %}" class="header-item-profile">
+                       <span>Meu carrinho</span>
+                        <!-- <a href="#profile"><i class="fa-sharp fa-solid fa-user"></i></a> -->
+
+                        <div id="cart">
+                            <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+                            <span class="fa-layers-counter">{{cart.get_quantity_products}}</span>
+                        </div>
+                    </a>
+                    
+                    <!-- <div class="header-item-myaccount">
+                        <a href="{% url 'perfil:my_perfil' %}"> <span>Minha conta</span></a>
+                        <i class="fa-solid fa-gift"></i>
+                    </div> -->
+                </div>
+            </div>
+
+            <!-- MOBILE HEADER-->
+
+            <div class="mobile-header-content">
+                <div class="mobile-block-icons">
+                    <div class="mobile-menu">
+                        <i id="mobile-menu" class="fa-sharp fa-solid fa-bars"></i>
+                            <div class="menu-click">
+                                <div class="menu-user">
+                                    <div class="item-icon-user">
+                                        <a href="{% url 'perfil:my_perfil' %}"><i class="fa-2x fa-solid fa-user"></i></a>
+                                    </div>
+                                    <div class="item-boas-vindas">
+                                        {% if request.user.is_authenticated %}
+                                        <a href="{% url 'perfil:my_perfil' %}"><span>Olá, {{user_authenticated|capfirst}}</span></a>
+                                        <p><a href="{% url 'accounts:logout_user' %}">Encerrar sessão</a></p>
+                                        {% else %}
+                                        <a href="{% url 'perfil:my_perfil' %}"><span>{{user_authenticated|capfirst}}</span></a>
+                                        <p><a href="{% url 'accounts:login_user' %}">Entre</a> ou <a href="{% url 'accounts:register' %}">Registre-se</a></p>
+                                        {% endif %}
+                                    </div>
+                                    <i id="menu-close" class="fa-regular fa-circle-xmark"></i>
+                                </div>
+                                <nav class="menu-nav-mobile">
+                                    <h3>Categorias</h3>
+                                    <ul>
+                                        <li id="nav-open-subcategory">Smartphone <i class="fa-solid fa-arrow-right"></i></li>
+                                        <nav id="menu">
+                                            <div class="nav-block-header">
+                                                <i id="nav-open-subcategory" class="fa-solid fa-arrow-left"></i>
+                                                <h3>Smartphone</h3>
+                                                <i id="menu-close" class="fa-regular fa-circle-xmark"></i>
+                                            </div>
+                                            <nav class="menu-nav-mobile">
+                                                <h3>Marcas</h3>
+                                                <ul>
+                                                   <a href="#"> <li>Motorola</li></a>
+                                                   <a href="#"> <li>Samsung</li></a>
+                                                   <a href="#"> <li>Lenovo</li></a>
+                                                   <a href="#"> <li>Xiaomi</li></a>
+                                                   <a href="#"> <li>Nokia</li></a>
+                                                   <a href="#"> <li>Apple</li></a>
+                                                   <a href="#"> <li>Asus</li></a>
+                                                   <a href="#"> <li>LG</li></a>
+                                                </ul>
+                                            </nav>
+                                        </nav>
+                                        <a href="{% url 'products:product_list_by_category' 'computador' %}"> <li>Computador <i class="fa-solid fa-arrow-right"></i></li></a>
+                                        <a href="{% url 'products:product_list_by_category' 'eletronicos' %}"> <li>Eletrônicos <i class="fa-solid fa-arrow-right"></i></li></a>
+                                        <a href="{% url 'products:product_list_by_category' 'acessorios' %}"> <li>Acessórios <i class="fa-solid fa-arrow-right"></i></li></a>
+                                    </ul>
+                                </nav>
+                            </div>
+                        <a href="{% url 'core:index' %}" id="mobile-name"><span>Py Commerce</span></a>
+                    </div>
+                    <div class="mobile-profile">
+                        <a href="#profile"><i class="fa-sharp fa-solid fa-user"></i></a>
+                        <div>
+                            <a href="{% url 'cart:cart_detail' %}"><i class="fa-sharp fa-solid fa-cart-shopping"></i></a>
+                            <span class="fa-layers-counter">{{cart.get_quantity_products}}</span>
+                        </div>
+                    </div>
+                </div>
+                <form class="mobile-search-form">
+                    <!-- TODO: CONSTRUIR O SEARCH Q| -->
+                    {% csrf_token %}
+                    <input type="text" id="mobile-search" name="search" placeholder="Busque seu produto">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </form>
+            </div>
+        </div>
+
+        <section class="all-sections">
+            {% block content %}
+            
+            {% block js %} {% endblock %}
+            
+            {% endblock %}
+        </section>
+    </header>
+
+    <footer class="footer-container">
+        <div class="footer-content">
+            <div class="social-medias">
+                <h3>Redes Sociais</h3>
+                <div>
+                    <a href="https://www.linkedin.com/in/weslley-pablo-7b0734222/" target="_blank"><i class="fa-2x fa-brands fa-github"></i></a>
+                    <a href="https://github.com/WeslleyxD" target="_blank"><i class="fa-2x fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="atendimentos">
+                <h3>Atendimento</h3>
+                <ul>
+                    <a href="{% url 'perfil:my_perfil' %}"><li>Minha conta</li></a>
+                    <!-- TODO: criar meus pedidos em perfil -->
+                    <a href=""><li>Meus pedidos</li></a>
+                    <a href="{% url 'cart:cart_detail' %}"><li>Meu carrinho</li></a>
+                    <a href="{% url 'accounts:login_user' %}"><li>Recuperar senha</li></a>
+                    <a href=""><li>Trocar senha</li></a>
+                </ul>
+            </div>
+            <div class="ofertas">
+                <h3>Ofertas</h3>
+                <ul>
+                    <!-- #TODO: criar todas essas features -->
+                    <a href=""><li>Ganhar cupom</li></a>
+                    <a href=""><li>Em promoções</li></a>
+                    <a href=""><li>Novidades</li></a>
+                    <a href=""><li>Relatar erros</li></a>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>WPAS LTDA | CNPJ: 00.000.000.0000-00 | Rua. à caminho de full-stack, S/N - Centro III, Web Developer - BR, 00000-000</p>
+            <p>© 2023 - Nenhum direito reservado</p>
+        </div>
+    </footer>
+
+    <!-- MOBILE FOOTER -->
+    <footer class="mobile-footer-container">
+        <div class="mobile-footer-content">
+            <div class="mobile-social-medias">
+                <h3>Redes Sociais</h3>
+                <div>
+                    <a href="https://www.linkedin.com/in/weslley-pablo-7b0734222/" target="_blank"><i class="fa-2x fa-brands fa-github"></i></a>
+                    <a href="https://github.com/WeslleyxD" target="_blank"><i class="fa-2x fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3>Atendimento</h3>
+                <ul>
+                    <a href="{% url 'perfil:my_perfil' %}"><li>Minha conta</li></a>
+                    <!-- TODO: criar meus pedidos em perfil -->
+                    <a href=""><li>Meus pedidos</li></a>
+                    <a href="{% url 'cart:cart_detail' %}"><li>Meu carrinho</li></a>
+                    <a href="{% url 'accounts:login_user' %}"><li>Recuperar senha</li></a>
+                    <a href=""><li>Trocar senha</li></a>
+                </ul>
+            </div>
+            <div>
+                <h3>Ofertas</h3>
+                <ul>
+                    <!-- #TODO: criar todas essas features -->
+                    <a href=""><li>Ganhar cupom</li></a>
+                    <a href=""><li>Em promoções</li></a>
+                    <a href=""><li>Novidades</li></a>
+                    <a href=""><li>Relatar erros</li></a>
+                </ul>
+            </div>
+        </div>
+        <div class="mobile-copyright">
+            <p>WPAS LTDA | CNPJ: 00.000.000.0000-00 | Rua. à caminho de full-stack, S/N - Centro III, Web Developer - BR, 00000-000</p>
+            <p>© 2023 - Nenhum direito reservado</p>
+        </div>
+    </footer>
+
+  <script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+</body>
+
+</html>

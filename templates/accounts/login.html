@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Login do cliente | PyCommerce {% endblock %}
+
+{% block content %}
+<div class="login-form-container">
+    <div class="login-form-content">
+        <div class="login-form-items">
+            <form method="POST" action="{% url 'accounts:login_user' %}" class="form-login">
+                {% csrf_token %}
+                <div>
+                    <h3>Já possui cadastro em nosso site?</h3>
+                    <h4>Entre em nosso site e aproveite os mais diversos produtos disponíveis</h4>
+                </div>
+
+                {{ login_form.non_field_errors }}
+                {% for field in login_form %}
+    
+                    {% if field.field.required %}
+                        <div class="register-input">
+                            <label for="{{ field.name }}" > {{field.label}} <span>{{field.field.label_suffix}}</span></label>
+                            {{field}}
+                        </div>
+                    {% else %}
+                        <div class="register-input-checkbox">
+                            <label for="{{ field.name }}" class="register-twofa"></label>
+                            {{field}}
+                        </div>
+                    {% endif %}
+    
+                {% endfor %}
+                <a href="#" id="forget-password">Esqueceu a senha?</a>
+                <button type="submit" value="Submit"> Continuar </button>
+            </form>
+        </div>
+        <div id="linha-vertical"></div>
+        <div class="register-option-items">
+            <div>
+                <h3>Não possui conta em nosso site?</h3>
+                <h4>Registre-se agora e obtenha muito mais vantagens</h4>
+            </div>
+            <ul>
+                <li><i class="fa-solid fa-check"></i><span>Diversos produtos a sua escolha</span></li>
+                <li><i class="fa-solid fa-check"></i><span>Fácil de buscar e comprar</span></li>
+                <li><i class="fa-solid fa-check"></i><span>Descontos exclusivos para usuários</span></li>
+                <li><i class="fa-solid fa-check"></i><span>Segurança na hora do pagamento</span></li>
+                <li><i class="fa-solid fa-check"></i><span>O único e-commerce completo</span></li>
+            </ul>
+            <a href="{% url 'accounts:register' %}"><button>Registre-se</button></a>
+        </div>
+    </div>
+
+
+
+    <div class="forget-password-container">
+        <div class="forget-password-content">
+            <div class="forget-password-items">
+                <form method="POST" action="{% url 'accounts:login_user' %}" class="form-forget">
+                    <div>
+                        <div class="forget-password-close">
+                            <h3>Recuperar a senha</h3>
+                            <i id="close-forget-password" class="fa-regular fa-circle-xmark"> </i>
+                        </div>
+                        <h4>Para redefinir sua senha, ensira o e-mail que você cadastrou.</h4>
+    
+                    </div>
+                    {% csrf_token %}
+
+                    {% for field in password_reset_form %}
+
+                        {% if field.field.required %}
+                            <div class="register-input">
+                                <label for="{{ field.name }}" > {{field.label}} <span>{{field.field.label_suffix}}</span></label>
+                                {{field}}
+                            </div>
+                        {% else %}
+                            <div class="register-input-checkbox">
+                                <label for="{{ field.name }}" class="register-twofa"></label>
+                                {{field}}
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+                    <button type="submit" value="Submit"> Enviar </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

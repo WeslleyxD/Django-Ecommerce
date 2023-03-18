@@ -1,0 +1,123 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+  
+:root {
+    --main-color: #61a5bf;
+    --second-color: #fdd550;
+    --third-color: #d5d5d5;
+    --background-color: rgb(255, 245, 233);
+    --green-color: #00ff2a;
+}
+
+
+/* ####  HEADER ####*/
+
+
+body {
+  overflow-x: hidden; /* evita a rolagem horizontal da página */
+}
+
+#menu {
+  position: fixed;
+  top: 0;
+  left: -300px; /* começa fora da tela, deslocado para a esquerda */
+  width: 300px;
+  height: 100%;
+  background-color: #333;
+  color: white;
+  transition: all 0.3s ease-in-out; /* animação de transição */
+  z-index: 1; /* coloca o menu acima do resto da página */
+}
+
+#menu.open {
+  left: 0; /* desloca o menu para a posição visível */
+}
+
+#menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#menu li {
+  margin: 10px;
+  font-size: 1.2em;
+}
+
+#menu a {
+  color: white;
+  text-decoration: none;
+}
+
+#menu-button {
+  display: block;
+  margin: 20px;
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+#close-menu-button {
+  display: block;
+  margin: 20px;
+  padding: 10px;
+  font-size: 1.2em;
+}
+
+
+
+
+
+.power-button {
+  width: 7rem;
+  height: 3rem;
+  background-color: greenyellow;
+  border-radius: 32px;
+}
+
+#powerbutton {
+  display: none;
+}
+
+.toggle {
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  cursor: pointer;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(255, 98, 98);
+  border-radius: 32px;
+  box-shadow: none;
+  transition: all 1s ease;
+}
+
+.toggle::after {
+  content: "off";
+  position: absolute;
+  text-transform: uppercase;
+  font-size: 20px;
+  top: 14px;
+  left: 12px;
+}
+
+.toggle::before {
+  content: "on";
+  color: #000000;
+  position: absolute;
+  font-size: 0;
+  top: 32px;
+  left: 20px;
+  text-transform: uppercase;
+}
+
+#powerbutton:checked + .toggle {
+  left: 4rem;
+  background-color: green;
+}
+
+

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Register-se :) | PyCommerce {% endblock %}
+
+{% block content %}
+<div class="form-register-container">
+    <div class="form-register-content">
+        <img src="{% static 'img/python-application.png' %}" alt="">
+        <form method="post" action="{% url 'accounts:register' %}" class="form-register">
+            <h3>Registre-se :)</h3>
+            {% csrf_token %}
+            {{ user_form.non_field_errors }}
+            {% for field in user_form %}
+
+                {% if field.field.required %}
+                    <div class="register-input">
+                        <label for="{{ field.name }}" > {{field.label}} <span>{{field.field.label_suffix}}</span></label>
+                        {{field}}
+                    </div>
+                {% else %}
+                    <div class="register-input-checkbox">
+                        <label for="{{ field.name }}" class="register-twofa"></label>
+                        {{field}}
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+            <button type="submit" value="Submit"> Criar minha conta no Pycommerce </button>
+        </form>
+    </div>
+</div>
+
+<a href="{% url 'accounts:logout_user' %}"> LOGOUT KKKKKKKKKKK</a>
+
+
+{% endblock %}
+
+
+
+<!-- <form method="post" action="{% url 'accounts:register' %}">
+    {% csrf_token %}
+    {% for field in user_form %}
+    <div>
+        {{field.label}}
+    </div>
+    <div>
+        <div class="inputlist">
+            {{field}}
+        </div>
+        {% for error in field.errors %}
+        <div> 
+            <span class="errorlist">{{error}}</span> 
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <button type="submit" value="Submit"> Continuar </button>
+</form>
+
+<a href="{% url 'accounts:logout_user' %}"> LOGOUT KKKKKKKKKKK</a> -->

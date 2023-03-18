@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+<form method="post" action="{% url 'accounts:login_twofa_authentication' %}">
+    {% csrf_token %}
+    {{ login_code_form.non_field_errors }}
+    {% for field in login_code_form %}
+    <div class="form-login-items-labelinput">
+        <div class="form-login-items-labelinput-label">
+            {{field.label}} {% if field.label != '' %} <span>*</span> {% endif %}
+        </div>
+        <div>
+            {{field}}
+        </div>
+    </div>
+    {% endfor %}
+    <button type="submit" value="Submit"> Continuar </button>
+</form>
+
+<a href="{% url 'accounts:resend_login_twofa_authentication' True %}">Reenviar código de segurança?</a>
+{% endblock %}
+
+<form action="">
+    {% csrf_token %}
+    {{login_form.as_p}}
+</form>
