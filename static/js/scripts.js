@@ -74,8 +74,38 @@ if (search) {
         let button = document.querySelector(".search-form");
             button.classList.toggle("icon");
     });
-
 }
+
+
+// CART SIDEBAR DETAIL
+
+const cartBar = document.querySelector("#cart-bar");
+if (cartBar) {
+    cartBar.addEventListener("click", (event) => {
+        let cartBarContainer = document.querySelector(".cart-bar-container");
+        cartBarContainer.classList.toggle("active");
+
+        // let cartBarContent = document.querySelector(".cart-bar-content");
+        // console.dir(cartBarContent)
+
+
+    });
+}
+
+const closeCartBarClickOutWindow = document.querySelector(".cart-bar-container")
+if (closeCartBarClickOutWindow) {
+
+    // const cartBarContent = document.querySelector(".cart-bar-content");
+
+    closeCartBarClickOutWindow.addEventListener("click", (event) => {
+        if (event.target === closeCartBarClickOutWindow) {
+            closeCartBarClickOutWindow.classList.toggle("active");
+        }
+    });
+}
+
+
+// FIM CART SIDEBAR DETAIL
 
 
 /// FIM SEARCH INPUT
