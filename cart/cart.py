@@ -70,7 +70,7 @@ class Cart(object):
         return sum(item['quantity'] for item in self.cart.values())
 
     def get_total_price(self):
-        return sum((float(item['price'])) * item['quantity'] for item in self.cart.values())
+        return sum((Decimal(item['price'])) * item['quantity'] for item in self.cart.values())
         
     def get_quantity_products(self):
         return len(self.cart)

@@ -948,6 +948,16 @@ li {
   display: flex;
   gap: 20px;
   flex-direction: column;
+  min-width: 120px;
+  max-width: 120px;
+  max-height: 120px;
+  max-height: 120px;
+}
+
+.cart-bar-mid-items-infos a {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .cart-bar-mid-items img {
