@@ -97,48 +97,50 @@
                 </div>
                 <div class="cart-bar-container">
                     <div class="cart-bar-content">
-                        <div class="cart-bar-items">
-                            {% if not cart.get_quantity_products %}
-                                <div class="cart-bar-top-items">
-                                    <h3>Resumo do carrinho</h3>
-                                </div>
-                                <div class="cart-bar-mid-items-empty">
-                                    <h4>Seu carrinho está vazio :(</h4>
-                                    <img src = "{% static 'img/man-with-cart.svg' %}" alt="My Happy SVG"/>
-                                </div>
-                                <div class="cart-bar-bottom-items-empty">
-                                    <h4>Ou acesse sua conta para recuperar seu carrinho</h4>
-                                <a href="{% url 'accounts:login_user' %}"><button>Acessar minha conta</button></a>
-                                </div>
-                            {% else %}
-                                <div class="cart-bar-top-items">
-                                    <h3>Resumo do carrinho</h3>
-                                </div>
-                                <div class="cart-bar-mid-items-scroll">
-                                {% for item in cart %}
-                                    {% with product=item.product %}
-                                        <div class="cart-bar-mid-items">
-                                            <img src="{% if product.main_image %}{{ product.main_image.url }} {% else %}{% static 'img/no_image.png' %}{% endif %}" alt="Falha">
-                                            <div class="cart-bar-mid-items-infos">
-                                                <a href="{{product.get_absolute_url}}">{{product.name}}</a>
-                                                <h3>R$ {{item.price|intcomma}}</h3>
-                                                <h5>Quantidade: {{item.quantity}}</h5>
-                                            </div>
-                                        </div>
-                                        {% endwith %}
-                                        {% endfor %}
-                                </div>
-                                
-                                <div class="cart-bar-bot-items">
-                                    <a href="{% url 'cart:cart_detail' %}"><button>Ver meu carrinho</button></a>
-                                    <div>
-                                        <h4>Total</h4>
-                                        <h3>R$ {{cart.get_total_price|intcomma}}</h3>
-                                    </div>
-                                </div>
-                            {% endif %}
+                        {% if not cart.get_quantity_products %}
+                        <div class="cart-bar-items-empty">
+                            <div class="cart-bar-top-items">
+                                <h3>Resumo do carrinho</h3>
+                            </div>
+                            <div class="cart-bar-mid-items-empty">
+                                <h4>Seu carrinho está vazio :(</h4>
+                                <img src = "{% static 'img/man-with-cart.svg' %}" alt="My Happy SVG"/>
+                            </div>
+                            <div class="cart-bar-bottom-items-empty">
+                                <h4>Ou acesse sua conta para recuperar seu carrinho</h4>
+                            <a href="{% url 'accounts:login_user' %}"><button>Acessar minha conta</button></a>
+                            </div>
                         </div>
-                    </div>
+                        {% else %}
+                        <div class="cart-bar-items">
+                            <div class="cart-bar-top-items">
+                                <h3>Resumo do carrinho</h3>
+                            </div>
+                            <div class="cart-bar-mid-items-scroll">
+                            {% for item in cart %}
+                                {% with product=item.product %}
+                                    <div class="cart-bar-mid-items">
+                                        <img src="{% if product.main_image %}{{ product.main_image.url }} {% else %}{% static 'img/no_image.png' %}{% endif %}" alt="Falha">
+                                        <div class="cart-bar-mid-items-infos">
+                                            <a href="{{product.get_absolute_url}}">{{product.name}}</a>
+                                            <h3>R$ {{item.price|intcomma}}</h3>
+                                            <h5>Quantidade: {{item.quantity}}</h5>
+                                        </div>
+                                    </div>
+                                    {% endwith %}
+                                    {% endfor %}
+                            </div>
+                            
+                            <div class="cart-bar-bot-items">
+                                <a href="{% url 'cart:cart_detail' %}"><button>Ver meu carrinho</button></a>
+                                <div>
+                                    <h4>Total</h4>
+                                    <h3>R$ {{cart.get_total_price|intcomma}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        </div>
                 </div>
             </div>
 

@@ -84,22 +84,28 @@ if (cartBar) {
     cartBar.addEventListener("click", (event) => {
         let cartBarContainer = document.querySelector(".cart-bar-container");
         cartBarContainer.classList.toggle("active");
+        closeCartBarClickOutWindow.style.backgroundColor = '#00000080';
 
-        // let cartBarContent = document.querySelector(".cart-bar-content");
-        // console.dir(cartBarContent)
-
-
+        setTimeout(() => {
+            let cartBarContent = document.querySelector(".cart-bar-content");
+            cartBarContent.style.left = "0"
+        }, 50);
     });
 }
 
-const closeCartBarClickOutWindow = document.querySelector(".cart-bar-container")
+const closeCartBarClickOutWindow = document.querySelector(".cart-bar-container");
 if (closeCartBarClickOutWindow) {
-
-    // const cartBarContent = document.querySelector(".cart-bar-content");
 
     closeCartBarClickOutWindow.addEventListener("click", (event) => {
         if (event.target === closeCartBarClickOutWindow) {
-            closeCartBarClickOutWindow.classList.toggle("active");
+            let cartBarContent = document.querySelector(".cart-bar-content");
+            cartBarContent.style.left = "100%"
+
+            closeCartBarClickOutWindow.style.backgroundColor = '#00000000';
+
+            setTimeout(() => {
+                closeCartBarClickOutWindow.classList.toggle("active");
+            }, 50);
         }
     });
 }
