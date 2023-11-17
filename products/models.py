@@ -3,7 +3,6 @@ from django.urls import reverse
 from accounts.models import User
 from django.template.defaultfilters import slugify
 from django.conf import settings
-from tinymce.models import HTMLField
 
 
 class Brand(models.Model):
@@ -51,7 +50,6 @@ class Product(models.Model):
     deslike = models.ManyToManyField(User, blank=True, related_name='deslike')
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
-    description = HTMLField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)

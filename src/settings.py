@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
-from decouple import config
 from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'django-insecure-sv&6k!j4)y^0h(zh%%ni)nys%^50507)2#sxahh*(ezj8nxw_='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,9 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #AppInternos
     'django.contrib.humanize',
-    #AppExternos
-    'captcha',
-    'tinymce',
+
     #MyApps
     'order',
     'perfil',
@@ -160,13 +157,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
 #SMTP
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST')
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = config('EMAIL_HOST')
+# DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
 
 
 #TIMEOUT LINK RESET PASSWORD OR ACTIVE EMAIL
@@ -181,8 +178,8 @@ AUTHENTICATION_BACKENDS = [
 #SESSION_COOKIE_AGE = 15
 
 #Recaptcha
-RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
-RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
+# RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+# RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
 
 RECAPTCHA_REQUIRED_SCORE = 0.85
 

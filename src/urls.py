@@ -24,7 +24,6 @@ urlpatterns = [
     path('products/', include('products.urls')),
     path('accounts/', include('accounts.urls')),
     path('my-perfil/', include('perfil.urls')),
-    path('tinymce/', include('tinymce.urls')),
     path('cart/', include('cart.urls')),
     path('coupons/', include('coupon.urls')),
     path('', include('core.urls')),
