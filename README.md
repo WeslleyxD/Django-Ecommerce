@@ -1,4 +1,4 @@
-# 🔎 Índice 
+# Índice 
 - [Descrição](#descrição)
 - [Tecnologias](#tecnologias)
 - [Instalação](#instalação)
@@ -7,11 +7,12 @@
 - [Contato](#contato)
 
 
-# 📖 Descrição
+# Descrição
 `Ecommerce`, Projeto com o intuito de praticar recursos avançados em Django na construção de um comércio eletrônico<br>
-<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/93230531/283944730-a61585f1-9dd1-4af2-b390-660e6f849f42.png" alt="Python" width="50%">
+https://github-production-user-asset-6210df.s3.amazonaws.com/93230531/283951085-1152dd5d-7f46-447f-8497-f0ef03b5e994.mp4
 
-# 📚 Tecnologias
+
+# Tecnologias
   <div style="display: inline-block">
     <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python">
     <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="Javascript">
@@ -19,7 +20,7 @@
   </div>
 
 
-# 🔨 Instalação
+# Instalação
   ### Requisitos
   > [!WARNING]\
   > Precisa ter Python3.9 ou superior instalado.
@@ -28,11 +29,11 @@
   
   1. Clone o repositório
      ```sh
-     git clone https://github.com/WeslleyxD/DOOFI.git
+     git clone https://github.com/WeslleyxD/Ecommerce.git
      ```
   2. Acesse o diretório
      ```sh
-     cd DOOFI
+     cd Ecommerce
      ```
   3. Instale o ambiente virtual
      ```sh
@@ -44,30 +45,15 @@
      ```
   5. Instale todas as biblioticas do projeto
      ```sh
-     pip3 -r requirements.txt
+     pip3 install -r requirements.txt
      ```
-  6. Migrações das tabelas
-     ```sh
-     python3 manage.py makemigrations
-     ```
-     ```sh
-     python3 manage.py migrate
-     ```
-  7. Crie um superusuário para poder se autenticar
-     ```sh
-     python3 manage.py createsuperuser
-     ```
-  8. Inicialize o servidor e faça o login com usuário criado na etapa 7
-     ```sh
-     python3 manage.py runserver
-     ```
-  9. Pronto, agora você pode explorar o projeto por completo!!!
+  6. Pronto, agora você pode explorar o projeto por completo!!!
      ```sh
      http://localhost:8000/
      ```
 
 
-# ☝️ Contato
+# Contato
   <div style="display: inline-block">
     <a href="www.linkedin.com/in/weslley-pablo" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Python"></a>
   </div>
